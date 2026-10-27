@@ -62,8 +62,10 @@ bilingual: true
     <span id="tool-count"></span>
     <span id="filter-tags"></span>
     <span class="meta-sep">·</span>
-    <span class="legend-item"><span class="dot dot-active"></span> {% include t.html k="link_active" %}</span>
-    <span class="legend-item"><span class="dot dot-inactive"></span> {% include t.html k="link_broken" %}</span>
+    <span>{% include t.html k="verified" %}:</span>
+    <span class="legend-item"><span class="dot dot-active"></span> {% include t.html k="age_recent" %}</span>
+    <span class="legend-item"><span class="dot dot-quiet"></span> {% include t.html k="age_mid" %}</span>
+    <span class="legend-item"><span class="dot dot-inactive"></span> {% include t.html k="age_old" %}</span>
   </div>
 </div>
 
@@ -72,7 +74,7 @@ bilingual: true
 <table class="tool-table" aria-label="Oslo Mental Health Map directory">
   <thead>
     <tr>
-      <th aria-label="Link status"></th>
+      <th aria-label="Info verified"></th>
       <th>{% include t.html k="col_name" %}</th>
       <th>{% include t.html k="col_desc" %}</th>
       <th class="col-date">{% include t.html k="col_added" %}</th>
@@ -184,6 +186,7 @@ bilingual: true
               data-name="{{ tool.name | downcase }}"
               data-desc="{{ tool.description.nb | downcase }} {{ tool.description.en | downcase }}"
               data-added="{{ tool.date_added }}"
+              data-verified="{{ tool.last_verified }}"
               data-link-status="{{ health.status }}"
               data-link-checked="{{ health.checked }}"
               data-akutt="{{ tool.akutt }}"
@@ -201,12 +204,12 @@ bilingual: true
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
               {%- if tool.akutt %} <span class="akutt-tag">{% include t.html k="akutt" %}</span>{% endif %}
+              {%- if health.status == 'broken' %} <span class="broken-tag">{% include t.html k="link_broken" %}</span>{% endif %}
               {%- if tool.phone %} <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}
             </td>
             <td class="tool-desc">
               {% include t.html nb=tool.description.nb en=tool.description.en %}
               {%- if tool.nar or tool.pris %}<span class="tool-when"></span>{% endif %}
-              {%- if tool.last_verified %}<span class="tool-verified" data-date="{{ tool.last_verified }}"></span>{% endif %}
             </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
             <td class="col-when"></td>
@@ -247,7 +250,6 @@ bilingual: true
   const textIn = el => (el.querySelector('.l-' + lang) || el).textContent.trim();
   const fmtDate = (d, opts) => d.toLocaleDateString(lang === 'nb' ? 'nb-NO' : 'en-GB', opts);
   const DAY_FORMAT   = { day: 'numeric', month: 'short', year: 'numeric' };
-  const MONTH_FORMAT = { month: 'short', year: 'numeric' };
 
   // Right-side chips expand into sub-pills, one per category in the group
   const groups = {
@@ -308,32 +310,30 @@ bilingual: true
     return name + time;
   }
 
-  // Dates, schedules and link-status tooltips depend on the language, so they're (re)written here
-  // "Active" only counts if the last successful check is within 30 days; otherwise the dot stays hollow.
-  const LINK_FRESH_MS = 30 * 24 * 60 * 60 * 1000;
+  // Dates, schedules and dot tooltips depend on the language, so they're (re)written here.
+  // The dot shows how recently a person verified the info (last_verified), computed in the
+  // browser so it ages without a rebuild. Broken links get a tag and a faded row instead.
+  const MONTH_MS = 30.44 * 24 * 60 * 60 * 1000;
 
   function renderDates() {
     document.querySelectorAll('.col-date[data-date]').forEach(cell => {
       const d = new Date(cell.dataset.date);
       if (!isNaN(d)) cell.textContent = fmtDate(d, DAY_FORMAT);
     });
-    document.querySelectorAll('.tool-verified[data-date]').forEach(el => {
-      const d = new Date(el.dataset.date);
-      if (!isNaN(d)) el.textContent = t('verified') + ' ' + fmtDate(d, MONTH_FORMAT);
-    });
     toolRows.forEach(row => {
       const dot = row.querySelector('.dot');
-      const checked = new Date(row.dataset.linkChecked);
-      const checkedLabel = isNaN(checked) ? '' : ` (${t('checked')} ${fmtDate(checked, DAY_FORMAT)})`;
-      if (row.dataset.linkStatus === 'broken') {
-        dot.className = 'dot dot-inactive';
-        dot.title = t('link_broken') + checkedLabel;
-      } else if (row.dataset.linkStatus === 'ok' && Date.now() - checked < LINK_FRESH_MS) {
-        dot.className = 'dot dot-active';
-        dot.title = t('link_active') + checkedLabel;
+      const verified = parseDay(row.dataset.verified);
+      if (verified) {
+        const months = (Date.now() - verified) / MONTH_MS;
+        dot.className = 'dot ' + (months < 1 ? 'dot-active' : months < 6 ? 'dot-quiet' : 'dot-inactive');
+        dot.title = `${t('verified')} ${fmtDate(verified, DAY_FORMAT)}`;
       } else {
         dot.className = 'dot dot-unknown';
-        dot.title = t('link_unchecked');
+        dot.title = t('never_verified');
+      }
+      if (row.dataset.linkStatus === 'broken') {
+        const checked = parseDay(row.dataset.linkChecked);
+        dot.title += ` · ${t('link_broken')}` + (checked ? ` (${t('checked')} ${fmtDate(checked, DAY_FORMAT)})` : '');
       }
 
       // "søndag 12:00–14:00 · ukentlig · Gratis · Sesong 1. nov.–11. apr."
@@ -625,6 +625,20 @@ bilingual: true
     renderCounts();
   }
 
+  // Under the map the table box shows at most this many rows; the rest scroll inside
+  const MAP_TABLE_ROWS = 3;
+
+  function fitTableBox() {
+    if (activeView !== 'map') { tableWrap.style.maxHeight = ''; return; }
+    let height = tableWrap.querySelector('thead').offsetHeight, rows = 0;
+    for (const el of tbody.children) {
+      if (!el.offsetParent) continue;   // hidden by filters
+      if (!el.classList.contains('section-header') && ++rows > MAP_TABLE_ROWS) break;
+      height += el.offsetHeight;
+    }
+    tableWrap.style.maxHeight = `${height + 1}px`;
+  }
+
   function renderCounts() {
     const isVisible = r => !r.classList.contains('hidden') && !r.classList.contains('out-of-view');
     const visible = [...toolRows].filter(isVisible).length;
@@ -634,6 +648,7 @@ bilingual: true
       header.classList.toggle('hidden', byDay || ![...toolRows].some(r => r.dataset.category === cat && isVisible(r)));
     });
     countEl.textContent = visible + ' ' + t(visible === 1 ? 'entry' : 'entries');
+    fitTableBox();
   }
 
   async function setView(view) {

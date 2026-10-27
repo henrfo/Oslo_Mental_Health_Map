@@ -233,7 +233,7 @@ html[data-lang="nb"] .l-en {
 }
 
 .map {
-  height: clamp(240px, calc(100vh - 580px), 360px);
+  height: clamp(320px, calc(100vh - 350px), 640px);
   border: 1px solid var(--hairline);
   border-radius: 2px;
 }
@@ -330,9 +330,9 @@ html[data-lang="nb"] .l-en {
   text-shadow: 0 0 3px #ffffff, 0 0 3px #ffffff, 0 0 3px #ffffff;
 }
 
-/* Map view: the same table on top in a box that scrolls after about five
-   rows (header kept in view), then the map. Sized so table + map fit on a
-   laptop screen. */
+/* Map view: the same table on top in a box that shows three rows and
+   scrolls (header kept in view), then the map. Sized so table + map fit on
+   a laptop screen. */
 .map-table-bar {
   display: flex;
   justify-content: flex-end;
@@ -349,8 +349,7 @@ html[data-lang="nb"] .l-en {
 }
 
 .map-mode .table-wrap {
-  max-height: 450px;
-  overflow-y: auto;
+  overflow-y: auto;   /* max-height set in JS to fit three rows */
   border-bottom: 1px solid var(--hairline);
 }
 
@@ -381,9 +380,6 @@ html[data-lang="en"] .map-mode .tool-desc > .l-en {
   overflow: hidden;
 }
 
-.map-mode .tool-verified {
-  display: none;
-}
 
 .tool-table tr.row-active td {
   background: var(--hairline);
@@ -759,12 +755,18 @@ html[data-lang="en"] .map-mode .tool-desc > .l-en {
   min-width: 120px;
 }
 
-.tool-verified {
-  display: block;
-  margin-top: 2px;
-  font-size: 11px;
+/* Set by the link checker; the row is faded too (.inactive) */
+.broken-tag {
+  margin-left: 6px;
+  padding: 1px 5px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--muted);
-  opacity: 0.8;
+  white-space: nowrap;
 }
 
 .tool-name a.tool-phone {

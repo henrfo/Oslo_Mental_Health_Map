@@ -44,7 +44,7 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
     en: Counselling for young people aged 16 to 25.
   website: https://example.no             # required. The offer's own page (intake, referral info)
   date_added: 2026-10-27                  # required. Drives "Recently added"
-  last_verified: 2026-10-27               # required. Date a person last confirmed the details are still correct
+  last_verified: 2026-10-27               # required. Date a person last confirmed the details; drives the status dot
   tilstand: [angst, depresjon]            # services: required. Fagstoff/ressurser: optional. List, see values below
   malgruppe: [ungdom]                     # services: required. Fagstoff/ressurser: optional. List, see values below
   bydel: Gamle Oslo                       # services: required. One of the 15 bydeler, or "Hele Oslo"
@@ -84,8 +84,10 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
 
 **bydel**: as listed in `_data/bydeler.yml`: Alna, Bjerke, Frogner, Gamle Oslo, Grorud, Grünerløkka, Nordre Aker, Nordstrand, Sagene, St. Hanshaugen, Stovner, Søndre Nordstrand, Ullern, Vestre Aker, Østensjø, or `Hele Oslo` for city-wide services. An entry with `Hele Oslo` matches every bydel filter.
 
-**last_verified** is a human check that the service still exists and the details above are right. A working link doesn't prove that: a site can stay up after a service closes or changes. It shows as small text under the description.
+**last_verified** is a human check that the service still exists and the details above are right. A working link doesn't prove that: a site can stay up after a service closes or changes. It drives the status dot; hover the dot to see the date.
 
-**Link status** is not part of an entry. The weekly link checker writes it to `_data/health.yml`, keyed by the entry's slugified name.
+**Status dot.** Shows the age of `last_verified`: green under 1 month, amber 1–6 months, grey over 6 months.
+
+**Link status** is not part of an entry; a broken link fades the row and adds a "Brutt lenke" tag. The weekly link checker writes it to `_data/health.yml`, keyed by the entry's slugified name.
 
 No marketing language.

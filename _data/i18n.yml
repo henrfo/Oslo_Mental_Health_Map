@@ -17,9 +17,11 @@ ressurser:        { nb: Ressurser, en: Resources }
 search:           { nb: Søk…, en: Search… }
 entry:            { nb: oppføring, en: entry }
 entries:          { nb: oppføringer, en: entries }
-link_active:      { nb: Aktiv lenke, en: Link active }
+age_recent:       { nb: "< 1 mnd", en: "< 1 month" }
+age_mid:          { nb: "1–6 mnd", en: "1–6 months" }
+age_old:          { nb: "> 6 mnd", en: "> 6 months" }
+never_verified:   { nb: Ikke bekreftet, en: Not verified }
 link_broken:      { nb: Brutt lenke, en: Link broken }
-link_unchecked:   { nb: Lenke ikke sjekket siste 30 dager, en: Link not checked in the last 30 days }
 checked:          { nb: sjekket, en: checked }
 contribute_gh:    { nb: Bidra på GitHub, en: Contribute on GitHub }
 col_name:         { nb: Navn, en: Name }
