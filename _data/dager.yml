@@ -1,0 +1,8 @@
+# Allowed values for nar.dag. n = position in the week (Monday first, as in Norway).
+- { id: mandag,  n: 0, nb: mandag,  en: Monday,    nb_short: man., en_short: Mon }
+- { id: tirsdag, n: 1, nb: tirsdag, en: Tuesday,   nb_short: tir., en_short: Tue }
+- { id: onsdag,  n: 2, nb: onsdag,  en: Wednesday, nb_short: ons., en_short: Wed }
+- { id: torsdag, n: 3, nb: torsdag, en: Thursday,  nb_short: tor., en_short: Thu }
+- { id: fredag,  n: 4, nb: fredag,  en: Friday,    nb_short: fre., en_short: Fri }
+- { id: lordag,  n: 5, nb: lørdag,  en: Saturday,  nb_short: lør., en_short: Sat }
+- { id: sondag,  n: 6, nb: søndag,  en: Sunday,    nb_short: søn., en_short: Sun }

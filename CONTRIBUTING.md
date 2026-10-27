@@ -39,7 +39,7 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
 
 ```yaml
 - name: Example Service                   # required. Official name, untranslated
-  description:                            # required. One sentence: what it offers, not why it matters
+  description:                            # required. Exactly one sentence: what it is and who it's for
     nb: Samtaletilbud for unge mellom 16 og 25 år.
     en: Counselling for young people aged 16 to 25.
   website: https://example.no             # required. The offer's own page (intake, referral info)
@@ -55,7 +55,23 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
   lon: 10.7522
   phone: 116 123                          # optional. Required for hjelpelinjer
   draft: true                             # optional. Kept in the data but not shown on the site, e.g. while details are being verified
+  nar:                                    # optional, for recurring activities
+    dag: sondag                           #   mandag | tirsdag | onsdag | torsdag | fredag | lordag | sondag
+    fra: "12:00"                          #   quoted, or YAML reads 12:00 as a number
+    til: "14:00"
+    hyppighet: ukentlig                   #   ukentlig | annenhver (every other week, counted from sesong.fra)
+  sesong:                                 # optional. Required for annenhver; the activity drops out of "Denne uken" after til
+    fra: 2026-11-01
+    til: 2027-04-11
+  pris: { nb: Gratis, en: Free }          # optional
+  kilde: https://mentalhelse.no/oslo/…    # optional. Page the nar/sesong info comes from; checked weekly for changes
 ```
+
+**One sentence.** `description` is exactly one sentence saying what it is and who it's for. Times, season and price go in `nar`, `sesong` and `pris`, not in the description.
+
+**Recurring activities.** `nar` + `sesong` power the "Denne uken" chip: the browser works out which activities run this week. The weekly source check fetches each `kilde` page and opens an issue when it changes; it never edits the data, so a person approves every change.
+
+**Check before committing.** `ruby scripts/validate_entries.rb` checks every entry against these rules.
 
 **YAML traps.** YAML reads `yes`, `no`, `on`, `off`, `true` and `false` (in any case) as true/false, both as keys and as values:
 - The key for Norwegian text is `nb`, not `no`.

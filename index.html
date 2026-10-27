@@ -33,6 +33,7 @@ bilingual: true
     <div class="pill-group">
       <button class="pill selected" data-filter="all">{% include t.html k="all" %}</button>
       <button class="pill" data-filter="new">{% include t.html k="recent" %}</button>
+      <button class="pill" data-filter="week">{% include t.html k="this_week" %}</button>
     </div>
     <div class="pill-group pill-group-primary">
       {%- assign services = site.data.categories | where: 'group', 'tjenester' %}
@@ -66,6 +67,8 @@ bilingual: true
   </div>
 </div>
 
+
+<div class="table-wrap" id="table-wrap">
 <table class="tool-table" aria-label="Oslo Mental Health Map directory">
   <thead>
     <tr>
@@ -73,6 +76,7 @@ bilingual: true
       <th>{% include t.html k="col_name" %}</th>
       <th>{% include t.html k="col_desc" %}</th>
       <th class="col-date">{% include t.html k="col_added" %}</th>
+      <th class="col-when">{% include t.html k="col_when" %}</th>
       <th class="col-th" data-key="tilstand">
         <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span> ▾</button>
         <div class="col-dropdown">
@@ -85,10 +89,21 @@ bilingual: true
       <th class="col-th" data-key="bydel">
         <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_bydel" %}</span> ▾</button>
         <div class="col-dropdown">
+          <p class="col-note">{% include t.html k="dekker_note" %}</p>
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           {%- for b in site.data.bydeler %}{% unless b == 'Hele Oslo' %}
           <button class="col-option" data-value="{{ b }}">{{ b }}</button>
           {%- endunless %}{% endfor %}
+        </div>
+      </th>
+      <th class="col-th" data-key="dps">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_dps" %}</span> ▾</button>
+        <div class="col-dropdown">
+          <p class="col-note">{% include t.html k="dps_note" %}</p>
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
+          {%- for area in site.data.dps.areas %}
+          <button class="col-option" data-value="{{ area.code }}">{{ area.dps | remove: ' DPS' }}</button>
+          {%- endfor %}
         </div>
       </th>
       <th class="col-th" data-key="malgruppe">
@@ -117,11 +132,41 @@ bilingual: true
       {% assign tools = site.data.entries[cat.id] | where_exp: "t", "t.draft != true" %}
       {% if tools.size > 0 %}
         <tr class="section-header" data-category="{{ cat.id }}">
-          <td colspan="8">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
+          <td colspan="10">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
         </tr>
         {% for tool in tools %}
           {% assign hkey = tool.name | slugify %}
           {% assign health = site.data.health[hkey] %}
+          {%- comment -%}
+            dekker = the bydeler the entry serves (what the bydel filter matches).
+            DPS entries take it from SSB's catchment area; otherwise dekker, else the location bydel.
+          {%- endcomment -%}
+          {%- if tool.dps -%}
+            {%- assign area = site.data.dps.areas | where: 'code', tool.dps | first -%}
+            {%- assign dekker = area.bydeler -%}
+          {%- elsif tool.dekker -%}
+            {%- assign dekker = tool.dekker -%}
+          {%- elsif tool.bydel -%}
+            {%- assign dekker = tool.bydel | split: '|' -%}
+          {%- else -%}
+            {%- assign dekker = '' | split: '' -%}
+          {%- endif -%}
+          {%- capture dps_codes -%}
+            {%- if dekker contains 'Hele Oslo' -%}*{%- else -%}
+              {%- for area in site.data.dps.areas -%}
+                {%- for b in area.bydeler -%}{%- if dekker contains b -%}{{ area.code }}|{%- break -%}{%- endif -%}{%- endfor -%}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endcapture -%}
+          {%- capture dps_names -%}
+            {%- if dps_codes == '*' -%}{% include t.html k="all" %}{%- else -%}
+              {%- assign codes = dps_codes | split: '|' -%}
+              {%- for code in codes -%}
+                {%- assign area = site.data.dps.areas | where: 'code', code | first -%}
+                {{ area.dps | remove: ' DPS' }}{% unless forloop.last %}, {% endunless %}
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endcapture -%}
           {%- capture tilstand_labels -%}
             {%- for id in tool.tilstand -%}
               {%- assign t = site.data.tilstand | where: 'id', id | first -%}
@@ -144,8 +189,13 @@ bilingual: true
               data-akutt="{{ tool.akutt }}"
               data-tilstand="{{ tool.tilstand | join: '|' }}"
               data-bydel="{{ tool.bydel }}"
+              data-dekker="{{ dekker | join: '|' }}"
+              data-dps="{{ dps_codes }}"
               data-malgruppe="{{ tool.malgruppe | join: '|' }}"
               data-henvisning="{% if tool.henvisning == true %}ja{% elsif tool.henvisning == false %}nei{% endif %}"
+              {% if tool.nar %}data-nar-dag="{{ tool.nar.dag }}" data-nar-fra="{{ tool.nar.fra }}" data-nar-til="{{ tool.nar.til }}" data-nar-hyppighet="{{ tool.nar.hyppighet }}"{% endif %}
+              {% if tool.sesong %}data-sesong-fra="{{ tool.sesong.fra }}" data-sesong-til="{{ tool.sesong.til }}"{% endif %}
+              {% if tool.pris %}data-pris-nb="{{ tool.pris.nb }}" data-pris-en="{{ tool.pris.en }}"{% endif %}
               {% if tool.lat and tool.lon %}data-lat="{{ tool.lat }}" data-lon="{{ tool.lon }}" data-address="{{ tool.address }}"{% endif %}>
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
@@ -155,11 +205,14 @@ bilingual: true
             </td>
             <td class="tool-desc">
               {% include t.html nb=tool.description.nb en=tool.description.en %}
+              {%- if tool.nar or tool.pris %}<span class="tool-when"></span>{% endif %}
               {%- if tool.last_verified %}<span class="tool-verified" data-date="{{ tool.last_verified }}"></span>{% endif %}
             </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
+            <td class="col-when"></td>
             <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
-            <td class="col-cell">{{ tool.bydel }}</td>
+            <td class="col-cell col-wrap">{% if dekker contains 'Hele Oslo' %}Hele Oslo{% else %}{{ dekker | join: ', ' }}{% endif %}</td>
+            <td class="col-cell col-wrap">{{ dps_names }}</td>
             <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
             <td class="col-cell">{% if tool.henvisning == true %}{% include t.html k="answer_yes" %}{% elsif tool.henvisning == false %}{% include t.html k="answer_no" %}{% endif %}</td>
           </tr>
@@ -168,26 +221,27 @@ bilingual: true
     {% endfor %}
   </tbody>
 </table>
+</div>
 
 <div id="map-view" class="map-view hidden">
+  <div class="map-table-bar">
+    <label class="in-view-toggle">
+      <input type="checkbox" id="in-view-only">
+      {% include t.html k="in_view_only" %}
+    </label>
+  </div>
   <div class="no-address-strip">
     <span class="strip-label">{% include t.html k="panel_title" %}</span>
     <span id="strip-chips" class="strip-chips"></span>
   </div>
-  <div class="map-body">
-    <aside class="map-list" aria-label="Entries in the map view">
-      <h2 class="map-list-title">{% include t.html k="list_title" %} <span id="map-list-count"></span></h2>
-      <ul id="map-list-items" class="map-list-items"></ul>
-      <button id="map-list-more" class="strip-toggle hidden"></button>
-    </aside>
-    <div id="map" class="map" aria-label="Map of entries"></div>
-  </div>
+  <div id="map" class="map" aria-label="Map of entries"></div>
 </div>
 <p id="map-note" class="map-note hidden"></p>
 
 <script>
   // Interface strings (_data/i18n.yml); data text is rendered in both languages and toggled by CSS
   const I18N = {{ site.data.i18n | jsonify }};
+  const DAYS = {{ site.data.dager | jsonify }};
   let lang = document.documentElement.dataset.lang === 'en' ? 'en' : 'nb';
   const t = key => I18N[key][lang];
   const textIn = el => (el.querySelector('.l-' + lang) || el).textContent.trim();
@@ -207,6 +261,7 @@ bilingual: true
   };
 
   const toolTable     = document.querySelector('.tool-table');
+  const tableWrap     = document.getElementById('table-wrap');
   const mainPills     = document.querySelectorAll('#pills .pill');
   const subPillsEl    = document.getElementById('sub-pills');
   const search        = document.getElementById('search');
@@ -220,7 +275,40 @@ bilingual: true
   const mobileTilstandBtns = document.querySelectorAll('#mobile-tilstand .pill');
   const langBtns      = document.querySelectorAll('.lang-btn');
 
-  // Dates and link-status tooltips depend on the language, so they're (re)written here
+  // ── Recurring activities (nar + sesong) ──
+  // Weeks start on Monday. "Annenhver" counts every other week from the week sesong.fra falls in.
+  const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+  const parseDay = s => { const [y, m, d] = (s || '').split('-').map(Number); return y ? new Date(y, m - 1, d) : null; };
+  const mondayOf = d => { const x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); x.setDate(x.getDate() - (x.getDay() + 6) % 7); return x; };
+  const dayInfo  = id => DAYS.find(d => d.id === id);
+
+  // The date the activity happens this week, or null if it doesn't run this week
+  function occurrenceThisWeek(row) {
+    const day = dayInfo(row.dataset.narDag);
+    if (!day) return null;
+    const monday = mondayOf(new Date());
+    const date = new Date(monday);
+    date.setDate(monday.getDate() + day.n);
+    const from = parseDay(row.dataset.sesongFra), to = parseDay(row.dataset.sesongTil);
+    if (from && date < from) return null;
+    if (to && date > to) return null;
+    if (row.dataset.narHyppighet === 'annenhver') {
+      if (!from) return null;
+      const weeks = Math.round((monday - mondayOf(from)) / WEEK_MS);
+      if (weeks % 2 !== 0) return null;
+    }
+    return date;
+  }
+
+  function whenText(row, short) {
+    const day = dayInfo(row.dataset.narDag);
+    if (!day) return '';
+    const name = short ? day[lang + '_short'] : day[lang];
+    const time = row.dataset.narFra ? ` ${row.dataset.narFra}${row.dataset.narTil ? '–' + row.dataset.narTil : ''}` : '';
+    return name + time;
+  }
+
+  // Dates, schedules and link-status tooltips depend on the language, so they're (re)written here
   // "Active" only counts if the last successful check is within 30 days; otherwise the dot stays hollow.
   const LINK_FRESH_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -247,12 +335,25 @@ bilingual: true
         dot.className = 'dot dot-unknown';
         dot.title = t('link_unchecked');
       }
+
+      // "søndag 12:00–14:00 · ukentlig · Gratis · Sesong 1. nov.–11. apr."
+      const whenEl = row.querySelector('.tool-when');
+      if (whenEl) {
+        const freq = { ukentlig: t('weekly'), annenhver: t('biweekly') }[row.dataset.narHyppighet];
+        const from = parseDay(row.dataset.sesongFra), to = parseDay(row.dataset.sesongTil);
+        const season = from && to ? `${t('season')} ${fmtDate(from, { day: 'numeric', month: 'short' })}–${fmtDate(to, DAY_FORMAT)}` : '';
+        const price = row.dataset[lang === 'en' ? 'prisEn' : 'prisNb'];
+        whenEl.textContent = [whenText(row, false), freq, price, season].filter(Boolean).join(' · ');
+      }
+      row.querySelector('td.col-when').textContent = whenText(row, true);
     });
   }
 
-  // Column filters; an entry tagged with the wildcard value matches every filter of that column
-  const colFilters = { tilstand: null, bydel: null, malgruppe: null, henvisning: null };
-  const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', malgruppe: 'alle' };
+  // Column filters; an entry tagged with the wildcard value matches every filter of that column.
+  // The bydel filter matches what an entry serves (dekker), not where it is.
+  const colFilters = { tilstand: null, bydel: null, dps: null, malgruppe: null, henvisning: null };
+  const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', dps: '*', malgruppe: 'alle' };
+  const filterAttr = { bydel: 'dekker' };
 
   let activeFilter    = 'all';
   let activeSubFilter = null;
@@ -309,7 +410,7 @@ bilingual: true
   function matchesCol(row, key) {
     const value = colFilters[key];
     if (!value) return true;
-    const vals = (row.dataset[key] || '').split('|');
+    const vals = (row.dataset[filterAttr[key] || key] || '').split('|');
     return vals.includes(value) || (key in wildcards && vals.includes(wildcards[key]));
   }
 
@@ -319,7 +420,18 @@ bilingual: true
       e.stopPropagation();
       const wasOpen = dropdown.classList.contains('open');
       closeDropdowns();
-      dropdown.classList.toggle('open', !wasOpen);
+      if (wasOpen) return;
+      // Under the map the table scrolls in its own box, which would clip the dropdown;
+      // pin it to the viewport instead
+      if (activeView === 'map') {
+        const r = th.getBoundingClientRect();
+        dropdown.style.position = 'fixed';
+        dropdown.style.top   = `${r.bottom + 6}px`;
+        dropdown.style.right = `${window.innerWidth - r.right}px`;
+      } else {
+        dropdown.style.position = dropdown.style.top = dropdown.style.right = '';
+      }
+      dropdown.classList.add('open');
     });
     th.querySelectorAll('.col-option').forEach(opt => {
       opt.addEventListener('click', e => {
@@ -331,8 +443,10 @@ bilingual: true
   });
 
   document.addEventListener('click', closeDropdowns);
+  tableWrap.addEventListener('scroll', closeDropdowns);
+  window.addEventListener('scroll', closeDropdowns, { passive: true });
 
-  // ── Map view ──
+  // ── Map view: the same table on top (about five rows, scrolling), the map below ──
   // Leaflet loads on first switch to the map, so list-only visits don't pay for it.
   // Bounds cover Oslo plus Nittedal (part of the DPS Groruddalen catchment, which reaches 60.19°N), so users can't pan away.
   const OSLO_CENTER = [59.9139, 10.7522];
@@ -343,13 +457,18 @@ bilingual: true
   const mapEl       = document.getElementById('map');
   const mapNote     = document.getElementById('map-note');
   const stripChips  = document.getElementById('strip-chips');
+  const inViewOnly  = document.getElementById('in-view-only');
   const darkQuery   = window.matchMedia('(prefers-color-scheme: dark)');
-  let activeView  = 'list';
-  let map         = null;
-  let markerLayer = null;
-  let dpsLayer    = null;   // areas + labels, toggled together
-  let dpsAreas    = null;
-  let leafletLoad = null;
+  const MARKER_STYLE     = { radius: 7, weight: 2, fillOpacity: 0.7 };
+  const MARKER_HIGHLIGHT = { radius: 11, weight: 3, fillOpacity: 1 };
+  let activeView   = 'list';
+  let map          = null;
+  let markerLayer  = null;
+  let dpsLayer     = null;   // areas + labels, toggled together
+  let dpsAreas     = null;
+  let leafletLoad  = null;
+  let markersByRow = new Map();   // table row → circle marker
+  let activeRow    = null;        // row linked to the last clicked marker or row
 
   function loadLeaflet() {
     if (!leafletLoad) {
@@ -380,7 +499,7 @@ bilingual: true
     name.appendChild(row.querySelector('.tool-name a').cloneNode(true));
     el.appendChild(name);
     const details = [categoryLabel(row), row.dataset.akutt === 'true' ? t('akutt') : ''].filter(Boolean).join(' · ');
-    [details, row.dataset.address].forEach(text => {
+    [details, row.dataset.address, whenText(row, false)].forEach(text => {
       if (!text) return;
       const line = document.createElement('div');
       line.textContent = text;
@@ -402,7 +521,7 @@ bilingual: true
   function stripChipFor(row) {
     const chip = document.createElement('span');
     chip.className = 'strip-chip' + (row.dataset.akutt === 'true' ? ' strip-chip-akutt' : '');
-    chip.title = [categoryLabel(row), row.dataset.bydel].filter(Boolean).join(' · ');
+    chip.title = categoryLabel(row);
     chip.appendChild(row.querySelector('.tool-name a').cloneNode(true));
     const phone = row.querySelector('.tool-phone');
     if (phone) chip.append(' ', phone.cloneNode(true));
@@ -432,17 +551,7 @@ bilingual: true
     }
   }
 
-  // ── List beside the map: the markers inside the current view, linked both ways ──
-  const LIST_STEP = 5;
-  const mapListItems = document.getElementById('map-list-items');
-  const mapListCount = document.getElementById('map-list-count');
-  const mapListMore  = document.getElementById('map-list-more');
-  const MARKER_STYLE    = { radius: 7, weight: 2, fillOpacity: 0.7 };
-  const MARKER_HIGHLIGHT = { radius: 11, weight: 3, fillOpacity: 1 };
-  let markersByRow = new Map();   // table row → circle marker
-  let listExpanded = false;
-  let activeListRow = null;       // table row whose list item is highlighted
-
+  // ── Rows ↔ markers ──
   function highlightMarker(row, on) {
     const marker = markersByRow.get(row);
     if (!marker) return;
@@ -450,106 +559,97 @@ bilingual: true
     if (on) marker.bringToFront();
   }
 
-  function listItemFor(row) {
-    const li = document.createElement('li');
-    li.className = 'map-list-item' + (row === activeListRow ? ' active' : '');
-    li.tabIndex = 0;
-    const name = document.createElement('div');
-    name.className = 'map-list-name';
-    name.textContent = row.querySelector('.tool-name a').textContent;
-    li.appendChild(name);
-    const meta = document.createElement('div');
-    meta.className = 'map-list-meta';
-    const nivaa = document.createElement('span');
-    nivaa.className = 'map-list-tag';
-    nivaa.textContent = categoryLabel(row);
-    meta.appendChild(nivaa);
-    if (row.dataset.bydel) meta.append(' ' + row.dataset.bydel);
-    if (row.dataset.akutt === 'true') {
-      const akutt = document.createElement('span');
-      akutt.className = 'akutt-tag';
-      akutt.textContent = t('akutt');
-      meta.append(' ', akutt);
+  function setActiveRow(row, scroll) {
+    if (activeRow) activeRow.classList.remove('row-active');
+    activeRow = row;
+    if (!row) return;
+    row.classList.add('row-active');
+    if (scroll) {
+      // Scroll inside the table box only, not the whole page
+      const top = row.offsetTop - tableWrap.querySelector('thead').offsetHeight;
+      if (top < tableWrap.scrollTop || row.offsetTop + row.offsetHeight > tableWrap.scrollTop + tableWrap.clientHeight) {
+        tableWrap.scrollTo({ top, behavior: 'smooth' });
+      }
     }
-    li.appendChild(meta);
-    const open = () => {
+  }
+
+  toolRows.forEach(row => {
+    row.addEventListener('mouseenter', () => { if (activeView === 'map') highlightMarker(row, true); });
+    row.addEventListener('mouseleave', () => { if (activeView === 'map') highlightMarker(row, false); });
+    row.addEventListener('click', e => {
+      if (activeView !== 'map' || e.target.closest('a')) return;   // links keep working as links
       const marker = markersByRow.get(row);
+      if (!marker) return;
+      setActiveRow(row, false);
       map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 15), { duration: 0.6 });
       map.once('moveend', () => marker.openPopup());
-      setActiveListRow(row);
-    };
-    li.addEventListener('click', open);
-    li.addEventListener('keydown', e => { if (e.key === 'Enter') open(); });
-    li.addEventListener('mouseenter', () => highlightMarker(row, true));
-    li.addEventListener('mouseleave', () => highlightMarker(row, false));
-    return li;
-  }
+    });
+  });
 
-  function renderMapList() {
-    if (!map) return;
-    markersByRow.forEach(m => m.setStyle(MARKER_STYLE));   // redrawn rows never get mouseleave
-    const bounds = map.getBounds();
-    const inView = [...markersByRow.entries()].filter(([, m]) => bounds.contains(m.getLatLng())).map(([row]) => row);
-    // A clicked marker's row must be visible even if it's past the first five
-    if (activeListRow && inView.indexOf(activeListRow) >= LIST_STEP) listExpanded = true;
-    const visible = listExpanded ? inView : inView.slice(0, LIST_STEP);
-    mapListItems.innerHTML = '';
-    visible.forEach(row => mapListItems.appendChild(listItemFor(row)));
-    if (!inView.length) {
-      const empty = document.createElement('li');
-      empty.className = 'map-list-empty';
-      empty.textContent = t('list_empty');
-      mapListItems.appendChild(empty);
-    }
-    mapListCount.textContent = inView.length ? `(${inView.length})` : '';
-    const hidden = inView.length - LIST_STEP;
-    mapListMore.classList.toggle('hidden', hidden <= 0);
-    mapListMore.textContent = listExpanded ? t('strip_less') : `${t('list_more')} (${hidden})`;
-  }
-
-  function setActiveListRow(row) {
-    activeListRow = row;
-    renderMapList();
-    const li = mapListItems.querySelector('.map-list-item.active');
-    if (li) li.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-  }
-
-  mapListMore.addEventListener('click', () => { listExpanded = !listExpanded; renderMapList(); });
-
-  function renderMarkers() {
+  // Markers follow the filters (not the viewport); refit only when the filters change
+  function renderMarkers(fit) {
     if (!map || activeView !== 'map') return;
     markerLayer.clearLayers();
     markersByRow = new Map();
     const shown    = [...toolRows].filter(r => !r.classList.contains('hidden'));
     const placed   = shown.filter(r => r.dataset.lat && r.dataset.lon);
     const unplaced = shown.filter(r => !(r.dataset.lat && r.dataset.lon));
-    if (!placed.includes(activeListRow)) activeListRow = null;
+    if (activeRow && !placed.includes(activeRow)) setActiveRow(null);
     const ink = getComputedStyle(document.documentElement).getPropertyValue('--text').trim();
     placed.forEach(row => {
       const color = row.dataset.akutt === 'true' ? '#dc2626' : ink;
       const marker = L.circleMarker([+row.dataset.lat, +row.dataset.lon], { ...MARKER_STYLE, color, fillColor: color })
         .bindPopup(popupFor(row))
-        .on('click', () => setActiveListRow(row))
+        .on('click', () => setActiveRow(row, true))
         .addTo(markerLayer);
       markersByRow.set(row, marker);
     });
-    if (placed.length) {
-      map.fitBounds(L.latLngBounds(placed.map(r => [+r.dataset.lat, +r.dataset.lon])), { padding: [40, 40], maxZoom: 14 });
-    } else {
-      map.setView(OSLO_CENTER, 11);
+    if (fit) {
+      if (placed.length) {
+        map.fitBounds(L.latLngBounds(placed.map(r => [+r.dataset.lat, +r.dataset.lon])), { padding: [40, 40], maxZoom: 14 });
+      } else {
+        map.setView(OSLO_CENTER, 11);
+      }
     }
     renderStrip(unplaced);
-    renderMapList();
+  }
+
+  // "Bare i kartutsnittet": hide rows whose marker is outside the map view (and rows without one)
+  function applyViewport() {
+    const on = activeView === 'map' && map && inViewOnly.checked;
+    const bounds = on ? map.getBounds() : null;
+    toolRows.forEach(row => {
+      const marker = markersByRow.get(row);
+      row.classList.toggle('out-of-view', !!on && !(marker && bounds.contains(marker.getLatLng())));
+    });
+    renderCounts();
+  }
+
+  function renderCounts() {
+    const isVisible = r => !r.classList.contains('hidden') && !r.classList.contains('out-of-view');
+    const visible = [...toolRows].filter(isVisible).length;
+    const byDay = activeFilter === 'week';
+    headers.forEach(header => {
+      const cat = header.dataset.category;
+      header.classList.toggle('hidden', byDay || ![...toolRows].some(r => r.dataset.category === cat && isVisible(r)));
+    });
+    countEl.textContent = visible + ' ' + t(visible === 1 ? 'entry' : 'entries');
   }
 
   async function setView(view) {
     activeView = view === 'map' ? 'map' : 'list';
     viewBtns.forEach(b => b.classList.toggle('selected', b.dataset.view === activeView));
-    toolTable.classList.toggle('hidden', activeView === 'map');
     mapViewEl.classList.toggle('hidden', activeView !== 'map');
+    document.body.classList.toggle('map-mode', activeView === 'map');
     mapNote.classList.add('hidden');
+    closeDropdowns();
     updateURL();
-    if (activeView !== 'map') return;
+    if (activeView !== 'map') {
+      toolRows.forEach(r => r.classList.remove('out-of-view'));
+      setActiveRow(null);
+      renderCounts();
+      return;
+    }
     try {
       await loadLeaflet();
     } catch {
@@ -572,12 +672,15 @@ bilingual: true
       // DPS areas sit in their own pane, under the markers
       map.createPane('dps').style.zIndex = 350;
       markerLayer = L.layerGroup().addTo(map);
-      map.on('moveend', renderMapList);   // the list follows the map's zoom and position
+      map.on('moveend', applyViewport);
       loadDpsAreas();
     }
     map.invalidateSize();
-    renderMarkers();
+    renderMarkers(true);
+    applyViewport();
   }
+
+  inViewOnly.addEventListener('change', applyViewport);
 
   // ── DPS catchment areas (assets/data/dps-oslo.geojson, from SSB) ──
   // KLASS gives health trust names in capitals; Norwegian uses sentence case ("Oslo universitetssykehus HF")
@@ -667,7 +770,7 @@ bilingual: true
 
   viewBtns.forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
   // Marker and DPS outline ink follows the theme
-  darkQuery.addEventListener('change', () => { renderMarkers(); styleDps(); });
+  darkQuery.addEventListener('change', () => { renderMarkers(false); styleDps(); });
 
   function updateURL() {
     const params = new URLSearchParams();
@@ -682,60 +785,65 @@ bilingual: true
     history.replaceState(null, '', str ? '?' + str : window.location.pathname);
   }
 
+  // Put rows in the given order; with headers, each category's header goes before its first row
+  function reorder(rows, withHeaders) {
+    const seenCats = new Set();
+    for (const row of rows) {
+      const cat = row.dataset.category;
+      if (withHeaders && !seenCats.has(cat)) {
+        const header = [...headers].find(h => h.dataset.category === cat);
+        if (header) tbody.appendChild(header);
+        seenCats.add(cat);
+      }
+      tbody.appendChild(row);
+    }
+  }
+
   function applyFilters() {
-    const q         = search.value.toLowerCase().trim();
-    const isNewView = activeFilter === 'new';
+    const q          = search.value.toLowerCase().trim();
+    const isNewView  = activeFilter === 'new';
+    const isWeekView = activeFilter === 'week';
 
     toolTable.classList.toggle('show-dates', isNewView);
+    toolTable.classList.toggle('show-when', isWeekView);
 
-    let recent = null;
+    let selected = null;
     if (isNewView) {
       const sorted = [...toolRows]
         .filter(r => r.dataset.added)
         .sort((a, b) => new Date(b.dataset.added) - new Date(a.dataset.added))
         .slice(0, 25);
-      recent = new Set(sorted);
-
-      // Reorder DOM: place section header then entries in date-descending order
-      const seenCats = new Set();
-      for (const row of sorted) {
-        const cat = row.dataset.category;
-        if (!seenCats.has(cat)) {
-          const header = [...headers].find(h => h.dataset.category === cat);
-          if (header) tbody.appendChild(header);
-          seenCats.add(cat);
-        }
-        tbody.appendChild(row);
-      }
+      selected = new Set(sorted);
+      reorder(sorted, true);
+    } else if (isWeekView) {
+      // Activities that run this week, by day and then start time
+      const sorted = [...toolRows]
+        .map(r => [r, occurrenceThisWeek(r)])
+        .filter(([, d]) => d)
+        .sort(([a, da], [b, db]) => da - db || (a.dataset.narFra || '').localeCompare(b.dataset.narFra || ''))
+        .map(([r]) => r);
+      selected = new Set(sorted);
+      originalOrder.forEach(el => tbody.appendChild(el));
+      reorder(sorted, false);
     } else {
       originalOrder.forEach(el => tbody.appendChild(el));
     }
 
     const allowed = activeSubFilter ? [activeSubFilter] : groups[activeFilter] || [activeFilter];
 
-    let visible = 0;
     toolRows.forEach(row => {
-      const pillMatch = isNewView                 ? recent.has(row)
+      const pillMatch = selected                  ? selected.has(row)
                       : activeFilter === 'akutt'  ? row.dataset.akutt === 'true'
                       : activeFilter === 'all'    ? true
                       : allowed.includes(row.dataset.category);
       const textMatch = !q || row.dataset.name.includes(q) || row.dataset.desc.includes(q);
       const show = pillMatch && textMatch && Object.keys(colFilters).every(key => matchesCol(row, key));
       row.classList.toggle('hidden', !show);
-      if (show) visible++;
     });
 
-    headers.forEach(header => {
-      const cat = header.dataset.category;
-      const hasVisible = [...toolRows].some(
-        r => r.dataset.category === cat && !r.classList.contains('hidden')
-      );
-      header.classList.toggle('hidden', !hasVisible);
-    });
-
-    countEl.textContent = visible + ' ' + t(visible === 1 ? 'entry' : 'entries');
     updateURL();
-    renderMarkers();
+    renderMarkers(true);
+    applyViewport();
   }
 
   function showSubPills(filter) {

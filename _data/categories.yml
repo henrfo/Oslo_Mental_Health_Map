@@ -32,3 +32,7 @@
 - id: brukerorganisasjoner
   name: { nb: Brukerorganisasjoner, en: User organisations }
   group: ressurser
+
+- id: aktivitet
+  name: { nb: Aktivitet og fellesskap, en: Activity and community }
+  group: ressurser

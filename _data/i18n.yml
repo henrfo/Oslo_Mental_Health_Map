@@ -9,6 +9,7 @@ view_label:       { nb: Visning, en: View }
 view_list:        { nb: Liste, en: List }
 view_map:         { nb: Kart, en: Map }
 all:              { nb: Alle, en: All }
+this_week:        { nb: Denne uken, en: This week }
 recent:           { nb: Nylig lagt til, en: Recently added }
 akutt:            { nb: Akutt, en: Acute }
 fagstoff:         { nb: Fagstoff, en: Guidance }
@@ -23,9 +24,13 @@ checked:          { nb: sjekket, en: checked }
 contribute_gh:    { nb: Bidra på GitHub, en: Contribute on GitHub }
 col_name:         { nb: Navn, en: Name }
 col_desc:         { nb: Beskrivelse, en: Description }
+col_when:         { nb: Når, en: When }
 col_added:        { nb: Lagt til, en: Added }
 col_tilstand:     { nb: Tilstand, en: Condition }
 col_bydel:        { nb: Bydel, en: District }
+col_dps:          { nb: DPS-område, en: DPS area }
+dekker_note:      { nb: "Bydelene tilbudet dekker, ikke hvor det ligger.", en: "The districts the service covers, not where it is." }
+dps_note:         { nb: "DPS-området tilbudet dekker, fra SSBs opptaksområder.", en: "The DPS catchment area the service covers, from SSB." }
 col_malgruppe:    { nb: Målgruppe, en: Target group }
 col_henvisning:   { nb: Henvisning, en: Referral }
 henvisning_note:  { nb: Om det trengs henvisning for å få tilgang., en: Whether a referral is needed to get access. }
@@ -34,9 +39,6 @@ answer_no:        { nb: Nei, en: "No" }
 verified:         { nb: Info bekreftet, en: Info verified }
 panel_title:      { nb: Uten fast adresse, en: No fixed address }
 panel_empty:      { nb: Ingen tilbud uten fast adresse i dette utvalget., en: No services without a fixed address in this selection. }
-list_title:       { nb: I kartutsnittet, en: In this map view }
-list_empty:       { nb: Ingen tilbud i dette kartutsnittet., en: No services in this map view. }
-list_more:        { nb: Vis flere, en: Show more }
 strip_more:       { nb: "+ {n} til", en: "+ {n} more" }
 strip_less:       { nb: Vis færre, en: Show fewer }
 dps_layer:        { nb: DPS-områder, en: DPS areas }
@@ -44,3 +46,8 @@ dps_outside:      { nb: utenfor Oslo, en: outside Oslo }
 map_error:        { nb: Kartet kunne ikke lastes. Sjekk tilkoblingen og prøv igjen., en: The map could not be loaded. Check your connection and try again. }
 footer_akutt:     { nb: Akutt hjelp, en: Emergency }
 footer_legevakt:  { nb: Legevakt, en: Out-of-hours (legevakt) }
+weekly:           { nb: ukentlig, en: weekly }
+biweekly:         { nb: annenhver uke, en: every other week }
+season:           { nb: Sesong, en: Season }
+source:           { nb: kilde, en: source }
+in_view_only:     { nb: Bare i kartutsnittet, en: Only in the current map view }

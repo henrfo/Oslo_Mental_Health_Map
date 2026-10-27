@@ -1,10 +1,11 @@
 - name: Bipolarforeningen Norge
   description:
-    nb: Medlemsorganisasjon for personer med bipolar lidelse og pårørende, med åpne treff i Oslo, kurs og samtaletjenester.
-    en: Member organisation for people with bipolar disorder and their families, with open meetings in Oslo, courses and support calls.
+    nb: "Brukerorganisasjon for personer med bipolar lidelse og pårørende, med åpne treff i Oslo."
+    en: "User organisation for people with bipolar disorder and their families, with open meetings in Oslo."
   tilstand: [bipolar]
   malgruppe: [voksne, parorende]
-  bydel: Hele Oslo
+  bydel: Grünerløkka         # location
+  dekker: [Hele Oslo]
   address: Christian Krohgs gate 10, 0186 Oslo   # Frivillighetens Hus
   lat: 59.91467
   lon: 10.75842
@@ -14,11 +15,11 @@
 
 - name: ADHD Norge
   description:
-    nb: Frivillig medlemsorganisasjon innen psykisk helse, med likepersoner, kurs og fylkeslag i Oslo.
-    en: Voluntary member organisation in mental health, with peer supporters, courses and an Oslo branch.
+    nb: "Brukerorganisasjon for personer med ADHD og familier, med likepersoner og kurs."
+    en: "User organisation for people with ADHD and their families, with peer supporters and courses."
   tilstand: [adhd]
   malgruppe: [alle]
-  bydel: Hele Oslo
+  dekker: [Hele Oslo]
   # address: VERIFY – sources disagree (Storgata 10A vs Rådhusgata 30); left out
   website: https://www.adhdnorge.no
   last_verified: 2026-10-27

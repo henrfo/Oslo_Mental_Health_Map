@@ -1,10 +1,11 @@
 - name: Voksenpsykiatrisk avdeling Vinderen (Diakonhjemmet)
   description:
-    nb: DPS og sykehusfunksjon for voksne, med poliklinikker, døgnenheter og akuttpsykiatrisk døgnenhet.
-    en: DPS and hospital psychiatry for adults, with outpatient clinics, inpatient units and an acute psychiatric ward.
+    nb: "DPS for voksne i Frogner, Ullern og Vestre Aker, med poliklinikk, døgn og akuttpost."
+    en: "Adult DPS for Frogner, Ullern and Vestre Aker, with outpatient, inpatient and acute care."
   tilstand: [generelt]
   malgruppe: [voksne]
-  bydel: Vestre Aker          # serves Frogner, Ullern, Vestre Aker
+  bydel: Vestre Aker          # location
+  dps: D48                    # dekker comes from SSB's catchment area (Frogner, Ullern, Vestre Aker)
   address: Forskningsveien 7, 0373 Oslo
   lat: 59.94221
   lon: 10.71283
@@ -17,11 +18,11 @@
 - name: Nic Waals Institutt (Lovisenberg)
   draft: true                 # VERIFY address before publishing
   description:
-    nb: Poliklinikk for barn og unges psykiske helse (BUP), 0–18 år, for Gamle Oslo, Grünerløkka og St. Hanshaugen.
-    en: Child and adolescent mental health outpatient clinic (BUP), ages 0–18, for Gamle Oslo, Grünerløkka and St. Hanshaugen.
+    nb: "BUP for barn og unge 0–18 år i Gamle Oslo, Grünerløkka og St. Hanshaugen."
+    en: "Child and adolescent mental health service (BUP), ages 0–18, for Gamle Oslo, Grünerløkka and St. Hanshaugen."
   tilstand: [generelt]
   malgruppe: [barn, ungdom]
-  bydel: St. Hanshaugen
+  dekker: [Gamle Oslo, Grünerløkka, St. Hanshaugen]
   # address: VERIFY – Spångbergveien 25 geocodes to Tåsen (Nordre Aker), not St. Hanshaugen;
   #          job ads list Lovisenberggata 17 (St. Hanshaugen: 59.93335, 10.74691)
   henvisning: true

@@ -1,11 +1,11 @@
 - name: LINK Oslo – senter for selvhjelp og mestring
   draft: true                 # VERIFY address and website before publishing
   description:
-    nb: Selvhjelpshus for Oslos innbyggere med gratis samtale- og mestringsgrupper.
-    en: Self-help centre for Oslo residents, with free peer conversation and coping groups.
+    nb: "Selvhjelpssenter med gratis samtale- og mestringsgrupper for alle i Oslo."
+    en: "Self-help centre with free peer conversation and coping groups for anyone in Oslo."
   tilstand: [generelt]
   malgruppe: [voksne]
-  bydel: Hele Oslo
+  dekker: [Hele Oslo]
   # address: VERIFY – not found in sources; add from LINK Oslo's own site
   henvisning: false
   akutt: false
@@ -14,30 +14,30 @@
   date_added: 2026-10-27
 
 - name: Mental Helse Oslo
-  draft: true                 # VERIFY website URL before publishing
   description:
-    nb: Fylkeslaget til Mental Helse, med lavterskel møteplasser, samtalegrupper og aktiviteter.
-    en: Oslo branch of Mental Helse, with low-threshold meeting places, conversation groups and activities.
+    nb: "Brukerorganisasjonens Oslo-lag, med åpent hus, samtalegrupper og ukentlige aktiviteter."
+    en: "The Oslo branch of the user organisation, with open house, conversation groups and weekly activities."
   tilstand: [generelt]
   malgruppe: [voksne, parorende]
-  bydel: Hele Oslo
+  bydel: St. Hanshaugen      # location
+  dekker: [Hele Oslo]
   address: Arbeidersamfunnets plass 1, 0181 Oslo
   lat: 59.91552
   lon: 10.75180
   phone: "940 65 739"
   henvisning: false
   akutt: false
-  website: https://mentalhelse.no/oslo   # VERIFY exact URL
+  website: https://mentalhelse.no/oslo/
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
 - name: Sober Norge
   description:
-    nb: Sosial plattform med rusfrie arrangementer og aktiviteter i Oslo, et alternativ til drikkekulturen.
-    en: Social platform with alcohol- and drug-free events and activities in Oslo, an alternative to drinking culture.
+    nb: "Rusfrie sosiale arrangementer i Oslo for deg som vil være med uten alkohol."
+    en: "Alcohol-free social events in Oslo for anyone who wants to join in without drinking."
   tilstand: [rus]
   malgruppe: [voksne]
-  bydel: Hele Oslo
+  dekker: [Hele Oslo]
   henvisning: false
   akutt: false
   website: https://sobernorge.no
@@ -45,15 +45,14 @@
   date_added: 2026-10-27
 
 - name: LivsGnist (Mental Helse)
-  draft: true                 # VERIFY – needs the exact LivsGnist page URL on mentalhelse.no
   description:
-    nb: Lavterskel turtilbud i naturen for deg som ønsker fellesskap og en enkel vei ut på tur.
-    en: Low-threshold outdoor walks for people who want company and an easy way to get outside.
+    nb: "Lavterskel naturturer med frivillige turledere, for deg som vil ha selskap ute."
+    en: "Low-threshold nature walks with volunteer guides, for anyone who wants company outdoors."
   tilstand: [generelt]
   malgruppe: [voksne]
-  bydel: Hele Oslo
+  dekker: [Hele Oslo]
   henvisning: false
   akutt: false
-  website: https://mentalhelse.no   # VERIFY – replace with the LivsGnist page
+  website: https://mentalhelse.no/vart-arbeid/prosjekter/livsgnist-naturen-som-moteplass/
   last_verified: 2026-10-27
   date_added: 2026-10-27

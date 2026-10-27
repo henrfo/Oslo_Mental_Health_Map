@@ -1,0 +1,8 @@
+- name: Frivillig.no
+  description:
+    nb: "Oversikt over frivillige oppdrag i Oslo, nyttig for pasienter som trenger aktivitet."
+    en: "Listing of volunteer roles in Oslo, useful for patients who need activity."
+  dekker: [Hele Oslo]
+  website: https://frivillig.no
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

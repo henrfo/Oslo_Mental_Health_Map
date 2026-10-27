@@ -1,7 +1,7 @@
 - name: Norsk forening for kognitiv atferdsterapi (NFKT)
   description:
-    nb: Videreutdanninger i kognitiv atferdsterapi for helsepersonell, med kurslokale i Oslo.
-    en: Further training in cognitive behavioural therapy for health professionals, with a course venue in Oslo.
+    nb: "Videreutdanninger i kognitiv atferdsterapi for helsepersonell."
+    en: "Further training in cognitive behavioural therapy for health professionals."
   address: Torggata 10, Oslo    # Oslo course venue; head office is in Hønefoss
   lat: 59.91425
   lon: 10.74803
