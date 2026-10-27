@@ -8,17 +8,17 @@ bilingual: true
   <div class="site-header-row">
     <div class="site-header-left">
       <h1 class="site-title"><span class="title-dot"></span><a href="{{ '/' | relative_url }}">Oslo Mental Health Map</a></h1>
-      <p class="site-subtitle">{% include t.html k="tagline" %}</p>
     </div>
     <nav class="site-nav">
       <a href="{{ '/contribute/' | relative_url }}">{% include t.html k="nav_suggest" %}</a>
       <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">{% include t.html k="nav_pending" %}</a>
+      <a href="{{ '/about/' | relative_url }}">{% include t.html k="nav_about" %}</a>
       <span class="lang-toggle" role="group" aria-label="Language">
         <button class="lang-btn" data-set-lang="nb" lang="nb">NO</button><button class="lang-btn" data-set-lang="en" lang="en">EN</button>
       </span>
-      <a href="{{ '/about/' | relative_url }}">{% include t.html k="nav_about" %}</a>
     </nav>
   </div>
+  <p class="site-subtitle">{% include t.html k="description" %} — {% include t.html k="tagline" %}</p>
 </header>
 
 <div class="controls">
@@ -171,12 +171,11 @@ bilingual: true
 </table>
 
 <div id="map-view" class="map-view hidden">
+  <div class="no-address-strip">
+    <span class="strip-label">{% include t.html k="panel_title" %}</span>
+    <span id="strip-chips" class="strip-chips"></span>
+  </div>
   <div id="map" class="map" aria-label="Map of entries"></div>
-  <aside class="map-panel">
-    <h2 class="map-panel-title">{% include t.html k="panel_title" %} <span id="map-panel-count"></span></h2>
-    <p class="map-panel-sub">{% include t.html k="panel_sub" %}</p>
-    <ul id="map-panel-list" class="map-panel-list"></ul>
-  </aside>
 </div>
 <p id="map-note" class="map-note hidden"></p>
 
@@ -336,8 +335,7 @@ bilingual: true
   const mapViewEl   = document.getElementById('map-view');
   const mapEl       = document.getElementById('map');
   const mapNote     = document.getElementById('map-note');
-  const panelList   = document.getElementById('map-panel-list');
-  const panelCount  = document.getElementById('map-panel-count');
+  const stripChips  = document.getElementById('strip-chips');
   const darkQuery   = window.matchMedia('(prefers-color-scheme: dark)');
   let activeView  = 'list';
   let map         = null;
@@ -388,18 +386,41 @@ bilingual: true
     return el;
   }
 
-  function panelItemFor(row) {
-    const li = document.createElement('li');
-    li.appendChild(row.querySelector('.tool-name a').cloneNode(true));
-    const akutt = row.querySelector('.akutt-tag');
-    if (akutt) li.append(' ', akutt.cloneNode(true));
+  // Entries without an address go in a strip above the map, as small chips (name + phone)
+  const STRIP_COLLAPSED = 6;
+  let stripExpanded = false;
+
+  function stripChipFor(row) {
+    const chip = document.createElement('span');
+    chip.className = 'strip-chip' + (row.dataset.akutt === 'true' ? ' strip-chip-akutt' : '');
+    chip.title = [categoryLabel(row), row.dataset.bydel].filter(Boolean).join(' · ');
+    chip.appendChild(row.querySelector('.tool-name a').cloneNode(true));
     const phone = row.querySelector('.tool-phone');
-    if (phone) li.append(' ', phone.cloneNode(true));
-    const meta = document.createElement('div');
-    meta.className = 'map-panel-meta';
-    meta.textContent = [categoryLabel(row), row.dataset.bydel].filter(Boolean).join(' · ');
-    li.appendChild(meta);
-    return li;
+    if (phone) chip.append(' ', phone.cloneNode(true));
+    return chip;
+  }
+
+  function renderStrip(unplaced) {
+    stripChips.innerHTML = '';
+    if (!unplaced.length) {
+      const empty = document.createElement('span');
+      empty.className = 'strip-empty';
+      empty.textContent = t('panel_empty');
+      stripChips.appendChild(empty);
+      return;
+    }
+    const collapsible = unplaced.length > STRIP_COLLAPSED + 1;
+    const visible = collapsible && !stripExpanded ? unplaced.slice(0, STRIP_COLLAPSED) : unplaced;
+    visible.forEach(row => stripChips.appendChild(stripChipFor(row)));
+    if (collapsible) {
+      const toggle = document.createElement('button');
+      toggle.className = 'strip-toggle';
+      toggle.textContent = stripExpanded
+        ? t('strip_less')
+        : t('strip_more').replace('{n}', unplaced.length - STRIP_COLLAPSED);
+      toggle.addEventListener('click', () => { stripExpanded = !stripExpanded; renderStrip(unplaced); });
+      stripChips.appendChild(toggle);
+    }
   }
 
   function renderMarkers() {
@@ -420,15 +441,7 @@ bilingual: true
     } else {
       map.setView(OSLO_CENTER, 11);
     }
-    panelList.innerHTML = '';
-    unplaced.forEach(row => panelList.appendChild(panelItemFor(row)));
-    if (!unplaced.length) {
-      const empty = document.createElement('li');
-      empty.className = 'map-panel-empty';
-      empty.textContent = t('panel_empty');
-      panelList.appendChild(empty);
-    }
-    panelCount.textContent = unplaced.length ? `(${unplaced.length})` : '';
+    renderStrip(unplaced);
   }
 
   async function setView(view) {

@@ -1,9 +1,10 @@
 # Interface strings for the NO | EN switch. Data text (descriptions, value
 # labels, category names) carries its own nb/en and is not listed here.
-tagline:          { nb: "Du kan ikke henvise til et tilbud du ikke vet finnes.", en: "You can't refer to a service you don't know exists." }
+tagline:          { nb: "du kan ikke henvise til et tilbud du ikke vet finnes.", en: "you can't refer to a service you don't know exists." }
+description:      { nb: "En oversikt over psykiske helsetilbud i Oslo, for helsepersonell", en: "An overview of mental health services in Oslo, for health professionals" }
 nav_suggest:      { nb: Foreslå tilbud eller endring, en: Suggest an offer or edit }
-nav_pending:      { nb: Ventende forslag, en: Pending suggestions }
-nav_about:        { nb: Om, en: About }
+nav_pending:      { nb: Innsendte forslag, en: Submitted suggestions }
+nav_about:        { nb: Om prosjektet, en: About }
 view_label:       { nb: Visning, en: View }
 view_list:        { nb: Liste, en: List }
 view_map:         { nb: Kart, en: Map }
@@ -15,8 +16,8 @@ ressurser:        { nb: Ressurser, en: Resources }
 search:           { nb: Søk…, en: Search… }
 entry:            { nb: oppføring, en: entry }
 entries:          { nb: oppføringer, en: entries }
-link_active:      { nb: Lenke aktiv, en: Link active }
-link_broken:      { nb: Lenke brutt, en: Link broken }
+link_active:      { nb: Aktiv lenke, en: Link active }
+link_broken:      { nb: Brutt lenke, en: Link broken }
 link_unchecked:   { nb: Lenke ikke sjekket siste 30 dager, en: Link not checked in the last 30 days }
 checked:          { nb: sjekket, en: checked }
 contribute_gh:    { nb: Bidra på GitHub, en: Contribute on GitHub }
@@ -32,8 +33,9 @@ answer_yes:       { nb: Ja, en: "Yes" }
 answer_no:        { nb: Nei, en: "No" }
 verified:         { nb: Info bekreftet, en: Info verified }
 panel_title:      { nb: Uten fast adresse, en: No fixed address }
-panel_sub:        { nb: "Telefon, nett og tilbud for hele Oslo.", en: "Phone, online and city-wide services." }
-panel_empty:      { nb: Ingen i dette utvalget., en: None in this selection. }
+panel_empty:      { nb: Ingen tilbud uten fast adresse i dette utvalget., en: No services without a fixed address in this selection. }
+strip_more:       { nb: "+ {n} til", en: "+ {n} more" }
+strip_less:       { nb: Vis færre, en: Show fewer }
 map_error:        { nb: Kartet kunne ikke lastes. Sjekk tilkoblingen og prøv igjen., en: The map could not be loaded. Check your connection and try again. }
 footer_akutt:     { nb: Akutt hjelp, en: Emergency }
 footer_legevakt:  { nb: Legevakt, en: Out-of-hours (legevakt) }
