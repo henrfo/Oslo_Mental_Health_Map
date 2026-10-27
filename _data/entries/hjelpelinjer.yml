@@ -22,7 +22,8 @@
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
-- name: "Kors på halsen (Røde Kors)"
+- name: "Kors på halsen"
+  full_name: "Kors på halsen (Røde Kors)"
   description:
     nb: "Gratis, anonym chat for barn og unge."
     en: "Free, anonymous chat for children and young people."
@@ -33,7 +34,8 @@
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
-- name: "Mental Helse Ungdom chat"
+- name: "Mental Helse Ungdom"
+  full_name: "Mental Helse Ungdom chat"
   description:
     nb: "Chat for unge om psykisk helse."
     en: "Chat for young people about mental health."
@@ -56,7 +58,8 @@
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
-- name: "Pårørendetelefonen (Ivareta)"
+- name: "Pårørendetelefonen"
+  full_name: "Pårørendetelefonen (Ivareta)"
   description:
     nb: "Hjelpelinje for pårørende og etterlatte."
     en: "Helpline for families, friends and the bereaved."

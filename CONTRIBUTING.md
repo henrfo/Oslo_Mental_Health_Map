@@ -38,7 +38,8 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
 | `brukerorganisasjoner.yml` | Brukerorganisasjoner: user and patient organisations |
 
 ```yaml
-- name: Example Service                   # required. Official name, untranslated
+- name: Example Service                   # required. Short display name, one line (about 22 characters)
+  full_name: Example Service for Everyone # optional. The full official name; shown on hover and searchable
   description:                            # required. Exactly one sentence: what it is and who it's for
     nb: Samtaletilbud for unge mellom 16 og 25 år.
     en: Counselling for young people aged 16 to 25.

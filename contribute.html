@@ -86,6 +86,7 @@ bilingual: true
     {% assign cat_tools = site.data.entries[cat.id] %}
     {% for tool in cat_tools %}
     { name: {{ tool.name | jsonify }}, url: {{ tool.website | jsonify }} },
+    {% if tool.full_name %}{ name: {{ tool.full_name | jsonify }}, url: {{ tool.website | jsonify }} },{% endif %}
     {% endfor %}
     {% endfor %}
   ];

@@ -36,6 +36,8 @@ Dir[File.join(ROOT, '_data/entries/*.yml')].sort.each do |file|
 
     %w[name website date_added last_verified].each { |k| bad.("missing #{k}") unless e[k] }
     bad.('website should start with https://') if e['website'] && !e['website'].to_s.start_with?('https://')
+    # Names show on one line in a ~170px column; long official names go in full_name (shown on hover)
+    bad.("name is #{e['name'].to_s.length} characters; use a short name (about 22) and put the full name in full_name") if e['name'].to_s.length > 26
 
     # Description: both languages, exactly one sentence each
     d = e['description']

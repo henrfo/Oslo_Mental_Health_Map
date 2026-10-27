@@ -79,15 +79,6 @@ bilingual: true
       <th class="col-desc-th">{% include t.html k="col_desc" %}</th>
       <th class="col-date">{% include t.html k="col_added" %}</th>
       <th class="col-when">{% include t.html k="col_when" %}</th>
-      <th class="col-th" data-key="tilstand">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span>&nbsp;▾</button>
-        <div class="col-dropdown">
-          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
-          {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
-          <button class="col-option" data-value="{{ t.id }}">{% include t.html nb=t.nb en=t.en %}</button>
-          {%- endunless %}{% endfor %}
-        </div>
-      </th>
       <th class="col-th" data-key="bydel">
         <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_bydel" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
@@ -124,6 +115,15 @@ bilingual: true
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           <button class="col-option" data-value="ja">{% include t.html k="answer_yes" %}</button>
           <button class="col-option" data-value="nei">{% include t.html k="answer_no" %}</button>
+        </div>
+      </th>
+      <th class="col-th" data-key="tilstand">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span>&nbsp;▾</button>
+        <div class="col-dropdown">
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
+          {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
+          <button class="col-option" data-value="{{ t.id }}">{% include t.html nb=t.nb en=t.en %}</button>
+          {%- endunless %}{% endfor %}
         </div>
       </th>
     </tr>
@@ -183,7 +183,7 @@ bilingual: true
           {%- endcapture -%}
           <tr class="{% if health.status == 'broken' %}inactive{% endif %}"
               data-category="{{ cat.id }}"
-              data-name="{{ tool.name | downcase }}"
+              data-name="{{ tool.name | downcase }}{% if tool.full_name %} {{ tool.full_name | downcase }}{% endif %}"
               data-desc="{{ tool.description.nb | downcase }} {{ tool.description.en | downcase }}"
               data-added="{{ tool.date_added }}"
               data-verified="{{ tool.last_verified }}"
@@ -202,7 +202,7 @@ bilingual: true
               {% if tool.lat and tool.lon %}data-lat="{{ tool.lat }}" data-lon="{{ tool.lon }}" data-address="{{ tool.address }}"{% endif %}>
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
-              <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
+              <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer"{% if tool.full_name %} title="{{ tool.full_name }}"{% endif %}>{{ tool.name }}</a>
               {%- if tool.akutt %} <span class="akutt-tag">{% include t.html k="akutt" %}</span>{% endif %}
               {%- if health.status == 'broken' %} <span class="broken-tag">{% include t.html k="link_broken" %}</span>{% endif %}
               <span class="tool-sub">{% include t.html nb=cat.name.nb en=cat.name.en %}
@@ -214,11 +214,11 @@ bilingual: true
             </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
             <td class="col-when"></td>
-            <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
             <td class="col-cell col-wrap col-short">{% if dekker contains 'Hele Oslo' %}{% include t.html k="hele_oslo" %}{% else %}{% for b in dekker %}<span class="val">{{ b }}</span>{% endfor %}{% endif %}</td>
             <td class="col-cell col-wrap col-short">{{ dps_names }}</td>
             <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
             <td class="col-cell col-short">{% if tool.henvisning == true %}{% include t.html k="answer_yes" %}{% elsif tool.henvisning == false %}{% include t.html k="answer_no" %}{% endif %}</td>
+            <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
           </tr>
         {% endfor %}
       {% endif %}

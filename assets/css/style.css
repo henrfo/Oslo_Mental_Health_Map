@@ -679,10 +679,10 @@ html[data-lang="nb"] .l-en {
   color: var(--muted);
 }
 
-/* Column widths: dot 24px, name ~18%, description ~30%; the five short
+/* Column widths: dot 24px, name ~20%, description ~28%; the five short
    columns (and Lagt til / Når when shown) share the rest equally */
-.tool-table th.col-name-th { width: 18%; }
-.tool-table th.col-desc-th { width: 30%; }
+.tool-table th.col-name-th { width: 20%; }
+.tool-table th.col-desc-th { width: 28%; }
 
 /* With a fixed layout a display:none header still reserves its column, so the
    optional Lagt til / Når columns stay in the table at zero width until shown

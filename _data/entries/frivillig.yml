@@ -1,4 +1,5 @@
-- name: LINK Oslo – senter for selvhjelp og mestring
+- name: "LINK Oslo"
+  full_name: "LINK Oslo – senter for selvhjelp og mestring"
   description:
     nb: "Selvhjelpssenter med gratis samtale- og mestringsgrupper for alle i Oslo."
     en: "Self-help centre with free peer conversation and coping groups for anyone in Oslo."
@@ -82,7 +83,8 @@
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
-- name: "Pårørendesenteret i Oslo (PIO)"
+- name: "PIO-senteret"
+  full_name: "Pårørendesenteret i Oslo (PIO)"
   description:
     nb: "Råd, kurs og grupper for pårørende."
     en: "Advice, courses and groups for families and friends."

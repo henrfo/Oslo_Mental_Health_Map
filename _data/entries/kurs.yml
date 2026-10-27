@@ -1,4 +1,5 @@
-- name: Norsk forening for kognitiv atferdsterapi (NFKT)
+- name: "NFKT"
+  full_name: "Norsk forening for kognitiv atferdsterapi (NFKT)"
   description:
     nb: "Videreutdanninger i kognitiv atferdsterapi for helsepersonell."
     en: "Further training in cognitive behavioural therapy for health professionals."

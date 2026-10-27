@@ -1,4 +1,5 @@
-- name: NKVTS – Nasjonalt kunnskapssenter om vold og traumatisk stress
+- name: "NKVTS"
+  full_name: "NKVTS – Nasjonalt kunnskapssenter om vold og traumatisk stress"
   description:
     nb: "Nasjonalt kunnskapssenter om vold og traumer, med kurs, e-læring og veiledere."
     en: "National centre on violence and trauma, with courses, e-learning and clinical guides."
