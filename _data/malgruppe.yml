@@ -3,5 +3,5 @@
 - { id: ungdom,    nb: Ungdom,    en: Youth }
 - { id: voksne,    nb: Voksne,    en: Adults }
 - { id: eldre,     nb: Eldre,     en: Older adults }
-- { id: parorende, nb: Pårørende, en: Next of kin }
+- { id: parorende, nb: Pårørende, en: Families }
 - { id: alle,      nb: Alle,      en: Everyone }
