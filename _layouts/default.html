@@ -1,8 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{% if page.bilingual %}nb{% else %}en{% endif %}"{% if page.bilingual %} data-lang="nb"{% endif %}>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {%- if page.bilingual %}
+  <script>
+    // Pick the language before first paint: ?lang= wins, then the saved choice, else Norwegian
+    (function() {
+      let lang = new URLSearchParams(location.search).get('lang');
+      if (!lang) { try { lang = localStorage.getItem('omhm-lang'); } catch (e) {} }
+      lang = lang === 'en' ? 'en' : 'nb';
+      document.documentElement.dataset.lang = lang;
+      document.documentElement.lang = lang;
+    })();
+  </script>
+  {%- endif %}
   <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ site.description }}">
   <meta property="og:title" content="{{ page.title | default: site.title }}">

@@ -1,18 +1,22 @@
 ---
 layout: default
 title: Oslo Mental Health Map
+bilingual: true
 ---
 
 <header>
   <div class="site-header-row">
     <div class="site-header-left">
       <h1 class="site-title"><span class="title-dot"></span><a href="{{ '/' | relative_url }}">Oslo Mental Health Map</a></h1>
-      <p class="site-subtitle">An overview of mental health services in Oslo, for health professionals.</p>
+      <p class="site-subtitle">{% include t.html k="tagline" %}</p>
     </div>
     <nav class="site-nav">
-      <a href="{{ '/contribute/' | relative_url }}">Suggest an offer or edit</a>
-      <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">Pending suggestions</a>
-      <a href="{{ '/about/' | relative_url }}">About</a>
+      <a href="{{ '/contribute/' | relative_url }}">{% include t.html k="nav_suggest" %}</a>
+      <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">{% include t.html k="nav_pending" %}</a>
+      <span class="lang-toggle" role="group" aria-label="Language">
+        <button class="lang-btn" data-set-lang="nb" lang="nb">NO</button><button class="lang-btn" data-set-lang="en" lang="en">EN</button>
+      </span>
+      <a href="{{ '/about/' | relative_url }}">{% include t.html k="nav_about" %}</a>
     </nav>
   </div>
 </header>
@@ -20,54 +24,47 @@ title: Oslo Mental Health Map
 <div class="controls">
   <div class="view-row">
     <div class="view-toggle" role="group" aria-label="View">
-      <button class="view-btn selected" data-view="list">List</button>
-      <button class="view-btn" data-view="map">Map</button>
+      <button class="view-btn selected" data-view="list">{% include t.html k="view_list" %}</button>
+      <button class="view-btn" data-view="map">{% include t.html k="view_map" %}</button>
     </div>
   </div>
   <div class="pills" id="pills">
     <div class="pill-group">
-      <button class="pill selected" data-filter="all">All</button>
-      <button class="pill" data-filter="new">Recently added</button>
+      <button class="pill selected" data-filter="all">{% include t.html k="all" %}</button>
+      <button class="pill" data-filter="new">{% include t.html k="recent" %}</button>
     </div>
     <div class="pill-group pill-group-primary">
       {%- assign services = site.data.categories | where: 'group', 'tjenester' %}
       {%- for cat in services %}
-      <button class="pill" data-filter="{{ cat.id }}">{{ cat.name }}</button>
+      <button class="pill" data-filter="{{ cat.id }}">{% include t.html nb=cat.name.nb en=cat.name.en %}</button>
       {%- endfor %}
-      <button class="pill" data-filter="akutt">Akutt</button>
+      <button class="pill" data-filter="akutt">{% include t.html k="akutt" %}</button>
     </div>
     <div class="pill-group">
-      <button class="pill" data-filter="fagstoff">Fagstoff</button>
-      <button class="pill" data-filter="ressurser">Ressurser</button>
+      <button class="pill" data-filter="fagstoff">{% include t.html k="fagstoff" %}</button>
+      <button class="pill" data-filter="ressurser">{% include t.html k="ressurser" %}</button>
     </div>
   </div>
   <div class="sub-pills" id="sub-pills"></div>
-  <input class="search" id="search" type="search" placeholder="Search…" autocomplete="off">
+  <input class="search" id="search" type="search" placeholder="{{ site.data.i18n.search.nb }}" autocomplete="off">
   <div class="mobile-filter" id="mobile-tilstand">
-    <button class="pill selected" data-value="">All</button>
+    <button class="pill selected" data-value="">{% include t.html k="all" %}</button>
     {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
-    <button class="pill" data-value="{{ t.id }}">{{ t.nb }}</button>
+    <button class="pill" data-value="{{ t.id }}">{% include t.html nb=t.nb en=t.en %}</button>
     {%- endunless %}{% endfor %}
   </div>
 </div>
 
 <div class="meta">
   <div class="meta-left">
-    <span id="tool-count">
-      {%- assign total = 0 -%}
-      {%- for cat in site.data.categories -%}
-        {%- assign tools = site.data.entries[cat.id] -%}
-        {%- if tools -%}{%- assign total = total | plus: tools.size -%}{%- endif -%}
-      {%- endfor -%}
-      {{ total }} {% if total == 1 %}entry{% else %}entries{% endif %}
-    </span>
+    <span id="tool-count"></span>
     <span id="filter-tags"></span>
     <span class="meta-sep">·</span>
-    <span class="legend-item"><span class="dot dot-active"></span> Link active</span>
-    <span class="legend-item"><span class="dot dot-inactive"></span> Link broken</span>
+    <span class="legend-item"><span class="dot dot-active"></span> {% include t.html k="link_active" %}</span>
+    <span class="legend-item"><span class="dot dot-inactive"></span> {% include t.html k="link_broken" %}</span>
   </div>
   <div class="meta-right">
-    <a class="meta-link" href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">Contribute on GitHub</a>
+    <a class="meta-link" href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">{% include t.html k="contribute_gh" %}</a>
   </div>
 </div>
 
@@ -75,43 +72,43 @@ title: Oslo Mental Health Map
   <thead>
     <tr>
       <th aria-label="Link status"></th>
-      <th>Name</th>
-      <th>Description</th>
-      <th class="col-date">Added</th>
-      <th class="col-th" data-key="tilstand" data-title="Tilstand">
-        <button class="col-header-btn"><span class="col-header-label">Tilstand</span> ▾</button>
+      <th>{% include t.html k="col_name" %}</th>
+      <th>{% include t.html k="col_desc" %}</th>
+      <th class="col-date">{% include t.html k="col_added" %}</th>
+      <th class="col-th" data-key="tilstand">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span> ▾</button>
         <div class="col-dropdown">
-          <button class="col-option selected" data-value="">All</button>
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
-          <button class="col-option" data-value="{{ t.id }}">{{ t.nb }}</button>
+          <button class="col-option" data-value="{{ t.id }}">{% include t.html nb=t.nb en=t.en %}</button>
           {%- endunless %}{% endfor %}
         </div>
       </th>
-      <th class="col-th" data-key="bydel" data-title="Bydel">
-        <button class="col-header-btn"><span class="col-header-label">Bydel</span> ▾</button>
+      <th class="col-th" data-key="bydel">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_bydel" %}</span> ▾</button>
         <div class="col-dropdown">
-          <button class="col-option selected" data-value="">All</button>
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           {%- for b in site.data.bydeler %}{% unless b == 'Hele Oslo' %}
           <button class="col-option" data-value="{{ b }}">{{ b }}</button>
           {%- endunless %}{% endfor %}
         </div>
       </th>
-      <th class="col-th" data-key="malgruppe" data-title="Målgruppe">
-        <button class="col-header-btn"><span class="col-header-label">Målgruppe</span> ▾</button>
+      <th class="col-th" data-key="malgruppe">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_malgruppe" %}</span> ▾</button>
         <div class="col-dropdown">
-          <button class="col-option selected" data-value="">All</button>
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           {%- for m in site.data.malgruppe %}{% unless m.id == 'alle' %}
-          <button class="col-option" data-value="{{ m.id }}">{{ m.nb }}</button>
+          <button class="col-option" data-value="{{ m.id }}">{% include t.html nb=m.nb en=m.en %}</button>
           {%- endunless %}{% endfor %}
         </div>
       </th>
-      <th class="col-th" data-key="henvisning" data-title="Henvisning">
-        <button class="col-header-btn"><span class="col-header-label">Henvisning</span> ▾</button>
+      <th class="col-th" data-key="henvisning">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_henvisning" %}</span> ▾</button>
         <div class="col-dropdown">
-          <p class="col-note">Whether a referral is needed to get access.</p>
-          <button class="col-option selected" data-value="">All</button>
-          <button class="col-option" data-value="ja">Ja</button>
-          <button class="col-option" data-value="nei">Nei</button>
+          <p class="col-note">{% include t.html k="henvisning_note" %}</p>
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
+          <button class="col-option" data-value="ja">{% include t.html k="answer_yes" %}</button>
+          <button class="col-option" data-value="nei">{% include t.html k="answer_no" %}</button>
         </div>
       </th>
     </tr>
@@ -121,7 +118,7 @@ title: Oslo Mental Health Map
       {% assign tools = site.data.entries[cat.id] %}
       {% if tools %}
         <tr class="section-header" data-category="{{ cat.id }}">
-          <td colspan="8">{{ cat.name }}</td>
+          <td colspan="8">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
         </tr>
         {% for tool in tools %}
           {% assign hkey = tool.name | slugify %}
@@ -129,13 +126,13 @@ title: Oslo Mental Health Map
           {%- capture tilstand_labels -%}
             {%- for id in tool.tilstand -%}
               {%- assign t = site.data.tilstand | where: 'id', id | first -%}
-              {{ t.nb | default: id }}{% unless forloop.last %}, {% endunless %}
+              {% include t.html nb=t.nb en=t.en %}{% unless forloop.last %}, {% endunless %}
             {%- endfor -%}
           {%- endcapture -%}
           {%- capture malgruppe_labels -%}
             {%- for id in tool.malgruppe -%}
               {%- assign m = site.data.malgruppe | where: 'id', id | first -%}
-              {{ m.nb | default: id }}{% unless forloop.last %}, {% endunless %}
+              {% include t.html nb=m.nb en=m.en %}{% unless forloop.last %}, {% endunless %}
             {%- endfor -%}
           {%- endcapture -%}
           <tr class="{% if health.status == 'broken' %}inactive{% endif %}"
@@ -154,18 +151,18 @@ title: Oslo Mental Health Map
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
-              {%- if tool.akutt %} <span class="akutt-tag">Akutt</span>{% endif %}
+              {%- if tool.akutt %} <span class="akutt-tag">{% include t.html k="akutt" %}</span>{% endif %}
               {%- if tool.phone %} <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}
             </td>
             <td class="tool-desc">
-              {{ tool.description.nb }}
-              {%- if tool.last_verified %}<span class="tool-verified">Info verified {{ tool.last_verified | date: '%b %Y' }}</span>{% endif %}
+              {% include t.html nb=tool.description.nb en=tool.description.en %}
+              {%- if tool.last_verified %}<span class="tool-verified" data-date="{{ tool.last_verified }}"></span>{% endif %}
             </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
             <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
             <td class="col-cell">{{ tool.bydel }}</td>
             <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
-            <td class="col-cell">{% if tool.henvisning == true %}Ja{% elsif tool.henvisning == false %}Nei{% endif %}</td>
+            <td class="col-cell">{% if tool.henvisning == true %}{% include t.html k="answer_yes" %}{% elsif tool.henvisning == false %}{% include t.html k="answer_no" %}{% endif %}</td>
           </tr>
         {% endfor %}
       {% endif %}
@@ -173,10 +170,26 @@ title: Oslo Mental Health Map
   </tbody>
 </table>
 
-<div id="map" class="map hidden" aria-label="Map of entries"></div>
+<div id="map-view" class="map-view hidden">
+  <div id="map" class="map" aria-label="Map of entries"></div>
+  <aside class="map-panel">
+    <h2 class="map-panel-title">{% include t.html k="panel_title" %} <span id="map-panel-count"></span></h2>
+    <p class="map-panel-sub">{% include t.html k="panel_sub" %}</p>
+    <ul id="map-panel-list" class="map-panel-list"></ul>
+  </aside>
+</div>
 <p id="map-note" class="map-note hidden"></p>
 
 <script>
+  // Interface strings (_data/i18n.yml); data text is rendered in both languages and toggled by CSS
+  const I18N = {{ site.data.i18n | jsonify }};
+  let lang = document.documentElement.dataset.lang === 'en' ? 'en' : 'nb';
+  const t = key => I18N[key][lang];
+  const textIn = el => (el.querySelector('.l-' + lang) || el).textContent.trim();
+  const fmtDate = (d, opts) => d.toLocaleDateString(lang === 'nb' ? 'nb-NO' : 'en-GB', opts);
+  const DAY_FORMAT   = { day: 'numeric', month: 'short', year: 'numeric' };
+  const MONTH_FORMAT = { month: 'short', year: 'numeric' };
+
   // Right-side chips expand into sub-pills, one per category in the group
   const groups = {
     fagstoff:  [{% assign cats = site.data.categories | where: 'group', 'fagstoff' %}{% for cat in cats %}'{{ cat.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
@@ -184,38 +197,11 @@ title: Oslo Mental Health Map
   };
 
   const categoryNames = {
-    {% for cat in site.data.categories %}'{{ cat.id }}': '{{ cat.name }}',
+    {% for cat in site.data.categories %}'{{ cat.id }}': {{ cat.name | jsonify }},
     {% endfor %}
   };
 
-  const toolTable = document.querySelector('.tool-table');
-
-  // Pre-populate date cells once on load
-  document.querySelectorAll('.col-date[data-date]').forEach(cell => {
-    const d = new Date(cell.dataset.date);
-    if (!isNaN(d)) {
-      cell.textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-    }
-  });
-
-  // Link status from the link checker (_data/health.yml). "Active" only counts if
-  // the last successful check is under a month old; otherwise the dot stays hollow.
-  const MONTH_MS = 31 * 24 * 60 * 60 * 1000;
-  document.querySelectorAll('#tool-list tr[data-link-status]').forEach(row => {
-    const dot = row.querySelector('.dot');
-    const checked = new Date(row.dataset.linkChecked);
-    const checkedLabel = isNaN(checked) ? '' : ' (checked ' + checked.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ')';
-    if (row.dataset.linkStatus === 'broken') {
-      dot.className = 'dot dot-inactive';
-      dot.title = 'Link broken' + checkedLabel;
-    } else if (row.dataset.linkStatus === 'ok' && Date.now() - checked < MONTH_MS) {
-      dot.className = 'dot dot-active';
-      dot.title = 'Link active' + checkedLabel;
-    } else {
-      dot.title = 'Link not checked this month';
-    }
-  });
-
+  const toolTable     = document.querySelector('.tool-table');
   const mainPills     = document.querySelectorAll('#pills .pill');
   const subPillsEl    = document.getElementById('sub-pills');
   const search        = document.getElementById('search');
@@ -227,6 +213,37 @@ title: Oslo Mental Health Map
   const filterTagsEl  = document.getElementById('filter-tags');
   const colThs        = document.querySelectorAll('.col-th');
   const mobileTilstandBtns = document.querySelectorAll('#mobile-tilstand .pill');
+  const langBtns      = document.querySelectorAll('.lang-btn');
+
+  // Dates and link-status tooltips depend on the language, so they're (re)written here
+  // "Active" only counts if the last successful check is within 30 days; otherwise the dot stays hollow.
+  const LINK_FRESH_MS = 30 * 24 * 60 * 60 * 1000;
+
+  function renderDates() {
+    document.querySelectorAll('.col-date[data-date]').forEach(cell => {
+      const d = new Date(cell.dataset.date);
+      if (!isNaN(d)) cell.textContent = fmtDate(d, DAY_FORMAT);
+    });
+    document.querySelectorAll('.tool-verified[data-date]').forEach(el => {
+      const d = new Date(el.dataset.date);
+      if (!isNaN(d)) el.textContent = t('verified') + ' ' + fmtDate(d, MONTH_FORMAT);
+    });
+    toolRows.forEach(row => {
+      const dot = row.querySelector('.dot');
+      const checked = new Date(row.dataset.linkChecked);
+      const checkedLabel = isNaN(checked) ? '' : ` (${t('checked')} ${fmtDate(checked, DAY_FORMAT)})`;
+      if (row.dataset.linkStatus === 'broken') {
+        dot.className = 'dot dot-inactive';
+        dot.title = t('link_broken') + checkedLabel;
+      } else if (row.dataset.linkStatus === 'ok' && Date.now() - checked < LINK_FRESH_MS) {
+        dot.className = 'dot dot-active';
+        dot.title = t('link_active') + checkedLabel;
+      } else {
+        dot.className = 'dot dot-unknown';
+        dot.title = t('link_unchecked');
+      }
+    });
+  }
 
   // Column filters; an entry tagged with the wildcard value matches every filter of that column
   const colFilters = { tilstand: null, bydel: null, malgruppe: null, henvisning: null };
@@ -241,11 +258,18 @@ title: Oslo Mental Health Map
 
   function optionLabel(key, value) {
     const opt = [...thFor(key).querySelectorAll('.col-option')].find(o => o.dataset.value === value);
-    return opt ? opt.textContent : value;
+    return opt ? textIn(opt) : value;
   }
 
   function closeDropdowns() {
     colThs.forEach(th => th.querySelector('.col-dropdown').classList.remove('open'));
+  }
+
+  function renderColHeaders() {
+    Object.entries(colFilters).forEach(([key, value]) => {
+      thFor(key).querySelector('.col-header-label').textContent =
+        value ? t('col_' + key) + ': ' + optionLabel(key, value) : t('col_' + key);
+    });
   }
 
   function renderFilterTags() {
@@ -254,7 +278,7 @@ title: Oslo Mental Health Map
       if (!value) return;
       const tag = document.createElement('span');
       tag.className = 'filter-tag';
-      tag.textContent = `(${thFor(key).dataset.title.toLowerCase()}: ${optionLabel(key, value)} `;
+      tag.textContent = `(${t('col_' + key).toLowerCase()}: ${optionLabel(key, value)} `;
       const clear = document.createElement('button');
       clear.className = 'filter-clear';
       clear.textContent = '✕';
@@ -267,13 +291,12 @@ title: Oslo Mental Health Map
   function setColFilter(key, value) {
     colFilters[key] = value || null;
     const th = thFor(key);
-    th.querySelector('.col-header-label').textContent =
-      colFilters[key] ? th.dataset.title + ': ' + optionLabel(key, value) : th.dataset.title;
     th.querySelector('.col-header-btn').classList.toggle('col-header-active', !!colFilters[key]);
     th.querySelectorAll('.col-option').forEach(o => o.classList.toggle('selected', o.dataset.value === (value || '')));
     if (key === 'tilstand') {
       mobileTilstandBtns.forEach(b => b.classList.toggle('selected', b.dataset.value === (value || '')));
     }
+    renderColHeaders();
     renderFilterTags();
     applyFilters();
   }
@@ -306,10 +329,16 @@ title: Oslo Mental Health Map
 
   // ── Map view ──
   // Leaflet loads on first switch to the map, so list-only visits don't pay for it.
+  // Bounds cover Oslo plus Nittedal (part of the DPS Groruddalen catchment), so users can't pan away.
   const OSLO_CENTER = [59.9139, 10.7522];
-  const viewBtns = document.querySelectorAll('.view-btn');
-  const mapEl    = document.getElementById('map');
-  const mapNote  = document.getElementById('map-note');
+  const MAP_BOUNDS  = [[59.78, 10.45], [60.17, 11.02]];
+  const viewBtns    = document.querySelectorAll('.view-btn');
+  const mapViewEl   = document.getElementById('map-view');
+  const mapEl       = document.getElementById('map');
+  const mapNote     = document.getElementById('map-note');
+  const panelList   = document.getElementById('map-panel-list');
+  const panelCount  = document.getElementById('map-panel-count');
+  const darkQuery   = window.matchMedia('(prefers-color-scheme: dark)');
   let activeView  = 'list';
   let map         = null;
   let markerLayer = null;
@@ -332,16 +361,18 @@ title: Oslo Mental Health Map
     return leafletLoad;
   }
 
+  function categoryLabel(row) {
+    const header = [...headers].find(h => h.dataset.category === row.dataset.category);
+    return header ? textIn(header) : '';
+  }
+
   function popupFor(row) {
     const el = document.createElement('div');
     el.className = 'map-popup';
-    const link = row.querySelector('.tool-name a').cloneNode(true);
     const name = document.createElement('strong');
-    name.appendChild(link);
+    name.appendChild(row.querySelector('.tool-name a').cloneNode(true));
     el.appendChild(name);
-    const header = [...headers].find(h => h.dataset.category === row.dataset.category);
-    const details = [header ? header.textContent.trim() : '', row.dataset.akutt === 'true' ? 'Akutt' : '']
-      .filter(Boolean).join(' · ');
+    const details = [categoryLabel(row), row.dataset.akutt === 'true' ? t('akutt') : ''].filter(Boolean).join(' · ');
     [details, row.dataset.address].forEach(text => {
       if (!text) return;
       const line = document.createElement('div');
@@ -357,18 +388,31 @@ title: Oslo Mental Health Map
     return el;
   }
 
+  function panelItemFor(row) {
+    const li = document.createElement('li');
+    li.appendChild(row.querySelector('.tool-name a').cloneNode(true));
+    const akutt = row.querySelector('.akutt-tag');
+    if (akutt) li.append(' ', akutt.cloneNode(true));
+    const phone = row.querySelector('.tool-phone');
+    if (phone) li.append(' ', phone.cloneNode(true));
+    const meta = document.createElement('div');
+    meta.className = 'map-panel-meta';
+    meta.textContent = [categoryLabel(row), row.dataset.bydel].filter(Boolean).join(' · ');
+    li.appendChild(meta);
+    return li;
+  }
+
   function renderMarkers() {
     if (!map || activeView !== 'map') return;
     markerLayer.clearLayers();
-    const shown = [...toolRows].filter(r => !r.classList.contains('hidden'));
-    const placed = shown.filter(r => r.dataset.lat && r.dataset.lon);
+    const shown    = [...toolRows].filter(r => !r.classList.contains('hidden'));
+    const placed   = shown.filter(r => r.dataset.lat && r.dataset.lon);
+    const unplaced = shown.filter(r => !(r.dataset.lat && r.dataset.lon));
+    const ink = getComputedStyle(document.documentElement).getPropertyValue('--text').trim();
     placed.forEach(row => {
-      const akutt = row.dataset.akutt === 'true';
+      const color = row.dataset.akutt === 'true' ? '#dc2626' : ink;
       L.circleMarker([+row.dataset.lat, +row.dataset.lon], {
-        radius: 7, weight: 2,
-        color: akutt ? '#dc2626' : '#111111',
-        fillColor: akutt ? '#dc2626' : '#111111',
-        fillOpacity: 0.7,
+        radius: 7, weight: 2, color, fillColor: color, fillOpacity: 0.7,
       }).bindPopup(popupFor(row)).addTo(markerLayer);
     });
     if (placed.length) {
@@ -376,31 +420,41 @@ title: Oslo Mental Health Map
     } else {
       map.setView(OSLO_CENTER, 11);
     }
-    const unplaced = shown.length - placed.length;
-    mapNote.textContent = unplaced
-      ? `${unplaced} of ${shown.length} ${shown.length === 1 ? 'entry' : 'entries'} ${unplaced === 1 ? 'has' : 'have'} no address (phone, online or city-wide) and ${unplaced === 1 ? 'is' : 'are'} only in the list.`
-      : '';
-    mapNote.classList.toggle('hidden', !unplaced);
+    panelList.innerHTML = '';
+    unplaced.forEach(row => panelList.appendChild(panelItemFor(row)));
+    if (!unplaced.length) {
+      const empty = document.createElement('li');
+      empty.className = 'map-panel-empty';
+      empty.textContent = t('panel_empty');
+      panelList.appendChild(empty);
+    }
+    panelCount.textContent = unplaced.length ? `(${unplaced.length})` : '';
   }
 
   async function setView(view) {
     activeView = view === 'map' ? 'map' : 'list';
     viewBtns.forEach(b => b.classList.toggle('selected', b.dataset.view === activeView));
     toolTable.classList.toggle('hidden', activeView === 'map');
-    mapEl.classList.toggle('hidden', activeView !== 'map');
-    if (activeView === 'list') mapNote.classList.add('hidden');
+    mapViewEl.classList.toggle('hidden', activeView !== 'map');
+    mapNote.classList.add('hidden');
     updateURL();
     if (activeView !== 'map') return;
     try {
       await loadLeaflet();
     } catch {
-      mapNote.textContent = 'The map could not be loaded. Check your connection and try again.';
+      mapNote.textContent = t('map_error');
       mapNote.classList.remove('hidden');
       return;
     }
     if (!map) {
-      map = L.map(mapEl, { scrollWheelZoom: false }).setView(OSLO_CENTER, 11);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      map = L.map(mapEl, {
+        scrollWheelZoom: false,
+        minZoom: 10,
+        maxBounds: MAP_BOUNDS,
+        maxBoundsViscosity: 1.0,
+      }).setView(OSLO_CENTER, 11);
+      // Plain OSM tiles (no key needed); style.css mutes them, and darkens them in dark mode
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
@@ -411,9 +465,12 @@ title: Oslo Mental Health Map
   }
 
   viewBtns.forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
+  // Marker ink follows the theme
+  darkQuery.addEventListener('change', renderMarkers);
 
   function updateURL() {
     const params = new URLSearchParams();
+    if (lang === 'en') params.set('lang', 'en');
     if (activeView === 'map') params.set('view', 'map');
     if (activeFilter && activeFilter !== 'all') params.set('filter', activeFilter);
     if (activeSubFilter) params.set('cat', activeSubFilter);
@@ -475,7 +532,7 @@ title: Oslo Mental Health Map
       header.classList.toggle('hidden', !hasVisible);
     });
 
-    countEl.textContent = visible + (visible === 1 ? ' entry' : ' entries');
+    countEl.textContent = visible + ' ' + t(visible === 1 ? 'entry' : 'entries');
     updateURL();
     renderMarkers();
   }
@@ -488,9 +545,10 @@ title: Oslo Mental Health Map
       return;
     }
 
-    subPillsEl.innerHTML = cats.map(id =>
-      `<button class="pill sub-pill" data-cat="${id}">${categoryNames[id] || id}</button>`
-    ).join('');
+    subPillsEl.innerHTML = cats.map(id => {
+      const name = categoryNames[id] || { nb: id, en: id };
+      return `<button class="pill sub-pill" data-cat="${id}"><span class="l-nb">${name.nb}</span><span class="l-en">${name.en}</span></button>`;
+    }).join('');
 
     subPillsEl.querySelectorAll('.sub-pill').forEach(pill => {
       pill.addEventListener('click', () => {
@@ -527,6 +585,22 @@ title: Oslo Mental Health Map
   mobileTilstandBtns.forEach(btn => btn.addEventListener('click', () => setColFilter('tilstand', btn.dataset.value)));
   search.addEventListener('input', applyFilters);
 
+  // ── NO | EN ──
+  function setLang(next) {
+    lang = next === 'en' ? 'en' : 'nb';
+    document.documentElement.dataset.lang = lang;
+    document.documentElement.lang = lang;
+    try { localStorage.setItem('omhm-lang', lang); } catch (e) {}
+    langBtns.forEach(b => b.classList.toggle('selected', b.dataset.setLang === lang));
+    search.placeholder = t('search');
+    renderDates();
+    renderColHeaders();
+    renderFilterTags();
+    applyFilters();
+  }
+
+  langBtns.forEach(btn => btn.addEventListener('click', () => setLang(btn.dataset.setLang)));
+
   // Load state from URL on page load
   (function() {
     const p = new URLSearchParams(window.location.search);
@@ -548,7 +622,7 @@ title: Oslo Mental Health Map
     }
     Object.keys(colFilters).forEach(key => { if (p.get(key)) setColFilter(key, p.get(key)); });
     if (p.get('q')) { search.value = p.get('q'); }
-    if (p.toString()) applyFilters();
+    setLang(lang);
     if (p.get('view') === 'map') setView('map');
   })();
 
@@ -559,5 +633,5 @@ title: Oslo Mental Health Map
 </script>
 
 <footer class="footer">
-  Akutt hjelp: <a href="tel:113">113</a> · Legevakt: <a href="tel:116117">116 117</a>
+  {% include t.html k="footer_akutt" %}: <a href="tel:113">113</a> · {% include t.html k="footer_legevakt" %}: <a href="tel:116117">116 117</a>
 </footer>

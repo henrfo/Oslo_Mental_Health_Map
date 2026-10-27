@@ -1,0 +1,39 @@
+# Interface strings for the NO | EN switch. Data text (descriptions, value
+# labels, category names) carries its own nb/en and is not listed here.
+tagline:          { nb: "Du kan ikke henvise til et tilbud du ikke vet finnes.", en: "You can't refer to a service you don't know exists." }
+nav_suggest:      { nb: Foreslå tilbud eller endring, en: Suggest an offer or edit }
+nav_pending:      { nb: Ventende forslag, en: Pending suggestions }
+nav_about:        { nb: Om, en: About }
+view_label:       { nb: Visning, en: View }
+view_list:        { nb: Liste, en: List }
+view_map:         { nb: Kart, en: Map }
+all:              { nb: Alle, en: All }
+recent:           { nb: Nylig lagt til, en: Recently added }
+akutt:            { nb: Akutt, en: Acute }
+fagstoff:         { nb: Fagstoff, en: Guidance }
+ressurser:        { nb: Ressurser, en: Resources }
+search:           { nb: Søk…, en: Search… }
+entry:            { nb: oppføring, en: entry }
+entries:          { nb: oppføringer, en: entries }
+link_active:      { nb: Lenke aktiv, en: Link active }
+link_broken:      { nb: Lenke brutt, en: Link broken }
+link_unchecked:   { nb: Lenke ikke sjekket siste 30 dager, en: Link not checked in the last 30 days }
+checked:          { nb: sjekket, en: checked }
+contribute_gh:    { nb: Bidra på GitHub, en: Contribute on GitHub }
+col_name:         { nb: Navn, en: Name }
+col_desc:         { nb: Beskrivelse, en: Description }
+col_added:        { nb: Lagt til, en: Added }
+col_tilstand:     { nb: Tilstand, en: Condition }
+col_bydel:        { nb: Bydel, en: District }
+col_malgruppe:    { nb: Målgruppe, en: Target group }
+col_henvisning:   { nb: Henvisning, en: Referral }
+henvisning_note:  { nb: Om det trengs henvisning for å få tilgang., en: Whether a referral is needed to get access. }
+answer_yes:       { nb: Ja, en: "Yes" }
+answer_no:        { nb: Nei, en: "No" }
+verified:         { nb: Info bekreftet, en: Info verified }
+panel_title:      { nb: Uten fast adresse, en: No fixed address }
+panel_sub:        { nb: "Telefon, nett og tilbud for hele Oslo.", en: "Phone, online and city-wide services." }
+panel_empty:      { nb: Ingen i dette utvalget., en: None in this selection. }
+map_error:        { nb: Kartet kunne ikke lastes. Sjekk tilkoblingen og prøv igjen., en: The map could not be loaded. Check your connection and try again. }
+footer_akutt:     { nb: Akutt hjelp, en: Emergency }
+footer_legevakt:  { nb: Legevakt, en: Out-of-hours (legevakt) }

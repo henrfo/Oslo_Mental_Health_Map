@@ -2,33 +2,33 @@
 #        fagstoff  = what you know (right chip "Fagstoff", sub-pills per category)
 #        ressurser = who you point to (right chip "Ressurser", sub-pills per category)
 - id: frivillig
-  name: Frivillig
+  name: { nb: Frivillig, en: Voluntary }
   group: tjenester
 
 - id: forstelinje
-  name: Førstelinje
+  name: { nb: Førstelinje, en: Primary care }
   group: tjenester
 
 - id: spesialist
-  name: Spesialist
+  name: { nb: Spesialist, en: Specialist }
   group: tjenester
 
 - id: retningslinjer
-  name: Retningslinjer
+  name: { nb: Retningslinjer, en: Guidelines }
   group: fagstoff
 
 - id: veiledere
-  name: Veiledere
+  name: { nb: Veiledere, en: Guides }
   group: fagstoff
 
 - id: kurs
-  name: Kurs
+  name: { nb: Kurs, en: Courses }
   group: fagstoff
 
 - id: hjelpelinjer
-  name: Hjelpelinjer
+  name: { nb: Hjelpelinjer, en: Helplines }
   group: ressurser
 
 - id: brukerorganisasjoner
-  name: Brukerorganisasjoner
+  name: { nb: Brukerorganisasjoner, en: User organisations }
   group: ressurser

@@ -56,7 +56,10 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
   phone: 116 123                          # optional. Required for hjelpelinjer
 ```
 
-The key for Norwegian text is `nb`, not `no`. YAML reads `no` as false.
+**YAML traps.** YAML reads `yes`, `no`, `on`, `off`, `true` and `false` (in any case) as true/false, both as keys and as values:
+- The key for Norwegian text is `nb`, not `no`.
+- Quote words like `"No"`, `"Yes"` and `"On"` when you mean the text.
+- Inside `{ … }` on one line, quote any text that contains a comma or a colon, or it gets split.
 
 **tilstand** (what the offer helps with): ids from `_data/tilstand.yml`: `angst`, `depresjon`, `bipolar`, `personlighetsforstyrrelser`, `psykose`, `spiseforstyrrelser`, `traumer` (incl. PTSD), `ocd`, `adhd`, `rus` (substance use and addiction), `selvskading` (self-harm and suicidality), `krise` (crisis and grief), or `generelt` for offers not tied to a specific condition. An entry with `generelt` matches every tilstand filter.
 

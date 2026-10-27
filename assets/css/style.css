@@ -38,6 +38,7 @@ body {
 
 .site-nav {
   display: flex;
+  align-items: center;
   gap: 16px;
   font-size: 12px;
 }
@@ -50,6 +51,40 @@ body {
 .site-nav a:hover {
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* Bilingual text: both languages are in the page, the active one shows */
+html[data-lang="en"] .l-nb,
+html[data-lang="nb"] .l-en {
+  display: none;
+}
+
+/* NO | EN: same segmented style as List | Map, sized for the nav */
+.lang-toggle {
+  display: inline-flex;
+  height: 22px;
+  border: 1px solid var(--text);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.lang-btn {
+  padding: 0 8px;
+  font-family: inherit;
+  font-size: 11px;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.lang-btn + .lang-btn {
+  border-left: 1px solid var(--text);
+}
+
+.lang-btn.selected {
+  background: var(--pill-active-bg);
+  color: var(--pill-active-text);
 }
 
 .site-title {
@@ -185,11 +220,89 @@ body {
   color: var(--pill-active-text);
 }
 
+.map-view {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 20px;
+}
+
 .map {
   height: 60vh;
   min-height: 360px;
   border: 1px solid var(--hairline);
   border-radius: 2px;
+}
+
+/* Muted OSM tiles so the map doesn't shout over the page */
+.map .leaflet-tile-pane {
+  filter: grayscale(0.7) contrast(0.95);
+}
+
+@media (prefers-color-scheme: dark) {
+  .map .leaflet-tile-pane {
+    filter: invert(1) hue-rotate(180deg) grayscale(0.6) brightness(0.85) contrast(0.9);
+  }
+}
+
+.map-panel {
+  max-height: max(60vh, 360px);
+  overflow-y: auto;
+}
+
+.map-panel-title {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.map-panel-sub {
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.map-panel-list {
+  list-style: none;
+}
+
+.map-panel-list li {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 13px;
+}
+
+.map-panel-list li > a:first-child {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.map-panel-list li > a:first-child:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.map-panel-list .tool-phone {
+  margin-left: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.map-panel-meta {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.map-panel-list .map-panel-empty {
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .map-note {
@@ -721,6 +834,14 @@ body {
 /* ── Mobile ── */
 
 @media (max-width: 640px) {
+  .map-view {
+    grid-template-columns: 1fr;
+  }
+
+  .map-panel {
+    max-height: none;
+  }
+
   body {
     padding: 36px 20px 64px;
   }

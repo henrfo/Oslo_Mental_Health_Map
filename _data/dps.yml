@@ -1,0 +1,18 @@
+# Bydel → DPS opptaksområde (catchment area). Each DPS area is a group of
+# bydeler, so the map can draw it by merging bydel boundaries.
+#
+# Not used on the site yet. The mapping changes over time (Oslo has moved
+# bydeler between hospitals before), so every row needs checking against the
+# DPS's own pages before it goes live. Set verified: true and add the source
+# URL once checked. Bydel names must match _data/bydeler.yml.
+- dps: Nydalen DPS
+  bydeler: [Sagene, Nordre Aker, Bjerke]
+  outside_oslo: []
+  source: "finn.no listing (reported); DPS's own page not yet checked"
+  verified: false
+
+- dps: DPS Groruddalen
+  bydeler: [Alna, Grorud, Stovner]
+  outside_oslo: [Nittedal]   # outside Oslo; the map bounds are widened to include it
+  source: "finn.no listing (reported); DPS's own page not yet checked"
+  verified: false

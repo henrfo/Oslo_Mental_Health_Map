@@ -1,0 +1,7 @@
+{%- comment -%}
+  Bilingual text: both languages are rendered, CSS shows the active one.
+  Use k="key" for a string from _data/i18n.yml, or nb="…" en="…" directly.
+{%- endcomment -%}
+{%- if include.k -%}{%- assign s = site.data.i18n[include.k] -%}{%- assign nb = s.nb -%}{%- assign en = s.en -%}
+{%- else -%}{%- assign nb = include.nb -%}{%- assign en = include.en | default: include.nb -%}{%- endif -%}
+<span class="l-nb">{{ nb }}</span><span class="l-en">{{ en }}</span>
