@@ -1,1 +1,37 @@
-{}
+# Written by scripts/weekly_checks.py links — do not edit by hand.
+adhd-norge:
+  checked: 2026-10-27
+  status: ok
+bipolarforeningen-norge:
+  checked: 2026-10-27
+  status: ok
+frivillig-no:
+  checked: 2026-10-27
+  status: ok
+link-oslo-senter-for-selvhjelp-og-mestring:
+  checked: 2026-10-27
+  status: ok
+livsgnist-mental-helse:
+  checked: 2026-10-27
+  status: ok
+mental-helse-oslo:
+  checked: 2026-10-27
+  status: ok
+nic-waals-institutt-lovisenberg:
+  checked: 2026-10-27
+  status: ok
+nkvts-nasjonalt-kunnskapssenter-om-vold-og-traumatisk-stress:
+  checked: 2026-10-27
+  status: ok
+norsk-forening-for-kognitiv-atferdsterapi-nfkt:
+  checked: 2026-10-27
+  status: ok
+sober-norge:
+  checked: 2026-10-27
+  status: ok
+uteseksjonen:
+  checked: 2026-10-27
+  status: ok
+voksenpsykiatrisk-avdeling-vinderen-diakonhjemmet:
+  checked: 2026-10-27
+  status: ok
