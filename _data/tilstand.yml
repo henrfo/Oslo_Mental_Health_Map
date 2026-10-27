@@ -1,0 +1,14 @@
+# Allowed values for an entry's `tilstand` list. `generelt` matches every filter.
+- { id: angst,                      nb: Angst,                      en: Anxiety }
+- { id: depresjon,                  nb: Depresjon,                  en: Depression }
+- { id: bipolar,                    nb: Bipolar lidelse,            en: Bipolar disorder }
+- { id: personlighetsforstyrrelser, nb: Personlighetsforstyrrelser, en: Personality disorders }
+- { id: psykose,                    nb: Psykose,                    en: Psychosis }
+- { id: spiseforstyrrelser,         nb: Spiseforstyrrelser,         en: Eating disorders }
+- { id: traumer,                    nb: Traumer og PTSD,            en: Trauma and PTSD }
+- { id: ocd,                        nb: OCD,                        en: OCD }
+- { id: adhd,                       nb: ADHD,                       en: ADHD }
+- { id: rus,                        nb: Rus og avhengighet,         en: Substance use and addiction }
+- { id: selvskading,                nb: Selvskading og suicidalitet, en: Self-harm and suicidality }
+- { id: krise,                      nb: Krise og sorg,              en: Crisis and grief }
+- { id: generelt,                   nb: Generelt,                   en: General }

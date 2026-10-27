@@ -1,13 +1,13 @@
 # Webhook bridge: contribute form → GitHub Issues
 
-Cloudflare Worker that receives direct form POSTs from openmritools.com/contribute
+Cloudflare Worker that receives direct form POSTs from the Oslo Mental Health Map /contribute page
 and creates a GitHub Issue for each submission, then redirects the visitor back
 to /contribute/?submitted=true.
 
 ## Flow
 
 ```
-openmritools.com/contribute (HTML form POST)
+/contribute (HTML form POST)
   → this Worker (parses fields, creates issue)
   → GitHub Issues API
   → redirect → /contribute/?submitted=true
@@ -20,8 +20,8 @@ openmritools.com/contribute (HTML form POST)
 Go to **GitHub → Settings → Developer settings → Personal access tokens →
 Fine-grained tokens → Generate new token**.
 
-- Resource owner: `openmritools`
-- Repository access: only `openmritools.github.io`
+- Resource owner: `henrfo`
+- Repository access: only `Oslo_Mental_Health_Map`
 - Permissions:
   - Repository permissions → **Issues: Read and write**
   - Repository permissions → **Metadata: Read-only**
@@ -37,7 +37,7 @@ cd scripts/webhook-bridge
 wrangler deploy
 ```
 
-The Worker deploys to `https://openmritools-webhook-bridge.openmritools.workers.dev`.
+The Worker deploys to `https://omhm-webhook-bridge.openmritools.workers.dev`, the URL in the form `action` in `contribute.html`.
 
 ### 3. Add Worker secrets
 
@@ -46,12 +46,12 @@ wrangler secret put GITHUB_TOKEN
 # paste the PAT from step 1
 
 wrangler secret put GITHUB_REPO
-# enter: openmritools/openmritools.github.io
+# enter: henrfo/Oslo_Mental_Health_Map
 ```
 
 ### 4. Test
 
-Submit a test entry via `openmritools.com/contribute`. Verify:
+Submit a test entry via the site's /contribute page. Verify:
 - Browser redirects to `/contribute/?submitted=true` with the success message
 - A GitHub Issue appears under the Issues tab with the correct title and label
 

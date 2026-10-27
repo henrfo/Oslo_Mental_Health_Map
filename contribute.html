@@ -1,11 +1,11 @@
 ---
 layout: default
-title: Suggest an entry or an edit
+title: Suggest an offer or edit
 permalink: /contribute/
 ---
 
 <header>
-  <h1 class="site-title">Suggest an entry or an edit</h1>
+  <h1 class="site-title">Suggest an offer or edit</h1>
   <p class="site-subtitle">Know something that should be listed, or spot something wrong? Tell us.</p>
 </header>
 
@@ -13,8 +13,7 @@ permalink: /contribute/
   <p>Thanks — your suggestion is now <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">visible on GitHub</a>.</p>
 </div>
 
-<!-- TODO: point at an OMHM webhook bridge; the Open MRI Tools one would file issues in that repo -->
-<form id="suggest-form" class="suggest-form" action="" method="POST">
+<form id="suggest-form" class="suggest-form" action="https://omhm-webhook-bridge.openmritools.workers.dev" method="POST">
   <!-- Honeypot: hidden from real users, bots fill it in -->
   <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
@@ -22,7 +21,7 @@ permalink: /contribute/
     <div class="radio-group">
       <label class="radio-label">
         <input type="radio" name="type" value="suggest" checked>
-        Suggest an entry
+        Suggest an offer
       </label>
       <label class="radio-label">
         <input type="radio" name="type" value="flag">
@@ -71,7 +70,7 @@ permalink: /contribute/
 
   const existingTools = [
     {% for cat in site.data.categories %}
-    {% assign cat_tools = site.data.tools[cat.id] %}
+    {% assign cat_tools = site.data.entries[cat.id] %}
     {% for tool in cat_tools %}
     { name: {{ tool.name | jsonify }}, url: {{ tool.url | jsonify }} },
     {% endfor %}

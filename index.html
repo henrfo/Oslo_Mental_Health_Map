@@ -6,11 +6,11 @@ title: Oslo Mental Health Map
 <header>
   <div class="site-header-row">
     <div class="site-header-left">
-      <h1 class="site-title"><span class="title-dot" title="Actively maintained"></span><a href="{{ '/' | relative_url }}">Oslo Mental Health Map</a></h1>
-      <p class="site-subtitle">Building the overview we wish existed when starting out.</p>
+      <h1 class="site-title"><span class="title-dot"></span><a href="{{ '/' | relative_url }}">Oslo Mental Health Map</a></h1>
+      <p class="site-subtitle">An overview of mental health services in Oslo, for health professionals.</p>
     </div>
     <nav class="site-nav">
-      <a href="{{ '/contribute/' | relative_url }}">Suggest an entry or edit</a>
+      <a href="{{ '/contribute/' | relative_url }}">Suggest an offer or edit</a>
       <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">Pending suggestions</a>
       <a href="{{ '/about/' | relative_url }}">About</a>
     </nav>
@@ -24,25 +24,25 @@ title: Oslo Mental Health Map
       <button class="pill" data-filter="new">Recently added</button>
     </div>
     <div class="pill-group">
-      <button class="pill" data-filter="prepare">Prepare</button>
-      <button class="pill" data-filter="analyze">Analyze</button>
-      <button class="pill" data-filter="visualize">Visualize</button>
-      <button class="pill" data-filter="infrastructure">Infrastructure</button>
+      {%- assign services = site.data.categories | where: 'group', 'tjenester' %}
+      {%- for cat in services %}
+      <button class="pill" data-filter="{{ cat.id }}">{{ cat.name }}</button>
+      {%- endfor %}
+      <button class="pill" data-filter="akutt">Akutt</button>
     </div>
     <div class="pill-group">
-      <button class="pill" data-filter="foundations">Foundations</button>
-      <button class="pill" data-filter="resources">Resources & Data</button>
+      {%- assign resources = site.data.categories | where: 'group', 'ressurser' %}
+      {%- for cat in resources %}
+      <button class="pill" data-filter="{{ cat.id }}">{{ cat.name }}</button>
+      {%- endfor %}
     </div>
   </div>
-  <div class="sub-pills" id="sub-pills"></div>
   <input class="search" id="search" type="search" placeholder="Search…" autocomplete="off">
-  <div class="mobile-modality" id="mobile-modality">
-    <button class="pill selected" data-modality="">All</button>
-    <button class="pill" data-modality="fMRI">fMRI</button>
-    <button class="pill" data-modality="structural">Structural</button>
-    <button class="pill" data-modality="diffusion">Diffusion</button>
-    <button class="pill" data-modality="ASL">ASL</button>
-    <button class="pill" data-modality="multi">Multi-modal</button>
+  <div class="mobile-filter" id="mobile-tilstand">
+    <button class="pill selected" data-value="">All</button>
+    {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
+    <button class="pill" data-value="{{ t.id }}">{{ t.nb }}</button>
+    {%- endunless %}{% endfor %}
   </div>
 </div>
 
@@ -51,22 +51,17 @@ title: Oslo Mental Health Map
     <span id="tool-count">
       {%- assign total = 0 -%}
       {%- for cat in site.data.categories -%}
-        {%- assign tools = site.data.tools[cat.id] -%}
+        {%- assign tools = site.data.entries[cat.id] -%}
         {%- if tools -%}{%- assign total = total | plus: tools.size -%}{%- endif -%}
       {%- endfor -%}
-      {{ total }} entries
+      {{ total }} {% if total == 1 %}entry{% else %}entries{% endif %}
     </span>
-    <span id="lang-tag" class="hidden">(lang: <span id="lang-tag-name"></span> <button id="lang-clear" class="lang-clear">✕</button>)</span>
-    <span id="modality-tag" class="hidden">(modality: <span id="modality-tag-name"></span> <button id="modality-clear" class="lang-clear">✕</button>)</span>
+    <span id="filter-tags"></span>
     <span class="meta-sep">·</span>
-    <span class="legend-item"><span class="dot dot-active"></span> Active</span>
-    <span class="legend-item"><span class="dot dot-quiet"></span> Quiet</span>
-    <span class="legend-item"><span class="dot dot-inactive"></span> Inactive</span>
-    <span class="legend-item"><span class="dot dot-external"></span> Not on GitHub</span>
+    <span class="legend-item"><span class="dot dot-active"></span> Link active</span>
+    <span class="legend-item"><span class="dot dot-inactive"></span> Link broken</span>
   </div>
   <div class="meta-right">
-    <span>Updated weekly via GitHub API</span>
-    <span class="meta-sep">·</span>
     <a class="meta-link" href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">Contribute on GitHub</a>
   </div>
 </div>
@@ -74,112 +69,97 @@ title: Oslo Mental Health Map
 <table class="tool-table" aria-label="Oslo Mental Health Map directory">
   <thead>
     <tr>
-      <th aria-label="Health"></th>
-      <th>Tool</th>
+      <th aria-label="Link status"></th>
+      <th>Name</th>
       <th>Description</th>
       <th class="col-date">Added</th>
-      <th class="lang-th">
-        <button class="lang-header-btn" id="lang-header-btn" title="What the tool is written in — most are usable from the command line regardless">
-          <span id="lang-header-label">Language</span> ▾
-        </button>
-        <div class="lang-dropdown" id="lang-dropdown">
-          <p class="lang-note">What it's written in — most tools are usable from the command line regardless.</p>
-          <button class="lang-option selected" data-lang="">All</button>
-          {%- assign all_langs = '' | split: '' -%}
-          {%- for cat in site.data.categories -%}
-            {%- assign cat_tools = site.data.tools[cat.id] -%}
-            {%- for tool in cat_tools -%}
-              {%- if tool.language -%}
-                {%- unless all_langs contains tool.language -%}
-                  {%- assign all_langs = all_langs | push: tool.language -%}
-                {%- endunless -%}
-              {%- endif -%}
-            {%- endfor -%}
-          {%- endfor -%}
-          {%- assign sorted_langs = all_langs | sort -%}
-          {%- for lang in sorted_langs -%}
-          <button class="lang-option" data-lang="{{ lang }}">{{ lang }}</button>
-          {%- endfor -%}
+      <th class="col-th" data-key="tilstand" data-title="Tilstand">
+        <button class="col-header-btn"><span class="col-header-label">Tilstand</span> ▾</button>
+        <div class="col-dropdown">
+          <button class="col-option selected" data-value="">All</button>
+          {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
+          <button class="col-option" data-value="{{ t.id }}">{{ t.nb }}</button>
+          {%- endunless %}{% endfor %}
         </div>
       </th>
-      <th class="modality-th">
-        <button class="modality-header-btn" id="modality-header-btn">
-          <span id="modality-header-label">Modality</span> ▾
-        </button>
-        <div class="modality-dropdown" id="modality-dropdown">
-          <button class="modality-option selected" data-modality="">All</button>
-          <button class="modality-option" data-modality="fMRI">fMRI</button>
-          <button class="modality-option" data-modality="structural">Structural</button>
-          <button class="modality-option" data-modality="diffusion">Diffusion</button>
-          <button class="modality-option" data-modality="ASL">ASL</button>
-          <button class="modality-option" data-modality="multi">Multi-modal</button>
+      <th class="col-th" data-key="bydel" data-title="Bydel">
+        <button class="col-header-btn"><span class="col-header-label">Bydel</span> ▾</button>
+        <div class="col-dropdown">
+          <button class="col-option selected" data-value="">All</button>
+          {%- for b in site.data.bydeler %}{% unless b == 'Hele Oslo' %}
+          <button class="col-option" data-value="{{ b }}">{{ b }}</button>
+          {%- endunless %}{% endfor %}
         </div>
       </th>
-      <th class="stars-th">
-        <button class="stars-header-btn" id="stars-header-btn">
-          <span id="stars-header-label">Stars</span> <span id="stars-sort-icon">▾</span>
-        </button>
-        <div class="stars-dropdown" id="stars-dropdown">
-          <button class="stars-option selected" data-sort="">Default</button>
-          <button class="stars-option" data-sort="desc">Most first</button>
-          <button class="stars-option" data-sort="asc">Fewest first</button>
+      <th class="col-th" data-key="malgruppe" data-title="Målgruppe">
+        <button class="col-header-btn"><span class="col-header-label">Målgruppe</span> ▾</button>
+        <div class="col-dropdown">
+          <button class="col-option selected" data-value="">All</button>
+          {%- for m in site.data.malgruppe %}{% unless m.id == 'alle' %}
+          <button class="col-option" data-value="{{ m.id }}">{{ m.nb }}</button>
+          {%- endunless %}{% endfor %}
+        </div>
+      </th>
+      <th class="col-th" data-key="henvisning" data-title="Henvisning">
+        <button class="col-header-btn"><span class="col-header-label">Henvisning</span> ▾</button>
+        <div class="col-dropdown">
+          <p class="col-note">Whether a referral is needed to get access.</p>
+          <button class="col-option selected" data-value="">All</button>
+          <button class="col-option" data-value="ja">Ja</button>
+          <button class="col-option" data-value="nei">Nei</button>
         </div>
       </th>
     </tr>
   </thead>
   <tbody id="tool-list">
     {% for cat in site.data.categories %}
-      {% assign tools = site.data.tools[cat.id] %}
+      {% assign tools = site.data.entries[cat.id] %}
       {% if tools %}
         <tr class="section-header" data-category="{{ cat.id }}">
-          <td colspan="7">{{ cat.name }}</td>
+          <td colspan="8">{{ cat.name }}</td>
         </tr>
         {% for tool in tools %}
-          {% if tool.github %}
-            {% comment %} Accept a full github.com URL or a bare owner/repo slug {% endcomment %}
-            {% assign gh_slug = tool.github | remove: 'https://github.com/' | remove: 'http://github.com/' | remove: 'github.com/' | remove: '.git' %}
-            {% assign gh_parts = gh_slug | split: '/' %}
-            {% assign gh_slug = gh_parts[0] | append: '/' | append: gh_parts[1] %}
-            {% assign hkey = gh_slug | replace: '/', '-' %}
-            {% assign health = site.data.health[hkey] %}
-            {% assign status = health.status | default: 'unknown' %}
-            {% if status == 'active' or status == 'maintained' %}
-              {% assign dot = 'dot-active' %}
-              {% assign row_class = '' %}
-            {% elsif status == 'quiet' %}
-              {% assign dot = 'dot-quiet' %}
-              {% assign row_class = '' %}
-            {% elsif status == 'inactive' %}
-              {% assign dot = 'dot-inactive' %}
-              {% assign row_class = 'inactive' %}
-            {% else %}
-              {% assign dot = 'dot-unknown' %}
-              {% assign row_class = '' %}
-            {% endif %}
-          {% else %}
-            {% assign dot = 'dot-external' %}
-            {% assign row_class = '' %}
-            {% assign status = 'external' %}
-            {% assign health = nil %}
-          {% endif %}
-          <tr class="{{ row_class }}"
+          {% assign hkey = tool.name | slugify %}
+          {% assign health = site.data.health[hkey] %}
+          {%- capture tilstand_labels -%}
+            {%- for id in tool.tilstand -%}
+              {%- assign t = site.data.tilstand | where: 'id', id | first -%}
+              {{ t.nb | default: id }}{% unless forloop.last %}, {% endunless %}
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- capture malgruppe_labels -%}
+            {%- for id in tool.malgruppe -%}
+              {%- assign m = site.data.malgruppe | where: 'id', id | first -%}
+              {{ m.nb | default: id }}{% unless forloop.last %}, {% endunless %}
+            {%- endfor -%}
+          {%- endcapture -%}
+          <tr class="{% if health.status == 'broken' %}inactive{% endif %}"
               data-category="{{ cat.id }}"
               data-name="{{ tool.name | downcase }}"
-              data-desc="{{ tool.description | downcase }}"
+              data-desc="{{ tool.description.nb | downcase }} {{ tool.description.en | downcase }}"
               data-added="{{ tool.date_added }}"
-              data-lang="{{ tool.language }}"
-              data-modality="{{ tool.modality }}"
-              {% unless tool.github %}data-external="true"{% endunless %}
-              {% if health.stars %}data-stars="{{ health.stars }}"{% endif %}>
-            <td><span class="dot {{ dot }}" title="{{ status }}"></span></td>
+              data-link-status="{{ health.status }}"
+              data-link-checked="{{ health.checked }}"
+              data-akutt="{{ tool.akutt }}"
+              data-tilstand="{{ tool.tilstand | join: '|' }}"
+              data-bydel="{{ tool.bydel }}"
+              data-malgruppe="{{ tool.malgruppe | join: '|' }}"
+              data-henvisning="{% if tool.henvisning == true %}ja{% elsif tool.henvisning == false %}nei{% endif %}">
+            <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
-              <a href="{{ tool.url }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
+              <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
+              {%- if tool.akutt %} <span class="akutt-tag">Akutt</span>{% endif %}
+              {%- if tool.phone %} <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}
             </td>
-            <td class="tool-desc">{{ tool.description }}</td>
+            <td class="tool-desc">
+              {{ tool.description.nb }}
+              {%- if tool.last_verified %}<span class="tool-verified">Info verified {{ tool.last_verified | date: '%b %Y' }}</span>{% endif %}
+            </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
-            <td class="tool-lang">{{ tool.language }}</td>
-            <td class="tool-modality">{%- if tool.modality == 'fMRI' -%}fMRI{%- elsif tool.modality == 'structural' -%}Structural{%- elsif tool.modality == 'diffusion' -%}Diffusion{%- elsif tool.modality == 'ASL' -%}ASL{%- elsif tool.modality == 'multi' -%}Multi-modal{%- endif -%}</td>
-            <td class="tool-stars"{% if health.stars %} data-stars="{{ health.stars }}"{% endif %}></td>
+            <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
+            <td class="col-cell">{{ tool.bydel }}</td>
+            <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
+            <td class="col-cell">{% if tool.henvisning == true %}Ja{% elsif tool.henvisning == false %}Nei{% endif %}</td>
           </tr>
         {% endfor %}
       {% endif %}
@@ -188,16 +168,6 @@ title: Oslo Mental Health Map
 </table>
 
 <script>
-  const groups = {
-    all:            null,
-    foundations:    ['foundations'],
-    prepare:        ['data_conversion', 'qc', 'preprocessing', 'registration_normalization'],
-    analyze:        ['statistical_analysis', 'connectivity'],
-    visualize:      ['visualization', 'libraries'],
-    infrastructure: ['workflow_managers'],
-    resources:      ['datasets', 'consortia', 'standards_protocols', 'preregistration', 'community', 'training_events', 'general_purpose']
-  };
-
   const toolTable = document.querySelector('.tool-table');
 
   // Pre-populate date cells once on load
@@ -208,153 +178,114 @@ title: Oslo Mental Health Map
     }
   });
 
-  // Pre-populate star counts
-  document.querySelectorAll('.tool-stars[data-stars]').forEach(cell => {
-    const n = parseInt(cell.dataset.stars);
-    if (!isNaN(n) && n > 0) {
-      cell.textContent = n >= 1000 ? (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k' : n;
-    }
-  });
-
-  const categoryNames = {
-    {% for cat in site.data.categories %}'{{ cat.id }}': '{{ cat.name }}',
-    {% endfor %}
-  };
-
-  const mainPills      = document.querySelectorAll('#pills .pill');
-  const subPillsEl     = document.getElementById('sub-pills');
-  const search         = document.getElementById('search');
-  const tbody          = document.getElementById('tool-list');
-  const toolRows       = document.querySelectorAll('#tool-list tr:not(.section-header)');
-  const headers        = document.querySelectorAll('#tool-list tr.section-header');
-  const originalOrder  = [...tbody.children];
-  const countEl        = document.getElementById('tool-count');
-  const langTagEl         = document.getElementById('lang-tag');
-  const langTagName       = document.getElementById('lang-tag-name');
-  const langClearEl       = document.getElementById('lang-clear');
-  const langHeaderBtn     = document.getElementById('lang-header-btn');
-  const langHeaderLabel   = document.getElementById('lang-header-label');
-  const langDropdown      = document.getElementById('lang-dropdown');
-  const langOptions       = langDropdown.querySelectorAll('.lang-option');
-
-  const modalityTagEl     = document.getElementById('modality-tag');
-  const modalityTagName   = document.getElementById('modality-tag-name');
-  const modalityClearEl   = document.getElementById('modality-clear');
-  const modalityHeaderBtn = document.getElementById('modality-header-btn');
-  const modalityHeaderLabel = document.getElementById('modality-header-label');
-  const modalityDropdown  = document.getElementById('modality-dropdown');
-  const modalityOptions   = modalityDropdown.querySelectorAll('.modality-option');
-  const mobileModalityBtns = document.querySelectorAll('#mobile-modality .pill');
-
-  const modalityLabels = { fMRI: 'fMRI', structural: 'Structural', diffusion: 'Diffusion', ASL: 'ASL', multi: 'Multi-modal' };
-
-  let activeFilter    = 'all';
-  let activeSubFilter = null;
-  let activeLang      = null;
-  let activeModality  = null;
-  let starsSortDir = null; // null | 'desc' | 'asc'
-
-  const starsHeaderBtn   = document.getElementById('stars-header-btn');
-  const starsSortIcon    = document.getElementById('stars-sort-icon');
-  const starsDropdown    = document.getElementById('stars-dropdown');
-  const starsOptions     = starsDropdown.querySelectorAll('.stars-option');
-
-  function setStarsSort(dir) {
-    starsSortDir = dir || null;
-    starsSortIcon.textContent = starsSortDir === 'desc' ? '↓' : starsSortDir === 'asc' ? '↑' : '▾';
-    starsHeaderBtn.classList.toggle('stars-header-active', !!starsSortDir);
-    starsOptions.forEach(o => o.classList.toggle('selected', o.dataset.sort === (starsSortDir || '')));
-    applyFilters();
-  }
-
-  starsHeaderBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    langDropdown.classList.remove('open');
-    modalityDropdown.classList.remove('open');
-    starsDropdown.classList.toggle('open');
-  });
-
-  starsOptions.forEach(opt => {
-    opt.addEventListener('click', e => {
-      e.stopPropagation();
-      setStarsSort(opt.dataset.sort);
-      starsDropdown.classList.remove('open');
-    });
-  });
-
-  function setLang(lang) {
-    activeLang = lang || null;
-    langHeaderLabel.textContent = activeLang ? 'Language: ' + activeLang : 'Language';
-    langHeaderBtn.classList.toggle('lang-header-active', !!activeLang);
-    langOptions.forEach(o => o.classList.toggle('selected', o.dataset.lang === (activeLang || '')));
-    if (activeLang) {
-      langTagName.textContent = activeLang;
-      langTagEl.classList.remove('hidden');
+  // Link status from the link checker (_data/health.yml). "Active" only counts if
+  // the last successful check is under a month old; otherwise the dot stays hollow.
+  const MONTH_MS = 31 * 24 * 60 * 60 * 1000;
+  document.querySelectorAll('#tool-list tr[data-link-status]').forEach(row => {
+    const dot = row.querySelector('.dot');
+    const checked = new Date(row.dataset.linkChecked);
+    const checkedLabel = isNaN(checked) ? '' : ' (checked ' + checked.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ')';
+    if (row.dataset.linkStatus === 'broken') {
+      dot.className = 'dot dot-inactive';
+      dot.title = 'Link broken' + checkedLabel;
+    } else if (row.dataset.linkStatus === 'ok' && Date.now() - checked < MONTH_MS) {
+      dot.className = 'dot dot-active';
+      dot.title = 'Link active' + checkedLabel;
     } else {
-      langTagEl.classList.add('hidden');
+      dot.title = 'Link not checked this month';
     }
+  });
+
+  const mainPills     = document.querySelectorAll('#pills .pill');
+  const search        = document.getElementById('search');
+  const tbody         = document.getElementById('tool-list');
+  const toolRows      = document.querySelectorAll('#tool-list tr:not(.section-header)');
+  const headers       = document.querySelectorAll('#tool-list tr.section-header');
+  const originalOrder = [...tbody.children];
+  const countEl       = document.getElementById('tool-count');
+  const filterTagsEl  = document.getElementById('filter-tags');
+  const colThs        = document.querySelectorAll('.col-th');
+  const mobileTilstandBtns = document.querySelectorAll('#mobile-tilstand .pill');
+
+  // Column filters; an entry tagged with the wildcard value matches every filter of that column
+  const colFilters = { tilstand: null, bydel: null, malgruppe: null, henvisning: null };
+  const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', malgruppe: 'alle' };
+
+  let activeFilter = 'all';
+
+  function thFor(key) {
+    return document.querySelector(`.col-th[data-key="${key}"]`);
+  }
+
+  function optionLabel(key, value) {
+    const opt = [...thFor(key).querySelectorAll('.col-option')].find(o => o.dataset.value === value);
+    return opt ? opt.textContent : value;
+  }
+
+  function closeDropdowns() {
+    colThs.forEach(th => th.querySelector('.col-dropdown').classList.remove('open'));
+  }
+
+  function renderFilterTags() {
+    filterTagsEl.innerHTML = '';
+    Object.entries(colFilters).forEach(([key, value]) => {
+      if (!value) return;
+      const tag = document.createElement('span');
+      tag.className = 'filter-tag';
+      tag.textContent = `(${thFor(key).dataset.title.toLowerCase()}: ${optionLabel(key, value)} `;
+      const clear = document.createElement('button');
+      clear.className = 'filter-clear';
+      clear.textContent = '✕';
+      clear.addEventListener('click', () => setColFilter(key, null));
+      tag.append(clear, ')');
+      filterTagsEl.appendChild(tag);
+    });
+  }
+
+  function setColFilter(key, value) {
+    colFilters[key] = value || null;
+    const th = thFor(key);
+    th.querySelector('.col-header-label').textContent =
+      colFilters[key] ? th.dataset.title + ': ' + optionLabel(key, value) : th.dataset.title;
+    th.querySelector('.col-header-btn').classList.toggle('col-header-active', !!colFilters[key]);
+    th.querySelectorAll('.col-option').forEach(o => o.classList.toggle('selected', o.dataset.value === (value || '')));
+    if (key === 'tilstand') {
+      mobileTilstandBtns.forEach(b => b.classList.toggle('selected', b.dataset.value === (value || '')));
+    }
+    renderFilterTags();
     applyFilters();
   }
 
-  function setModality(mod) {
-    activeModality = mod || null;
-    const label = activeModality ? (modalityLabels[activeModality] || activeModality) : null;
-    modalityHeaderLabel.textContent = label ? 'Modality: ' + label : 'Modality';
-    modalityHeaderBtn.classList.toggle('modality-header-active', !!activeModality);
-    modalityOptions.forEach(o => o.classList.toggle('selected', o.dataset.modality === (activeModality || '')));
-    mobileModalityBtns.forEach(b => b.classList.toggle('selected', b.dataset.modality === (activeModality || '')));
-    if (activeModality) {
-      modalityTagName.textContent = label;
-      modalityTagEl.classList.remove('hidden');
-    } else {
-      modalityTagEl.classList.add('hidden');
-    }
-    applyFilters();
+  function matchesCol(row, key) {
+    const value = colFilters[key];
+    if (!value) return true;
+    const vals = (row.dataset[key] || '').split('|');
+    return vals.includes(value) || (key in wildcards && vals.includes(wildcards[key]));
   }
 
-  langHeaderBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    modalityDropdown.classList.remove('open');
-    starsDropdown.classList.remove('open');
-    langDropdown.classList.toggle('open');
-  });
-
-  langOptions.forEach(opt => {
-    opt.addEventListener('click', e => {
+  colThs.forEach(th => {
+    const dropdown = th.querySelector('.col-dropdown');
+    th.querySelector('.col-header-btn').addEventListener('click', e => {
       e.stopPropagation();
-      setLang(opt.dataset.lang);
-      langDropdown.classList.remove('open');
+      const wasOpen = dropdown.classList.contains('open');
+      closeDropdowns();
+      dropdown.classList.toggle('open', !wasOpen);
+    });
+    th.querySelectorAll('.col-option').forEach(opt => {
+      opt.addEventListener('click', e => {
+        e.stopPropagation();
+        setColFilter(th.dataset.key, opt.dataset.value);
+        dropdown.classList.remove('open');
+      });
     });
   });
 
-  modalityHeaderBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    langDropdown.classList.remove('open');
-    starsDropdown.classList.remove('open');
-    modalityDropdown.classList.toggle('open');
-  });
-
-  modalityOptions.forEach(opt => {
-    opt.addEventListener('click', e => {
-      e.stopPropagation();
-      setModality(opt.dataset.modality);
-      modalityDropdown.classList.remove('open');
-    });
-  });
-
-  document.addEventListener('click', () => {
-    langDropdown.classList.remove('open');
-    modalityDropdown.classList.remove('open');
-    starsDropdown.classList.remove('open');
-  });
+  document.addEventListener('click', closeDropdowns);
 
   function updateURL() {
     const params = new URLSearchParams();
     if (activeFilter && activeFilter !== 'all') params.set('filter', activeFilter);
-    if (activeSubFilter) params.set('cat', activeSubFilter);
-    if (activeModality) params.set('modality', activeModality);
-    if (activeLang) params.set('lang', activeLang);
-    if (starsSortDir) params.set('sort', starsSortDir);
+    Object.entries(colFilters).forEach(([key, value]) => { if (value) params.set(key, value); });
     const q = search.value.trim();
     if (q) params.set('q', q);
     const str = params.toString();
@@ -364,20 +295,18 @@ title: Oslo Mental Health Map
   function applyFilters() {
     const q         = search.value.toLowerCase().trim();
     const isNewView = activeFilter === 'new';
-    const groupCats = isNewView ? null : groups[activeFilter];
-    const allowed   = activeSubFilter ? [activeSubFilter] : groupCats;
 
     toolTable.classList.toggle('show-dates', isNewView);
 
-    let top10 = null;
+    let recent = null;
     if (isNewView) {
       const sorted = [...toolRows]
         .filter(r => r.dataset.added)
         .sort((a, b) => new Date(b.dataset.added) - new Date(a.dataset.added))
         .slice(0, 25);
-      top10 = new Set(sorted);
+      recent = new Set(sorted);
 
-      // Reorder DOM: place section header then tools in date-descending order
+      // Reorder DOM: place section header then entries in date-descending order
       const seenCats = new Set();
       for (const row of sorted) {
         const cat = row.dataset.category;
@@ -389,36 +318,24 @@ title: Oslo Mental Health Map
         tbody.appendChild(row);
       }
     } else {
-      // Restore default order: categories in original order, non-GitHub tools first within each category
-      for (const el of originalOrder) {
-        if (el.classList.contains('section-header')) {
-          const cat = el.dataset.category;
-          tbody.appendChild(el);
-          const catRows = originalOrder.filter(r =>
-            !r.classList.contains('section-header') && r.dataset.category === cat
-          );
-          catRows.filter(r => r.dataset.external === 'true').forEach(r => tbody.appendChild(r));
-          catRows.filter(r => r.dataset.external !== 'true').forEach(r => tbody.appendChild(r));
-        }
-      }
+      originalOrder.forEach(el => tbody.appendChild(el));
     }
 
     let visible = 0;
     toolRows.forEach(row => {
-      const catMatch      = isNewView ? top10.has(row) : (!allowed || allowed.includes(row.dataset.category));
-      const textMatch     = !q || row.dataset.name.includes(q) || row.dataset.desc.includes(q);
-      const langMatch     = !activeLang || row.dataset.lang === activeLang;
-      const modalityMatch = !activeModality || row.dataset.modality === activeModality || (activeModality !== 'multi' && row.dataset.modality === 'multi');
-      const show = catMatch && textMatch && langMatch && modalityMatch;
+      const pillMatch = isNewView                 ? recent.has(row)
+                      : activeFilter === 'akutt'  ? row.dataset.akutt === 'true'
+                      : activeFilter === 'all'    ? true
+                      : row.dataset.category === activeFilter;
+      const textMatch = !q || row.dataset.name.includes(q) || row.dataset.desc.includes(q);
+      const show = pillMatch && textMatch && Object.keys(colFilters).every(key => matchesCol(row, key));
       row.classList.toggle('hidden', !show);
       if (show) visible++;
     });
 
     headers.forEach(header => {
       const cat = header.dataset.category;
-      const catAllowed = isNewView ? [...top10].some(r => r.dataset.category === cat)
-                                   : (!allowed || allowed.includes(cat));
-      const hasVisible = catAllowed && [...toolRows].some(
+      const hasVisible = [...toolRows].some(
         r => r.dataset.category === cat && !r.classList.contains('hidden')
       );
       header.classList.toggle('hidden', !hasVisible);
@@ -426,97 +343,33 @@ title: Oslo Mental Health Map
 
     countEl.textContent = visible + (visible === 1 ? ' entry' : ' entries');
     updateURL();
-
-    if (starsSortDir) {
-      const visibleRows = [...toolRows].filter(r => !r.classList.contains('hidden'));
-      const withGithub  = visibleRows.filter(r => r.dataset.external !== 'true');
-      const noGithub    = visibleRows.filter(r => r.dataset.external === 'true');
-      withGithub.sort((a, b) => {
-        const sa = parseInt(a.dataset.stars) || 0;
-        const sb = parseInt(b.dataset.stars) || 0;
-        return starsSortDir === 'desc' ? sb - sa : sa - sb;
-      });
-      const seenCats = new Set();
-      for (const row of [...withGithub, ...noGithub]) {
-        const cat = row.dataset.category;
-        if (!seenCats.has(cat)) {
-          const header = [...headers].find(h => h.dataset.category === cat);
-          if (header) { header.classList.remove('hidden'); tbody.appendChild(header); }
-          seenCats.add(cat);
-        }
-        tbody.appendChild(row);
-      }
-    }
-  }
-
-  function showSubPills(filter) {
-    const cats = groups[filter];
-    if (!cats || cats.length <= 1) {
-      subPillsEl.innerHTML = '';
-      subPillsEl.classList.remove('visible');
-      return;
-    }
-
-    subPillsEl.innerHTML = cats.map(id =>
-      `<button class="pill sub-pill" data-cat="${id}">${categoryNames[id] || id}</button>`
-    ).join('');
-
-    subPillsEl.querySelectorAll('.sub-pill').forEach(pill => {
-      pill.addEventListener('click', () => {
-        const wasSelected = pill.classList.contains('selected');
-        subPillsEl.querySelectorAll('.sub-pill').forEach(p => p.classList.remove('selected'));
-        if (wasSelected) {
-          // Clicking the active sub-filter again deselects it (back to the whole group)
-          activeSubFilter = null;
-        } else {
-          pill.classList.add('selected');
-          activeSubFilter = pill.dataset.cat;
-        }
-        applyFilters();
-      });
-    });
-
-    subPillsEl.classList.add('visible');
   }
 
   mainPills.forEach(pill => {
     pill.addEventListener('click', () => {
       mainPills.forEach(p => p.classList.remove('selected'));
       pill.classList.add('selected');
-      activeFilter    = pill.dataset.filter;
-      activeSubFilter = null;
-      showSubPills(activeFilter);
+      activeFilter = pill.dataset.filter;
       applyFilters();
     });
   });
 
-  langClearEl.addEventListener('click', () => setLang(null));
-  modalityClearEl.addEventListener('click', () => setModality(null));
-  mobileModalityBtns.forEach(btn => btn.addEventListener('click', () => setModality(btn.dataset.modality)));
+  mobileTilstandBtns.forEach(btn => btn.addEventListener('click', () => setColFilter('tilstand', btn.dataset.value)));
   search.addEventListener('input', applyFilters);
 
   // Load state from URL on page load
   (function() {
     const p = new URLSearchParams(window.location.search);
     const initFilter = p.get('filter');
-    const initCat = p.get('cat');
     if (initFilter) {
       const pill = [...mainPills].find(pl => pl.dataset.filter === initFilter);
       if (pill) {
         mainPills.forEach(pl => pl.classList.remove('selected'));
         pill.classList.add('selected');
         activeFilter = initFilter;
-        showSubPills(activeFilter);
       }
     }
-    if (initCat) {
-      activeSubFilter = initCat;
-      const sub = subPillsEl.querySelector(`[data-cat="${initCat}"]`);
-      if (sub) { subPillsEl.querySelectorAll('.sub-pill').forEach(s => s.classList.remove('selected')); sub.classList.add('selected'); }
-    }
-    if (p.get('modality')) setModality(p.get('modality'));
-    if (p.get('lang')) setLang(p.get('lang'));
-    if (p.get('sort')) setStarsSort(p.get('sort'));
+    Object.keys(colFilters).forEach(key => { if (p.get(key)) setColFilter(key, p.get(key)); });
     if (p.get('q')) { search.value = p.get('q'); }
     if (p.toString()) applyFilters();
   })();
@@ -527,4 +380,6 @@ title: Oslo Mental Health Map
   });
 </script>
 
-
+<footer class="footer">
+  Akutt hjelp: <a href="tel:113">113</a> · Legevakt: <a href="tel:116117">116 117</a>
+</footer>

@@ -1,0 +1,7 @@
+# Allowed values for an entry's `malgruppe` list. `alle` matches every filter.
+- { id: barn,      nb: Barn,      en: Children }
+- { id: ungdom,    nb: Ungdom,    en: Youth }
+- { id: voksne,    nb: Voksne,    en: Adults }
+- { id: eldre,     nb: Eldre,     en: Older adults }
+- { id: parorende, nb: Pårørende, en: Next of kin }
+- { id: alle,      nb: Alle,      en: Everyone }

@@ -4,7 +4,7 @@ A community-driven overview of mental health resources in Oslo.
 
 ## How it works
 
-Entries are stored as YAML files in `_data/tools/`, grouped by the categories in `_data/categories.yml`. The site is built with Jekyll and hosted on GitHub Pages.
+Entries are stored as YAML files in `_data/entries/`, grouped by the categories in `_data/categories.yml`. The site is built with Jekyll and hosted on GitHub Pages.
 
 ## Local preview
 

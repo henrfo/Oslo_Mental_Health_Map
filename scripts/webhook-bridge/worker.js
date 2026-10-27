@@ -1,15 +1,15 @@
 /**
- * Cloudflare Worker: openmritools.com contribute form → GitHub Issue
+ * Cloudflare Worker: Oslo Mental Health Map contribute form → GitHub Issue
  *
  * Receives a direct HTML form POST, creates a GitHub Issue, then redirects
  * the user back to /contribute/?submitted=true.
  *
  * Required Worker secrets (set with `wrangler secret put`):
  *   GITHUB_TOKEN  — fine-grained PAT with Issues: Read and write
- *   GITHUB_REPO   — "openmritools/openmritools.github.io"
+ *   GITHUB_REPO   — "henrfo/Oslo_Mental_Health_Map"
  */
 
-const REDIRECT_BASE = 'https://openmritools.com/contribute/';
+const REDIRECT_BASE = 'https://henrfo.github.io/Oslo_Mental_Health_Map/contribute/';
 
 export default {
   async fetch(request, env) {
@@ -47,14 +47,14 @@ export default {
     const body = [
       `| Field | Value |`,
       `|---|---|`,
-      `| Type | ${isEdit ? 'Flag an edit' : 'Suggest a tool'} |`,
-      `| Tool name | ${toolName} |`,
+      `| Type | ${isEdit ? 'Flag an edit' : 'Suggest an offer'} |`,
+      `| Name | ${toolName} |`,
       `| URL | ${toolUrl ? `[${toolUrl}](${toolUrl})` : '—'} |`,
       `| Description | ${description ? description.replace(/\n/g, ' ') : '—'} |`,
       `| Contact | ${contact || '—'} |`,
       `| List as contributor | ${listMe} |`,
       ``,
-      `*Submitted via [openmritools.com/contribute](https://openmritools.com/contribute)*`,
+      `*Submitted via the [Oslo Mental Health Map suggest form](${REDIRECT_BASE})*`,
     ].join('\n');
 
     const ghResp = await fetch(
@@ -66,7 +66,7 @@ export default {
           'Content-Type':         'application/json',
           'Accept':               'application/vnd.github+json',
           'X-GitHub-Api-Version': '2022-11-28',
-          'User-Agent':           'openmritools-webhook-bridge',
+          'User-Agent':           'omhm-webhook-bridge',
         },
         body: JSON.stringify({
           title:  `${prefix} ${toolName}`,

@@ -1,56 +1,28 @@
-- id: foundations
-  name: Foundations
+# group: tjenester = services (middle chips), ressurser = resources (right chips)
+- id: frivillig
+  name: Frivillig
+  group: tjenester
 
-- id: data_conversion
-  name: Data Conversion
+- id: forstelinje
+  name: Førstelinje
+  group: tjenester
 
-- id: qc
-  name: Quality Control
+- id: spesialist
+  name: Spesialist
+  group: tjenester
 
-- id: preprocessing
-  name: Preprocessing
+- id: krisetelefoner
+  name: Krisetelefoner
+  group: ressurser
 
-- id: registration_normalization
-  name: Registration & Normalization
+- id: brukerorganisasjoner
+  name: Brukerorganisasjoner
+  group: ressurser
 
-- id: harmonization
-  name: Harmonization
+- id: retningslinjer
+  name: Retningslinjer
+  group: ressurser
 
-- id: statistical_analysis
-  name: Statistical Analysis
-
-- id: connectivity
-  name: Connectivity
-
-- id: diffusion_analysis
-  name: Diffusion Analysis
-
-- id: visualization
-  name: Visualization
-
-- id: workflow_managers
-  name: Workflow Managers
-
-- id: libraries
-  name: Libraries
-
-- id: datasets
-  name: Datasets
-
-- id: consortia
-  name: Consortia
-
-- id: standards_protocols
-  name: Standards & Protocols
-
-- id: preregistration
-  name: Preregistration & Publishing
-
-- id: community
-  name: Community
-
-- id: training_events
-  name: Events
-
-- id: general_purpose
-  name: General-Purpose Tools
+- id: kurs
+  name: Kurs
+  group: ressurser
