@@ -30,3 +30,110 @@
   website: https://www.lds.no
   last_verified: 2026-10-27
   date_added: 2026-10-27
+
+- name: "Psykiatrisk legevakt (OUS)"
+  draft: true                 # VERIFY – contact route ("via 116 117") flagged ⚠ in the research
+  description:
+    nb: "Akuttpsykiatrisk vurdering kveld og helg for alle i Oslo."
+    en: "Emergency psychiatric assessment in the evenings and at weekends for everyone in Oslo."
+  tilstand: [psykose, selvskading, krise]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: true
+  phone: "116 117"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/legevakt-oslo/akutt-psykisk-sykdom/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Lovisenberg DPS"
+  description:
+    nb: "DPS for voksne i Gamle Oslo, Grünerløkka, St. Hanshaugen og Sentrum."
+    en: "Adult DPS for Gamle Oslo, Grünerløkka, St. Hanshaugen and the city centre."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dps: D47
+  henvisning: true
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Nydalen DPS (OUS)"
+  description:
+    nb: "DPS for voksne i Sagene, Nordre Aker og Bjerke."
+    en: "Adult DPS for Sagene, Nordre Aker and Bjerke."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dps: D68
+  henvisning: true
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Søndre Oslo DPS (OUS)"
+  description:
+    nb: "DPS for voksne i Østensjø, Nordstrand og Søndre Nordstrand."
+    en: "Adult DPS for Østensjø, Nordstrand and Søndre Nordstrand."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dps: D69
+  henvisning: true
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "DPS Groruddalen (Ahus)"
+  description:
+    nb: "DPS for voksne i Alna, Grorud, Stovner og Nittedal."
+    en: "Adult DPS for Alna, Grorud, Stovner and Nittedal."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dps: D50
+  henvisning: true
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "BUP Vest (Diakonhjemmet)"
+  description:
+    nb: "BUP for barn og unge i Frogner, Ullern og Vestre Aker."
+    en: "Child and adolescent mental health service (BUP) for Frogner, Ullern and Vestre Aker."
+  tilstand: [generelt]
+  malgruppe: [barn, ungdom]
+  dekker: [Frogner, Ullern, Vestre Aker]
+  henvisning: true
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/psykisk-helsehjelp-til-barn-unge-og-familier/psykisk-helsehjelp-for-barn-og-familier/barne-og-ungdomspsykiatrisk-poliklinikk-bup/   # Oslo kommune's BUP page; replace with BUP Vest's own page
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Sorgpoliklinikken (Ahus)"
+  draft: true                 # VERIFY – check whether it covers Oslo (dekker set to Hele Oslo for now)
+  description:
+    nb: "Behandling ved komplisert sorg."
+    en: "Treatment for complicated grief."
+  tilstand: [krise]
+  malgruppe: [voksne]
+  dekker: [Hele Oslo]
+  henvisning: true
+  akutt: false
+  website: https://www.ahus.no/avdelinger/medisinsk-divisjon/sorgstotte
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Avtalespesialister"
+  description:
+    nb: "Private psykologer og psykiatere med offentlig avtale; du betaler bare egenandel."
+    en: "Private psychologists and psychiatrists with a public contract; you only pay the standard patient fee."
+  tilstand: [generelt]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  henvisning: true
+  akutt: false
+  website: https://www.helse-sorost.no/helsefaglig/samarbeid/avtaler-med-private/avtalespesialister
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

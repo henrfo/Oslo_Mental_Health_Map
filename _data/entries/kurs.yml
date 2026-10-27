@@ -8,3 +8,12 @@
   website: https://kognitiv.no
   last_verified: 2026-10-27
   date_added: 2026-10-27
+
+- name: "NHI selvhjelpskurs"
+  description:
+    nb: "Gratis kvalitetssikrede selvhjelpskurs for angst, depresjon og søvn."
+    en: "Free, quality-assured self-help courses for anxiety, depression and sleep."
+  tilstand: [angst, depresjon]
+  website: https://nhi.no/psykisk-helse/psykisk-egenpleie/selvhjelpskurs-for-psykiske-lidelser/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

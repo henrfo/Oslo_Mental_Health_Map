@@ -1,0 +1,80 @@
+- name: "Mental Helse hjelpetelefon"
+  description:
+    nb: "Anonym samtaletelefon for alle som trenger noen å snakke med."
+    en: "Anonymous helpline for anyone who needs someone to talk to."
+  tilstand: [generelt]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  phone: "116 123"
+  website: https://mentalhelse.no/fa-hjelp/hjelpetelefonen
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Kirkens SOS"
+  description:
+    nb: "Døgnåpen krisetelefon og chat."
+    en: "Crisis line and chat, open around the clock."
+  tilstand: [krise, selvskading]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  phone: "22 40 00 40"
+  website: https://www.kirkens-sos.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Kors på halsen (Røde Kors)"
+  description:
+    nb: "Gratis, anonym chat for barn og unge."
+    en: "Free, anonymous chat for children and young people."
+  tilstand: [generelt]
+  malgruppe: [barn, ungdom]
+  dekker: [Hele Oslo]
+  website: https://korspaahalsen.rodekors.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Mental Helse Ungdom chat"
+  description:
+    nb: "Chat for unge om psykisk helse."
+    en: "Chat for young people about mental health."
+  tilstand: [generelt]
+  malgruppe: [ungdom]
+  dekker: [Hele Oslo]
+  website: https://mentalhelseungdom.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Angsttelefonen"
+  description:
+    nb: "Telefon for deg som strever med angst."
+    en: "Helpline for people who struggle with anxiety."
+  tilstand: [angst]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  phone: "21 95 21 00"
+  website: https://angsttelefonen.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Pårørendetelefonen (Ivareta)"
+  description:
+    nb: "Hjelpelinje for pårørende og etterlatte."
+    en: "Helpline for families, friends and the bereaved."
+  tilstand: [generelt]
+  malgruppe: [parorende]
+  dekker: [Hele Oslo]
+  phone: "800 40 567"
+  website: https://www.ivareta.no/parorendetelefonen
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "RUSinfo"
+  description:
+    nb: "Anonym informasjon og veiledning om rus."
+    en: "Anonymous information and guidance about substance use."
+  tilstand: [rus]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  website: https://rusinfo.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

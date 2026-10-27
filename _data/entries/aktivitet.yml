@@ -6,3 +6,13 @@
   website: https://frivillig.no
   last_verified: 2026-10-27
   date_added: 2026-10-27
+
+- name: "Fyll dagene"
+  description:
+    nb: "Oversikt over arbeid og aktiviteter for deg med rusproblemer."
+    en: "Overview of work and activities for people with substance use problems."
+  tilstand: [rus]
+  dekker: [Hele Oslo]
+  website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/fyll-dagene-arbeidstilbud-og-aktiviteter/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

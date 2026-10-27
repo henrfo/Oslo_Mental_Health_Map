@@ -9,3 +9,22 @@
   website: https://www.nkvts.no
   last_verified: 2026-10-27
   date_added: 2026-10-27
+
+- name: "Følelseskompasset"
+  description:
+    nb: "Veileder for å forstå og jobbe med følelser."
+    en: "Guide to understanding and working with emotions."
+  tilstand: [generelt]
+  website: https://folelseskompasset.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Litt sint (Familievernet)"
+  description:
+    nb: "Hjelp for foreldre som vil bli mindre sinte hjemme."
+    en: "Help for parents who want to get less angry at home."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  website: https://www.littsint.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

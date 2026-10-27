@@ -55,3 +55,68 @@
   website: https://mentalhelse.no/vart-arbeid/prosjekter/livsgnist-naturen-som-moteplass/
   last_verified: 2026-10-27
   date_added: 2026-10-27
+
+- name: "Fontenehusene i Oslo"
+  description:
+    nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
+    en: "Work community for people who have or have had mental health problems."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/fyll-dagene-arbeidstilbud-og-aktiviteter/alle-tilbud-i-oslo/fontenehusene-i-oslo/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Aktivitetshusene"
+  description:
+    nb: "Lavterskel aktiviteter og møteplasser på dagtid."
+    en: "Low-threshold daytime activities and meeting places."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Pårørendesenteret i Oslo (PIO)"
+  description:
+    nb: "Råd, kurs og grupper for pårørende."
+    en: "Advice, courses and groups for families and friends."
+  tilstand: [generelt]
+  malgruppe: [parorende]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://piosenteret.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Ivareta"
+  description:
+    nb: "Støtte for pårørende og etterlatte ved rus og psykisk sykdom."
+    en: "Support for families and the bereaved affected by substance use and mental illness."
+  tilstand: [rus, generelt]
+  malgruppe: [parorende]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.ivareta.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Angstforeningen Oslo"
+  description:
+    nb: "Selvhjelpsgrupper for deg med angst."
+    en: "Self-help groups for people with anxiety."
+  tilstand: [angst]
+  malgruppe: [voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://angstforeningen.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

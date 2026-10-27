@@ -15,3 +15,163 @@
   website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/sentrumsarbeid/uteseksjonen/
   last_verified: 2026-10-27
   date_added: 2026-10-27
+
+- name: "Legevakten i Oslo"
+  description:
+    nb: "Døgnåpen legevakt, også ved alvorlig depresjon, selvmordsfare eller psykose."
+    en: "Emergency clinic open around the clock, also for severe depression, suicide risk or psychosis."
+  tilstand: [depresjon, selvskading, psykose, krise]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: true
+  phone: "116 117"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/legevakt-oslo/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Psykososial akuttjeneste"
+  description:
+    nb: "Gratis døgnåpen psykososial akutthjelp ved legevakten."
+    en: "Free psychosocial emergency help at the emergency clinic, open around the clock."
+  tilstand: [krise]
+  malgruppe: [alle]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: true
+  phone: "116 117"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/psykososial-akuttjeneste/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Barnevernvakten"
+  description:
+    nb: "Akutt barnevern når du er alvorlig bekymret for et barn."
+    en: "Emergency child welfare service when you are seriously worried about a child."
+  tilstand: [krise]
+  malgruppe: [barn, ungdom]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: true
+  website: https://www.barnevernvakten.no/kommuner/oslo-kommune
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Rask psykisk helsehjelp"
+  description:
+    nb: "Kortvarig hjelp ved lette til moderate plager, i hver bydel, fra 16 (noen steder 18) år."
+    en: "Short-term help for mild to moderate problems, in every district, from age 16 (18 in some districts)."
+  tilstand: [angst, depresjon]
+  malgruppe: [ungdom, voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/ved-milde-til-moderate-psykiske-utfordringer/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Ung Arena"
+  description:
+    nb: "Gratis samtaletilbud for unge 12–25 år."
+    en: "Free counselling for young people aged 12–25."
+  tilstand: [generelt]
+  malgruppe: [ungdom]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/psykisk-helsehjelp-til-barn-unge-og-familier/psykisk-helsehjelp-for-ungdom-og-unge-voksne/ung-arena/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Oslohjelpa"
+  description:
+    nb: "Gratis hjelp til barnefamilier fra helsestasjonen."
+    en: "Free help for families with children from the health centre."
+  tilstand: [generelt]
+  malgruppe: [barn, voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/barn-ungdom-og-familie/oslohjelpa/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Helsestasjon for ungdom (HFU)"
+  description:
+    nb: "Gratis helsetilbud for ungdom, også om psykisk helse."
+    en: "Free health service for young people, including mental health."
+  tilstand: [generelt]
+  malgruppe: [ungdom]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/helsetjenester/helsestasjon-og-vaksine/helsestasjon-for-ungdom-hfu/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Uteseksjonens psykologtjeneste"
+  description:
+    nb: "Lavterskel psykolog for unge under 25."
+    en: "Low-threshold psychologist for young people under 25."
+  tilstand: [generelt]
+  malgruppe: [ungdom]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/psykisk-helsehjelp-til-barn-unge-og-familier/psykisk-helsehjelp-for-ungdom-og-unge-voksne/uteseksjonens-psykologtjeneste/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Familievernkontoret"
+  description:
+    nb: "Gratis par- og familieterapi ved konflikt eller krise."
+    en: "Free couples and family therapy in conflict or crisis."
+  tilstand: [krise]
+  malgruppe: [voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/barn-ungdom-og-familie/barnevern-og-foreldreveiledning/par-og-familieterapi/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Frisklivssentralene"
+  draft: true                 # VERIFY – referral and details flagged ⚠ in the research
+  description:
+    nb: "Kurs i bedre psykisk helse, søvn og mestring."
+    en: "Courses on better mental health, sleep and coping."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/helsetjenester/dagtilbud/frisklivssentraler/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Hasjavvenningsprogrammet (HAP)"
+  description:
+    nb: "Gratis program for å redusere eller slutte med cannabis."
+    en: "Free programme to cut down on or quit cannabis."
+  tilstand: [rus]
+  malgruppe: [ungdom, voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/behandling-og-tjenester/hasjavvenning/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Senter for jobbmestring (NAV)"
+  draft: true                 # VERIFY – referral route flagged ⚠ in the research
+  description:
+    nb: "Hjelp til arbeid for unge under 30 med psykiske plager."
+    en: "Help with work for young people under 30 with mental health problems."
+  tilstand: [generelt]
+  malgruppe: [ungdom, voksne]
+  dekker: [Hele Oslo]
+  henvisning: false
+  akutt: false
+  website: https://www.nav.no/no/lokalt/oslo/satsinger-og-aktiviteter/senter-for-jobbmestring
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
