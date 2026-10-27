@@ -545,12 +545,17 @@ html[data-lang="nb"] .l-en {
 }
 
 .meta-left,
-/* Footer: crisis numbers on the left, "Bidra på GitHub" on the right */
+/* Footer: crisis numbers on the left, "Innsendte forslag · Bidra på GitHub" on the right */
 .footer-split {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 16px;
+}
+
+.footer-links {
+  display: inline-flex;
+  gap: 16px;
 }
 
 .meta-sep {
