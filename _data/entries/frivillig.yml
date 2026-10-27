@@ -57,32 +57,6 @@
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
-- name: "Fontenehusene i Oslo"
-  description:
-    nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
-    en: "Work community for people who have or have had mental health problems."
-  tilstand: [generelt]
-  malgruppe: [voksne]
-  dekker: [Hele Oslo]
-  henvisning: false
-  akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/fyll-dagene-arbeidstilbud-og-aktiviteter/alle-tilbud-i-oslo/fontenehusene-i-oslo/
-  last_verified: 2026-10-27
-  date_added: 2026-10-27
-
-- name: "Aktivitetshusene"
-  description:
-    nb: "Lavterskel aktiviteter og møteplasser på dagtid."
-    en: "Low-threshold daytime activities and meeting places."
-  tilstand: [generelt]
-  malgruppe: [voksne]
-  dekker: [Hele Oslo]
-  henvisning: false
-  akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
-  last_verified: 2026-10-27
-  date_added: 2026-10-27
-
 - name: "PIO-senteret"
   full_name: "Pårørendesenteret i Oslo (PIO)"
   description:
@@ -120,5 +94,336 @@
   henvisning: false
   akutt: false
   website: https://angstforeningen.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Fontenehuset sentrum"
+  full_name: "Fontenehuset Oslo sentrum"
+  description:
+    nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
+    en: "Work community for people who have or have had mental health problems."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "St. Hanshaugen"
+  dekker: [Hele Oslo]
+  address: "Holbergs gate 5, 0166 Oslo"
+  lat: 59.92068
+  lon: 10.73565
+  henvisning: false
+  akutt: false
+  phone: "22 99 34 80"
+  website: https://www.fontenehuset.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Fontenehuset Oslo Øst"
+  description:
+    nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
+    en: "Work community for people who have or have had mental health problems."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Gamle Oslo"
+  dekker: [Hele Oslo]
+  address: "Hagegata 25, 0653 Oslo"
+  lat: 59.91419
+  lon: 10.77476
+  henvisning: false
+  akutt: false
+  phone: "22 08 33 90"
+  website: https://www.fontenehuset-osloost.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Fontenehuset Oslo Sør"
+  full_name: "Fontenehuset Oslo Sør (Mortensrud)"
+  description:
+    nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
+    en: "Work community for people who have or have had mental health problems."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Søndre Nordstrand"
+  dekker: [Hele Oslo]
+  address: "Klemetsrudveien 50, 1278 Oslo"
+  lat: 59.84513
+  lon: 10.83469
+  henvisning: false
+  akutt: false
+  phone: "922 86 666"
+  website: https://www.fontenehuset-oslosor.no/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Akersveien 17 B"
+  full_name: "Aktivitetshus i Akersveien 17 B"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "St. Hanshaugen"
+  dekker: [Hele Oslo]
+  address: "Akersveien 17 B, 0177 Oslo"
+  lat: 59.91888
+  lon: 10.74480
+  henvisning: false
+  akutt: false
+  phone: "40 20 40 03"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Nordstrand aktivitetshus"
+  full_name: "Aktivitetshuset Nordstrand"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Nordstrand"
+  dekker: [Hele Oslo]
+  address: "Marmorveien 2C, 1154 Oslo"
+  lat: 59.87635
+  lon: 10.82044
+  henvisning: false
+  akutt: false
+  phone: "97 53 93 34"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Prindsen aktivitetshus"
+  full_name: "Aktivitetshuset Prindsen"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "St. Hanshaugen"
+  dekker: [Hele Oslo]
+  address: "Storgata 36 B, 0182 Oslo"
+  lat: 59.91508
+  lon: 10.75526
+  henvisning: false
+  akutt: false
+  phone: "22 17 18 18"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Svovel aktivitetshus"
+  full_name: "Aktivitetshuset Svovel"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Gamle Oslo"
+  dekker: [Hele Oslo]
+  address: "Grenseveien 66, 0663 Oslo"
+  lat: 59.91822
+  lon: 10.79969
+  henvisning: false
+  akutt: false
+  phone: "48 12 57 83"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Aktivitetssenteret 31B"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Gamle Oslo"
+  dekker: [Hele Oslo]
+  address: "Grønlandsleiret 31 B, 0190 Oslo"
+  lat: 59.91130
+  lon: 10.76673
+  henvisning: false
+  akutt: false
+  phone: "48 10 56 36"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Amaldhus aktivitetshus"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Frogner"
+  dekker: [Hele Oslo]
+  address: "Majorstuveien 8, 0353 Oslo"
+  lat: 59.92453
+  lon: 10.71862
+  henvisning: false
+  akutt: false
+  phone: "22 55 35 06"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Broa aktivitetshus"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Søndre Nordstrand"
+  dekker: [Hele Oslo]
+  address: "Nordåsveien 171, 1251 Oslo"
+  lat: 59.83004
+  lon: 10.78121
+  henvisning: false
+  akutt: false
+  phone: "91 00 34 50"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Fossum aktivitetshus"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Stovner"
+  dekker: [Hele Oslo]
+  address: "Tante Ulrikkes vei 1b, 0984 Oslo"
+  lat: 59.95797
+  lon: 10.91552
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Haven aktivitetshus"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Grünerløkka"
+  dekker: [Hele Oslo]
+  address: "Sofienberggata 7B, 0551 Oslo"
+  lat: 59.92185
+  lon: 10.75663
+  henvisning: false
+  akutt: false
+  phone: "41 86 50 92"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Hjørnesteinen"
+  full_name: "Hjørnesteinen aktivitetshus"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Ullern"
+  dekker: [Hele Oslo]
+  address: "Ullernchausseen 111, 0284 Oslo"
+  lat: 59.92245
+  lon: 10.64091
+  henvisning: false
+  akutt: false
+  phone: "48 22 50 61"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Kafé X"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Østensjø"
+  dekker: [Hele Oslo]
+  address: "Vetlandsveien 99, 1188 Oslo"
+  lat: 59.89417
+  lon: 10.84201
+  henvisning: false
+  akutt: false
+  phone: "93 23 01 28"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Løkta aktivitetssenter"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Grorud"
+  dekker: [Hele Oslo]
+  address: "Romsås senter 2, 0970 Oslo"
+  lat: 59.96404
+  lon: 10.89323
+  henvisning: false
+  akutt: false
+  phone: "91 52 18 29"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Rasmus aktivitetshus"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Bjerke"
+  dekker: [Hele Oslo]
+  address: "Årvollveien 35, 0590 Oslo"
+  lat: 59.94614
+  lon: 10.81494
+  henvisning: false
+  akutt: false
+  phone: "90 62 13 49"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Recoverysenteret"
+  full_name: "Recoverysenteret i Nordre Aker"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Nordre Aker"
+  dekker: [Hele Oslo]
+  address: "Maridalsveien 292, 0872 Oslo"
+  lat: 59.95281
+  lon: 10.76038
+  henvisning: false
+  akutt: false
+  phone: "90 22 73 75"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: "Svingen treffsted"
+  description:
+    nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and a meeting place for adults, no referral needed."
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: "Sagene"
+  dekker: [Hele Oslo]
+  address: "Vøyensvingen 22, 0458 Oslo"
+  lat: 59.93264
+  lon: 10.75485
+  henvisning: false
+  akutt: false
+  phone: "97 42 50 61"
+  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
   date_added: 2026-10-27
