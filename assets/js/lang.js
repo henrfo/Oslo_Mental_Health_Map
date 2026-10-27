@@ -8,6 +8,8 @@
     const lang = next === 'en' ? 'en' : 'nb';
     document.documentElement.dataset.lang = lang;
     document.documentElement.lang = lang;
+    const title = document.querySelector('title');
+    if (title && title.dataset[lang]) document.title = title.dataset[lang];
     try { localStorage.setItem('omhm-lang', lang); } catch (e) {}
     buttons.forEach(b => b.classList.toggle('selected', b.dataset.setLang === lang));
     // Attributes can't hold two languages, so they carry data-<attr>-nb/-en

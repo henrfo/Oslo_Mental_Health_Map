@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title{% if page.title_nb %} data-nb="{{ page.title_nb }}" data-en="{{ page.title }}"{% endif %}>{{ page.title | default: site.title }}</title>
   {%- if page.bilingual %}
   <script>
     // Pick the language before first paint: ?lang= wins, then the saved choice, else Norwegian
@@ -12,10 +13,12 @@
       lang = lang === 'en' ? 'en' : 'nb';
       document.documentElement.dataset.lang = lang;
       document.documentElement.lang = lang;
+      // Tab title in the chosen language (the <title> tag comes before this script)
+      const title = document.querySelector('title');
+      if (title && title.dataset[lang]) document.title = title.dataset[lang];
     })();
   </script>
   {%- endif %}
-  <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ site.description }}">
   <meta property="og:title" content="{{ page.title | default: site.title }}">
   <meta property="og:description" content="{{ site.description }}">

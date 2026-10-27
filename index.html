@@ -1,13 +1,14 @@
 ---
 layout: default
 title: Oslo Mental Health Map
+title_nb: "Psykisk Helse Oslo – Oversikt"
 bilingual: true
 ---
 
 <header>
   <div class="site-header-row">
     <div class="site-header-left">
-      <h1 class="site-title"><span class="title-dot"></span><a href="{{ '/' | relative_url }}">Oslo Mental Health Map</a></h1>
+      <h1 class="site-title"><span class="title-dot"></span><a href="{{ '/' | relative_url }}">{% include t.html k="site_name" %}</a></h1>
     </div>
     <nav class="site-nav">
       <a href="{{ '/contribute/' | relative_url }}">{% include t.html k="nav_suggest" %}</a>
@@ -68,7 +69,7 @@ bilingual: true
 
 
 <div class="table-wrap" id="table-wrap">
-<table class="tool-table" aria-label="Oslo Mental Health Map directory">
+<table class="tool-table" aria-label="Directory">
   <thead>
     <tr>
       <th aria-label="Info verified"></th>
@@ -882,6 +883,8 @@ bilingual: true
     lang = next === 'en' ? 'en' : 'nb';
     document.documentElement.dataset.lang = lang;
     document.documentElement.lang = lang;
+    const title = document.querySelector('title');
+    if (title && title.dataset[lang]) document.title = title.dataset[lang];
     try { localStorage.setItem('omhm-lang', lang); } catch (e) {}
     langBtns.forEach(b => b.classList.toggle('selected', b.dataset.setLang === lang));
     search.placeholder = t('search');

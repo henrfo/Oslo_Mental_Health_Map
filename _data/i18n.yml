@@ -1,5 +1,6 @@
 # Interface strings for the NO | EN switch. Data text (descriptions, value
 # labels, category names) carries its own nb/en and is not listed here.
+site_name:        { nb: "Psykisk Helse Oslo – Oversikt", en: "Oslo Mental Health Map" }
 tagline:          { nb: "du kan ikke henvise til et tilbud du ikke vet finnes.", en: "you can't refer to a service you don't know exists." }
 description:      { nb: "En oversikt over psykiske helsetilbud i Oslo, for helsepersonell", en: "An overview of mental health services in Oslo, for health professionals" }
 nav_suggest:      { nb: Foreslå tilbud eller endring, en: Suggest an offer or edit }
