@@ -331,6 +331,87 @@ html[data-lang="nb"] .l-en {
   text-shadow: 0 0 3px #ffffff, 0 0 3px #ffffff, 0 0 3px #ffffff;
 }
 
+/* List beside the map: ~300px on the left, below the map on phones */
+.map-body {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  gap: 16px;
+}
+
+.map-list {
+  display: flex;
+  flex-direction: column;
+  max-height: max(60vh, 360px);
+  min-width: 0;
+}
+
+.map-list-title {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--text);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.map-list-items {
+  list-style: none;
+  overflow-y: auto;
+}
+
+.map-list-item {
+  padding: 8px 6px;
+  border-bottom: 1px solid var(--hairline);
+  cursor: pointer;
+}
+
+.map-list-item:hover,
+.map-list-item:focus-visible {
+  background: var(--hairline);
+  outline: none;
+}
+
+.map-list-item.active {
+  box-shadow: inset 2px 0 0 var(--text);
+  background: var(--hairline);
+}
+
+.map-list-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.map-list-meta {
+  margin-top: 3px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.map-list-meta .akutt-tag {
+  margin-left: 4px;
+}
+
+.map-list-tag {
+  margin-right: 4px;
+  padding: 0 5px;
+  border: 1px solid var(--hairline);
+  border-radius: 2px;
+  color: var(--text);
+}
+
+.map-list-empty {
+  padding: 8px 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+#map-list-more {
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
 /* Entries without an address: a slim strip of chips above the map */
 .no-address-strip {
   display: flex;
@@ -934,6 +1015,15 @@ html[data-lang="nb"] .l-en {
 /* ── Mobile ── */
 
 @media (max-width: 640px) {
+  .map-body {
+    grid-template-columns: 1fr;
+  }
+
+  .map-list {
+    order: 2;
+    max-height: none;
+  }
+
   body {
     padding: 36px 20px 64px;
   }

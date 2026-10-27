@@ -34,6 +34,9 @@ answer_no:        { nb: Nei, en: "No" }
 verified:         { nb: Info bekreftet, en: Info verified }
 panel_title:      { nb: Uten fast adresse, en: No fixed address }
 panel_empty:      { nb: Ingen tilbud uten fast adresse i dette utvalget., en: No services without a fixed address in this selection. }
+list_title:       { nb: I kartutsnittet, en: In this map view }
+list_empty:       { nb: Ingen tilbud i dette kartutsnittet., en: No services in this map view. }
+list_more:        { nb: Vis flere, en: Show more }
 strip_more:       { nb: "+ {n} til", en: "+ {n} more" }
 strip_less:       { nb: Vis færre, en: Show fewer }
 dps_layer:        { nb: DPS-områder, en: DPS areas }

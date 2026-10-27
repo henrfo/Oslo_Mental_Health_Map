@@ -174,7 +174,14 @@ bilingual: true
     <span class="strip-label">{% include t.html k="panel_title" %}</span>
     <span id="strip-chips" class="strip-chips"></span>
   </div>
-  <div id="map" class="map" aria-label="Map of entries"></div>
+  <div class="map-body">
+    <aside class="map-list" aria-label="Entries in the map view">
+      <h2 class="map-list-title">{% include t.html k="list_title" %} <span id="map-list-count"></span></h2>
+      <ul id="map-list-items" class="map-list-items"></ul>
+      <button id="map-list-more" class="strip-toggle hidden"></button>
+    </aside>
+    <div id="map" class="map" aria-label="Map of entries"></div>
+  </div>
 </div>
 <p id="map-note" class="map-note hidden"></p>
 
@@ -425,18 +432,106 @@ bilingual: true
     }
   }
 
+  // ── List beside the map: the markers inside the current view, linked both ways ──
+  const LIST_STEP = 5;
+  const mapListItems = document.getElementById('map-list-items');
+  const mapListCount = document.getElementById('map-list-count');
+  const mapListMore  = document.getElementById('map-list-more');
+  const MARKER_STYLE    = { radius: 7, weight: 2, fillOpacity: 0.7 };
+  const MARKER_HIGHLIGHT = { radius: 11, weight: 3, fillOpacity: 1 };
+  let markersByRow = new Map();   // table row → circle marker
+  let listExpanded = false;
+  let activeListRow = null;       // table row whose list item is highlighted
+
+  function highlightMarker(row, on) {
+    const marker = markersByRow.get(row);
+    if (!marker) return;
+    marker.setStyle(on ? MARKER_HIGHLIGHT : MARKER_STYLE);
+    if (on) marker.bringToFront();
+  }
+
+  function listItemFor(row) {
+    const li = document.createElement('li');
+    li.className = 'map-list-item' + (row === activeListRow ? ' active' : '');
+    li.tabIndex = 0;
+    const name = document.createElement('div');
+    name.className = 'map-list-name';
+    name.textContent = row.querySelector('.tool-name a').textContent;
+    li.appendChild(name);
+    const meta = document.createElement('div');
+    meta.className = 'map-list-meta';
+    const nivaa = document.createElement('span');
+    nivaa.className = 'map-list-tag';
+    nivaa.textContent = categoryLabel(row);
+    meta.appendChild(nivaa);
+    if (row.dataset.bydel) meta.append(' ' + row.dataset.bydel);
+    if (row.dataset.akutt === 'true') {
+      const akutt = document.createElement('span');
+      akutt.className = 'akutt-tag';
+      akutt.textContent = t('akutt');
+      meta.append(' ', akutt);
+    }
+    li.appendChild(meta);
+    const open = () => {
+      const marker = markersByRow.get(row);
+      map.flyTo(marker.getLatLng(), Math.max(map.getZoom(), 15), { duration: 0.6 });
+      map.once('moveend', () => marker.openPopup());
+      setActiveListRow(row);
+    };
+    li.addEventListener('click', open);
+    li.addEventListener('keydown', e => { if (e.key === 'Enter') open(); });
+    li.addEventListener('mouseenter', () => highlightMarker(row, true));
+    li.addEventListener('mouseleave', () => highlightMarker(row, false));
+    return li;
+  }
+
+  function renderMapList() {
+    if (!map) return;
+    markersByRow.forEach(m => m.setStyle(MARKER_STYLE));   // redrawn rows never get mouseleave
+    const bounds = map.getBounds();
+    const inView = [...markersByRow.entries()].filter(([, m]) => bounds.contains(m.getLatLng())).map(([row]) => row);
+    // A clicked marker's row must be visible even if it's past the first five
+    if (activeListRow && inView.indexOf(activeListRow) >= LIST_STEP) listExpanded = true;
+    const visible = listExpanded ? inView : inView.slice(0, LIST_STEP);
+    mapListItems.innerHTML = '';
+    visible.forEach(row => mapListItems.appendChild(listItemFor(row)));
+    if (!inView.length) {
+      const empty = document.createElement('li');
+      empty.className = 'map-list-empty';
+      empty.textContent = t('list_empty');
+      mapListItems.appendChild(empty);
+    }
+    mapListCount.textContent = inView.length ? `(${inView.length})` : '';
+    const hidden = inView.length - LIST_STEP;
+    mapListMore.classList.toggle('hidden', hidden <= 0);
+    mapListMore.textContent = listExpanded ? t('strip_less') : `${t('list_more')} (${hidden})`;
+  }
+
+  function setActiveListRow(row) {
+    activeListRow = row;
+    renderMapList();
+    const li = mapListItems.querySelector('.map-list-item.active');
+    if (li) li.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }
+
+  mapListMore.addEventListener('click', () => { listExpanded = !listExpanded; renderMapList(); });
+
   function renderMarkers() {
     if (!map || activeView !== 'map') return;
     markerLayer.clearLayers();
+    markersByRow = new Map();
     const shown    = [...toolRows].filter(r => !r.classList.contains('hidden'));
     const placed   = shown.filter(r => r.dataset.lat && r.dataset.lon);
     const unplaced = shown.filter(r => !(r.dataset.lat && r.dataset.lon));
+    if (!placed.includes(activeListRow)) activeListRow = null;
     const ink = getComputedStyle(document.documentElement).getPropertyValue('--text').trim();
     placed.forEach(row => {
       const color = row.dataset.akutt === 'true' ? '#dc2626' : ink;
-      L.circleMarker([+row.dataset.lat, +row.dataset.lon], {
-        radius: 7, weight: 2, color, fillColor: color, fillOpacity: 0.7,
-      }).bindPopup(popupFor(row)).addTo(markerLayer);
+      const marker = L.circleMarker([+row.dataset.lat, +row.dataset.lon], { ...MARKER_STYLE, color, fillColor: color })
+        .bindPopup(popupFor(row))
+        .on('click', () => setActiveListRow(row))
+        .addTo(markerLayer);
+      markersByRow.set(row, marker);
     });
     if (placed.length) {
       map.fitBounds(L.latLngBounds(placed.map(r => [+r.dataset.lat, +r.dataset.lon])), { padding: [40, 40], maxZoom: 14 });
@@ -444,6 +539,7 @@ bilingual: true
       map.setView(OSLO_CENTER, 11);
     }
     renderStrip(unplaced);
+    renderMapList();
   }
 
   async function setView(view) {
@@ -476,6 +572,7 @@ bilingual: true
       // DPS areas sit in their own pane, under the markers
       map.createPane('dps').style.zIndex = 350;
       markerLayer = L.layerGroup().addTo(map);
+      map.on('moveend', renderMapList);   // the list follows the map's zoom and position
       loadDpsAreas();
     }
     map.invalidateSize();
