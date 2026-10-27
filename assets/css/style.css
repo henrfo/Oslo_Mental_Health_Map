@@ -117,9 +117,16 @@ html[data-lang="nb"] .l-en {
 }
 
 .site-subtitle {
+  max-width: 640px;
   margin-top: 8px;
   color: var(--muted);
   font-size: 13px;
+}
+
+/* One sentence set as two lines: description, then the motto */
+.subtitle-line {
+  display: block;
+  text-wrap: balance;
 }
 
 .back-link {
@@ -261,6 +268,57 @@ html[data-lang="nb"] .l-en {
   .map.leaflet-container .leaflet-control-attribution a {
     color: var(--text);
   }
+
+  .dps-label {
+    color: #ededec;
+    text-shadow: 0 0 3px #111111, 0 0 3px #111111, 0 0 3px #111111;
+  }
+
+  .dps-toggle.selected {
+    background: #ededec;
+    color: #111111;
+    border-color: #ededec;
+  }
+}
+
+/* DPS-områder on/off, in the map's top-right corner */
+.dps-toggle {
+  height: 26px;
+  padding: 0 10px;
+  font-family: inherit;
+  font-size: 12px;
+  color: #111111;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.dps-toggle.selected {
+  background: #111111;
+  color: #ffffff;
+  border-color: #111111;
+}
+
+.dps-tooltip,
+.dps-info {
+  max-width: 240px;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: normal;
+}
+
+/* DPS name centred in each area; a halo keeps it legible on any tile */
+.dps-label {
+  transform: translate(-50%, -50%);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #111111;
+  text-shadow: 0 0 3px #ffffff, 0 0 3px #ffffff, 0 0 3px #ffffff;
 }
 
 /* Entries without an address: a slim strip of chips above the map */
@@ -487,10 +545,12 @@ html[data-lang="nb"] .l-en {
 }
 
 .meta-left,
-.meta-right {
+/* Footer with crisis numbers on the left and "Bidra på GitHub" on the right */
+.footer-split {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
 }
 
 .meta-sep {
@@ -926,10 +986,6 @@ html[data-lang="nb"] .l-en {
     flex-direction: column;
     gap: 6px;
     align-items: flex-start;
-  }
-
-  .meta-right {
-    display: none;
   }
 
   .meta-left {

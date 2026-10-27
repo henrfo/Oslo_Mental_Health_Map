@@ -18,7 +18,10 @@ bilingual: true
       </span>
     </nav>
   </div>
-  <p class="site-subtitle">{% include t.html k="description" %} — {% include t.html k="tagline" %}</p>
+  <p class="site-subtitle">
+    <span class="subtitle-line">{% include t.html k="description" %} —</span>
+    <span class="subtitle-line">{% include t.html k="tagline" %}</span>
+  </p>
 </header>
 
 <div class="controls">
@@ -62,9 +65,6 @@ bilingual: true
     <span class="meta-sep">·</span>
     <span class="legend-item"><span class="dot dot-active"></span> {% include t.html k="link_active" %}</span>
     <span class="legend-item"><span class="dot dot-inactive"></span> {% include t.html k="link_broken" %}</span>
-  </div>
-  <div class="meta-right">
-    <a class="meta-link" href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">{% include t.html k="contribute_gh" %}</a>
   </div>
 </div>
 
@@ -328,9 +328,10 @@ bilingual: true
 
   // ── Map view ──
   // Leaflet loads on first switch to the map, so list-only visits don't pay for it.
-  // Bounds cover Oslo plus Nittedal (part of the DPS Groruddalen catchment), so users can't pan away.
+  // Bounds cover Oslo plus Nittedal (part of the DPS Groruddalen catchment, which reaches 60.19°N), so users can't pan away.
   const OSLO_CENTER = [59.9139, 10.7522];
-  const MAP_BOUNDS  = [[59.78, 10.45], [60.17, 11.02]];
+  const MAP_BOUNDS  = [[59.78, 10.45], [60.21, 11.03]];
+  const DPS_URL     = '{{ "/assets/data/dps-oslo.geojson" | relative_url }}';
   const viewBtns    = document.querySelectorAll('.view-btn');
   const mapViewEl   = document.getElementById('map-view');
   const mapEl       = document.getElementById('map');
@@ -340,6 +341,8 @@ bilingual: true
   let activeView  = 'list';
   let map         = null;
   let markerLayer = null;
+  let dpsLayer    = null;   // areas + labels, toggled together
+  let dpsAreas    = null;
   let leafletLoad = null;
 
   function loadLeaflet() {
@@ -471,15 +474,96 @@ bilingual: true
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
+      // DPS areas sit in their own pane, under the markers
+      map.createPane('dps').style.zIndex = 350;
       markerLayer = L.layerGroup().addTo(map);
+      loadDpsAreas();
     }
     map.invalidateSize();
     renderMarkers();
   }
 
+  // ── DPS catchment areas (assets/data/dps-oslo.geojson, from SSB) ──
+  // KLASS gives health trust names in capitals; Norwegian uses sentence case ("Oslo universitetssykehus HF")
+  const sentenceCase = s => s.charAt(0) + s.slice(1).toLowerCase().replace(/\bhf\b/, 'HF').replace(/\bas\b/, 'AS');
+
+  // A faint, distinct tint per area; red stays reserved for acute markers
+  const DPS_COLORS = { D47: '#2563eb', D48: '#9333ea', D50: '#d97706', D68: '#db2777', D69: '#0891b2' };
+  const DPS_FILL = 0.10, DPS_FILL_HOVER = 0.22;
+
+  function dpsInfo(props) {
+    const el = document.createElement('div');
+    el.className = 'dps-info';
+    const name = document.createElement('strong');
+    name.textContent = props.dps;
+    el.appendChild(name);
+    const bydeler = props.bydeler.concat(props.outside_oslo.map(k => `${k} (${t('dps_outside')})`)).join(', ');
+    [bydeler, sentenceCase(props.helseforetak)].forEach(text => {
+      const line = document.createElement('div');
+      line.textContent = text;
+      el.appendChild(line);
+    });
+    return el;
+  }
+
+  function styleDps() {
+    if (!dpsAreas) return;
+    dpsAreas.eachLayer(layer => {
+      const color = DPS_COLORS[layer.feature.properties.code] || '#666666';
+      layer.setStyle({ color, weight: 1.5, opacity: 0.8, dashArray: '4 4', fillColor: color, fillOpacity: DPS_FILL });
+    });
+  }
+
+  async function loadDpsAreas() {
+    let data;
+    try {
+      data = await (await fetch(DPS_URL)).json();
+    } catch {
+      return;   // the map still works without the areas
+    }
+    // Labels get their own pane above the fills but below the markers, and ignore the mouse
+    map.createPane('dps-labels').style.zIndex = 360;
+    map.getPane('dps-labels').style.pointerEvents = 'none';
+
+    dpsAreas = L.geoJSON(data, {
+      pane: 'dps',
+      onEachFeature: (feature, layer) => {
+        layer.bindTooltip(() => dpsInfo(feature.properties), { sticky: true, className: 'dps-tooltip' });
+        layer.bindPopup(() => dpsInfo(feature.properties));
+        layer.on('mouseover', () => layer.setStyle({ fillOpacity: DPS_FILL_HOVER }));
+        layer.on('mouseout', () => layer.setStyle({ fillOpacity: DPS_FILL }));
+      },
+    });
+    const labels = data.features.map(f => L.marker([f.properties.label[1], f.properties.label[0]], {
+      pane: 'dps-labels',
+      interactive: false,
+      icon: L.divIcon({ className: 'dps-label', html: f.properties.dps.replace(/\s*DPS$/, ''), iconSize: null }),
+    }));
+    dpsLayer = L.layerGroup([dpsAreas, ...labels]).addTo(map);
+    styleDps();
+    map.attributionControl.addAttribution('DPS: <a href="https://statisticsnorway.github.io/speshelse/">SSB</a>');
+
+    // Small on/off control in the map corner
+    const DpsControl = L.Control.extend({
+      onAdd() {
+        const btn = L.DomUtil.create('button', 'dps-toggle selected');
+        btn.type = 'button';
+        btn.innerHTML = `<span class="l-nb">${I18N.dps_layer.nb}</span><span class="l-en">${I18N.dps_layer.en}</span>`;
+        L.DomEvent.disableClickPropagation(btn);
+        btn.addEventListener('click', () => {
+          const on = !map.hasLayer(dpsLayer);
+          on ? dpsLayer.addTo(map) : map.removeLayer(dpsLayer);
+          btn.classList.toggle('selected', on);
+        });
+        return btn;
+      },
+    });
+    new DpsControl({ position: 'topright' }).addTo(map);
+  }
+
   viewBtns.forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
-  // Marker ink follows the theme
-  darkQuery.addEventListener('change', renderMarkers);
+  // Marker and DPS outline ink follows the theme
+  darkQuery.addEventListener('change', () => { renderMarkers(); styleDps(); });
 
   function updateURL() {
     const params = new URLSearchParams();
@@ -645,6 +729,7 @@ bilingual: true
   });
 </script>
 
-<footer class="footer">
-  {% include t.html k="footer_akutt" %}: <a href="tel:113">113</a> · {% include t.html k="footer_legevakt" %}: <a href="tel:116117">116 117</a>
+<footer class="footer footer-split">
+  <span>{% include t.html k="footer_akutt" %}: <a href="tel:113">113</a> · {% include t.html k="footer_legevakt" %}: <a href="tel:116117">116 117</a></span>
+  <a href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">{% include t.html k="contribute_gh" %}</a>
 </footer>

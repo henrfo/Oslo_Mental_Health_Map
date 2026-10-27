@@ -36,6 +36,8 @@ panel_title:      { nb: Uten fast adresse, en: No fixed address }
 panel_empty:      { nb: Ingen tilbud uten fast adresse i dette utvalget., en: No services without a fixed address in this selection. }
 strip_more:       { nb: "+ {n} til", en: "+ {n} more" }
 strip_less:       { nb: Vis færre, en: Show fewer }
+dps_layer:        { nb: DPS-områder, en: DPS areas }
+dps_outside:      { nb: utenfor Oslo, en: outside Oslo }
 map_error:        { nb: Kartet kunne ikke lastes. Sjekk tilkoblingen og prøv igjen., en: The map could not be loaded. Check your connection and try again. }
 footer_akutt:     { nb: Akutt hjelp, en: Emergency }
 footer_legevakt:  { nb: Legevakt, en: Out-of-hours (legevakt) }
