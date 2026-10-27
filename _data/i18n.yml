@@ -10,7 +10,6 @@ view_list:        { nb: Liste, en: List }
 view_map:         { nb: Kart, en: Map }
 all:              { nb: Alle, en: All }
 hele_oslo:        { nb: Hele Oslo, en: All of Oslo }
-dps_all:          { nb: Alle områder, en: All areas }
 this_week:        { nb: Denne uken, en: This week }
 recent:           { nb: Nylig lagt til, en: Recently added }
 akutt:            { nb: Akutt, en: Acute }
@@ -30,11 +29,10 @@ col_name:         { nb: Navn, en: Name }
 col_desc:         { nb: Beskrivelse, en: Description }
 col_when:         { nb: Når, en: When }
 col_added:        { nb: Lagt til, en: Added }
+col_nivaa:        { nb: Nivå, en: Level }
 col_tilstand:     { nb: Tilstand, en: Condition }
 col_bydel:        { nb: Bydel, en: District }
-col_dps:          { nb: DPS, en: DPS }
 dekker_note:      { nb: "Bydelene tilbudet dekker, ikke hvor det ligger.", en: "The districts the service covers, not where it is." }
-dps_note:         { nb: "DPS-området tilbudet dekker, fra SSBs opptaksområder.", en: "The DPS catchment area the service covers, from SSB." }
 col_malgruppe:    { nb: Gruppe, en: Group }
 col_henvisning:   { nb: Henvisning, en: Referral }
 henvisning_note:  { nb: Om det trengs henvisning for å få tilgang., en: Whether a referral is needed to get access. }

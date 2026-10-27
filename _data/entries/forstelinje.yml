@@ -27,6 +27,10 @@
   akutt: true
   phone: "116 117"
   website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/legevakt-oslo/
+  bydel: "Bjerke"
+  address: "Trondheimsveien 233 (Aker sykehus), 0586 Oslo"
+  lat: 59.93919
+  lon: 10.79225
   last_verified: 2026-10-27
   date_added: 2026-10-27
 

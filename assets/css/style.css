@@ -748,19 +748,6 @@ html[data-lang="nb"] .l-en {
   color: var(--text);
 }
 
-.akutt-tag {
-  margin-left: 6px;
-  padding: 1px 5px;
-  border: 1px solid currentColor;
-  border-radius: 2px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #dc2626;
-  white-space: nowrap;
-}
-
 .col-date {
   color: var(--muted);
   font-size: 12px;

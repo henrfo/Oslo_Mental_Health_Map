@@ -79,6 +79,25 @@ bilingual: true
       <th class="col-desc-th">{% include t.html k="col_desc" %}</th>
       <th class="col-date">{% include t.html k="col_added" %}</th>
       <th class="col-when">{% include t.html k="col_when" %}</th>
+      <th class="col-th" data-key="nivaa">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_nivaa" %}</span>&nbsp;▾</button>
+        <div class="col-dropdown">
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
+          {%- assign services = site.data.categories | where: 'group', 'tjenester' %}
+          {%- for cat in services %}
+          <button class="col-option" data-value="{{ cat.id }}">{% include t.html nb=cat.name.nb en=cat.name.en %}</button>
+          {%- endfor %}
+        </div>
+      </th>
+      <th class="col-th" data-key="tilstand">
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span>&nbsp;▾</button>
+        <div class="col-dropdown">
+          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
+          {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
+          <button class="col-option" data-value="{{ t.id }}">{% include t.html nb=t.nb en=t.en %}</button>
+          {%- endunless %}{% endfor %}
+        </div>
+      </th>
       <th class="col-th" data-key="bydel">
         <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_bydel" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
@@ -87,16 +106,6 @@ bilingual: true
           {%- for b in site.data.bydeler %}{% unless b == 'Hele Oslo' %}
           <button class="col-option" data-value="{{ b }}">{{ b }}</button>
           {%- endunless %}{% endfor %}
-        </div>
-      </th>
-      <th class="col-th" data-key="dps">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_dps" %}</span>&nbsp;▾</button>
-        <div class="col-dropdown">
-          <p class="col-note">{% include t.html k="dps_note" %}</p>
-          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
-          {%- for area in site.data.dps.areas %}
-          <button class="col-option" data-value="{{ area.code }}">{{ area.dps | remove: ' DPS' }}</button>
-          {%- endfor %}
         </div>
       </th>
       <th class="col-th" data-key="malgruppe">
@@ -115,15 +124,6 @@ bilingual: true
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           <button class="col-option" data-value="ja">{% include t.html k="answer_yes" %}</button>
           <button class="col-option" data-value="nei">{% include t.html k="answer_no" %}</button>
-        </div>
-      </th>
-      <th class="col-th" data-key="tilstand">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span>&nbsp;▾</button>
-        <div class="col-dropdown">
-          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
-          {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
-          <button class="col-option" data-value="{{ t.id }}">{% include t.html nb=t.nb en=t.en %}</button>
-          {%- endunless %}{% endfor %}
         </div>
       </th>
     </tr>
@@ -153,22 +153,6 @@ bilingual: true
           {%- else -%}
             {%- assign dekker = '' | split: '' -%}
           {%- endif -%}
-          {%- capture dps_codes -%}
-            {%- if dekker contains 'Hele Oslo' -%}*{%- else -%}
-              {%- for area in site.data.dps.areas -%}
-                {%- for b in area.bydeler -%}{%- if dekker contains b -%}{{ area.code }}|{%- break -%}{%- endif -%}{%- endfor -%}
-              {%- endfor -%}
-            {%- endif -%}
-          {%- endcapture -%}
-          {%- capture dps_names -%}
-            {%- if dps_codes == '*' -%}{% include t.html k="dps_all" %}{%- else -%}
-              {%- assign codes = dps_codes | split: '|' -%}
-              {%- for code in codes -%}
-                {%- assign area = site.data.dps.areas | where: 'code', code | first -%}
-                <span class="val">{{ area.dps | remove: ' DPS' }}</span>
-              {%- endfor -%}
-            {%- endif -%}
-          {%- endcapture -%}
           {%- capture tilstand_labels -%}
             {%- for id in tool.tilstand -%}
               {%- assign t = site.data.tilstand | where: 'id', id | first -%}
@@ -193,7 +177,7 @@ bilingual: true
               data-tilstand="{{ tool.tilstand | join: '|' }}"
               data-bydel="{{ tool.bydel }}"
               data-dekker="{{ dekker | join: '|' }}"
-              data-dps="{{ dps_codes }}"
+              data-nivaa="{{ cat.id }}"
               data-malgruppe="{{ tool.malgruppe | join: '|' }}"
               data-henvisning="{% if tool.henvisning == true %}ja{% elsif tool.henvisning == false %}nei{% endif %}"
               {% if tool.nar %}data-nar-dag="{{ tool.nar.dag }}" data-nar-fra="{{ tool.nar.fra }}" data-nar-til="{{ tool.nar.til }}" data-nar-hyppighet="{{ tool.nar.hyppighet }}"{% endif %}
@@ -203,10 +187,13 @@ bilingual: true
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer"{% if tool.full_name %} title="{{ tool.full_name }}"{% endif %}>{{ tool.name }}</a>
-              {%- if tool.akutt %} <span class="akutt-tag">{% include t.html k="akutt" %}</span>{% endif %}
               {%- if health.status == 'broken' %} <span class="broken-tag">{% include t.html k="link_broken" %}</span>{% endif %}
-              <span class="tool-sub">{% include t.html nb=cat.name.nb en=cat.name.en %}
-                {%- if tool.phone %} · <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}</span>
+              {%- if tool.akutt or tool.phone %}
+              <span class="tool-sub">
+                {%- if tool.akutt %}{% include t.html k="akutt" %}{% if tool.phone %} · {% endif %}{% endif %}
+                {%- if tool.phone %}<a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif -%}
+              </span>
+              {%- endif %}
             </td>
             <td class="tool-desc">
               {% include t.html nb=tool.description.nb en=tool.description.en %}
@@ -214,11 +201,11 @@ bilingual: true
             </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
             <td class="col-when"></td>
+            <td class="col-cell col-wrap col-short">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
+            <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
             <td class="col-cell col-wrap col-short">{% if dekker contains 'Hele Oslo' %}{% include t.html k="hele_oslo" %}{% else %}{% for b in dekker %}<span class="val">{{ b }}</span>{% endfor %}{% endif %}</td>
-            <td class="col-cell col-wrap col-short">{{ dps_names }}</td>
             <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
             <td class="col-cell col-short">{% if tool.henvisning == true %}{% include t.html k="answer_yes" %}{% elsif tool.henvisning == false %}{% include t.html k="answer_no" %}{% endif %}</td>
-            <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
           </tr>
         {% endfor %}
       {% endif %}
@@ -342,8 +329,8 @@ bilingual: true
 
   // Column filters; an entry tagged with the wildcard value matches every filter of that column.
   // The bydel filter matches what an entry serves (dekker), not where it is.
-  const colFilters = { tilstand: null, bydel: null, dps: null, malgruppe: null, henvisning: null };
-  const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', dps: '*', malgruppe: 'alle' };
+  const colFilters = { nivaa: null, tilstand: null, bydel: null, malgruppe: null, henvisning: null };
+  const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', malgruppe: 'alle' };
   const filterAttr = { bydel: 'dekker' };
 
   let activeFilter    = 'all';
@@ -546,7 +533,7 @@ bilingual: true
     const shown    = [...toolRows].filter(r => !r.classList.contains('hidden'));
     const placed   = shown.filter(r => r.dataset.lat && r.dataset.lon);
     if (activeRow && !placed.includes(activeRow)) setActiveRow(null);
-    // Fill = the row's dot colour (how recently the info was verified); acute offers get a red ring
+    // Fill = the row's dot colour (how recently the info was verified); the Akutt chip, not colour, singles out acute services
     const css = getComputedStyle(document.documentElement);
     const dotColor = row => {
       const kind = ['dot-active', 'dot-quiet', 'dot-inactive'].find(k => row.querySelector('.dot').classList.contains(k)) || 'dot-inactive';
@@ -555,7 +542,7 @@ bilingual: true
     const ink = css.getPropertyValue('--text').trim();
     placed.forEach(row => {
       const fillColor = dotColor(row);
-      const color = row.dataset.akutt === 'true' ? '#dc2626' : ink;
+      const color = ink;
       const marker = L.circleMarker([+row.dataset.lat, +row.dataset.lon], { ...MARKER_STYLE, color, fillColor })
         .bindPopup(popupFor(row))
         .on('click', () => setActiveRow(row, true))

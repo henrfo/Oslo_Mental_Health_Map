@@ -12,29 +12,30 @@
   lon: 10.71283
   henvisning: true
   akutt: false                # acute ward exists, but via legevakt/AMK; consider separate entry
-  website: https://www.diakonhjemmetsykehus.no
+  website: https://diakonhjemmetsykehus.no/avdelinger/klinikk-for-psykisk-helse-og-rus/voksenpsykiatrisk-avdeling-vinderen
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
 - name: "Nic Waals Institutt"
   full_name: "Nic Waals Institutt (Lovisenberg)"
-  draft: true                 # VERIFY address before publishing
   description:
     nb: "BUP for barn og unge 0–18 år i Gamle Oslo, Grünerløkka og St. Hanshaugen."
     en: "Child and adolescent mental health service (BUP), ages 0–18, for Gamle Oslo, Grünerløkka and St. Hanshaugen."
   tilstand: [generelt]
   malgruppe: [barn, ungdom]
   dekker: [Gamle Oslo, Grünerløkka, St. Hanshaugen]
-  # address: VERIFY – Spångbergveien 25 geocodes to Tåsen (Nordre Aker), not St. Hanshaugen;
   #          job ads list Lovisenberggata 17 (St. Hanshaugen: 59.93335, 10.74691)
   henvisning: true
   akutt: false                # has an acute ambulatory home-hospital team
-  website: https://www.lds.no
+  bydel: "Nordre Aker"
+  address: "Spångbergveien 25, 0853 Oslo"   # own page gives postcode 0771; the street is at 0853 (Tåsen)
+  lat: 59.94219
+  lon: 10.74851
+  website: https://www.lovisenbergsykehus.no/avdelinger/nic-waals-institutt
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
 - name: "Psykiatrisk legevakt (OUS)"
-  draft: true                 # VERIFY – contact route ("via 116 117") flagged ⚠ in the research
   description:
     nb: "Akuttpsykiatrisk vurdering kveld og helg for alle i Oslo."
     en: "Emergency psychiatric assessment in the evenings and at weekends for everyone in Oslo."
@@ -44,7 +45,11 @@
   henvisning: false
   akutt: true
   phone: "116 117"
-  website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/legevakt-oslo/akutt-psykisk-sykdom/
+  bydel: "Bjerke"
+  address: "Trondheimsveien 233 (Aker sykehus), 0586 Oslo"
+  lat: 59.93919
+  lon: 10.79225
+  website: https://www.oslo-universitetssykehus.no/avdelinger/klinikk-psykisk-helse-og-avhengighet/nydalen-dps/psykiatrisk-legevakt/
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -57,7 +62,11 @@
   dps: D47
   henvisning: true
   akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  bydel: "St. Hanshaugen"
+  address: "Lovisenberggata 21, 0456 Oslo"   # poliklinikk Grünerløkka is at Ullevålsveien 2
+  lat: 59.93427
+  lon: 10.74745
+  website: https://lovisenbergsykehus.no/avdelinger/senter-for-psykisk-helse-og-rus/avdeling-for-poliklinikker
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -70,7 +79,11 @@
   dps: D68
   henvisning: true
   akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  bydel: "Nordre Aker"
+  address: "Gullhaugveien 12, 0484 Oslo"   # poliklinikk; døgnbehandling is at Lovisenberggata 4G
+  lat: 59.95154
+  lon: 10.76618
+  website: https://www.oslo-universitetssykehus.no/avdelinger/klinikk-psykisk-helse-og-avhengighet/nydalen-dps
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -83,7 +96,11 @@
   dps: D69
   henvisning: true
   akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  bydel: "Søndre Nordstrand"
+  address: "Helga Vaneks vei 6, 1281 Oslo"
+  lat: 59.84799
+  lon: 10.83267
+  website: https://www.oslo-universitetssykehus.no/avdelinger/klinikk-psykisk-helse-og-avhengighet/sondre-oslo-dps
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -96,7 +113,11 @@
   dps: D50
   henvisning: true
   akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/langvarige-og-alvorlige-psykiske-utfordringer/distriktspsykiatrisk-senter-dps/   # Oslo kommune's DPS page; replace with the DPS's own page
+  bydel: "Alna"
+  address: "Jerikoveien 28, 1067 Oslo"   # the DPS also lists Rosenbergveien 15
+  lat: 59.93563
+  lon: 10.88696
+  website: https://www.ahus.no/avdelinger/psykisk-helsevern-og-rus-divisjon/dps-groruddalen
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -110,7 +131,11 @@
   dekker: [Frogner, Ullern, Vestre Aker]
   henvisning: true
   akutt: false
-  website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/psykisk-helsehjelp-til-barn-unge-og-familier/psykisk-helsehjelp-for-barn-og-familier/barne-og-ungdomspsykiatrisk-poliklinikk-bup/   # Oslo kommune's BUP page; replace with BUP Vest's own page
+  bydel: "Vestre Aker"
+  address: "Sørkedalsveien 150B, 0754 Oslo"
+  lat: 59.94186
+  lon: 10.65532
+  website: https://www.diakonhjemmetsykehus.no/avdelinger/klinikk-for-psykisk-helse-og-rus/barne-og-unggdomspsykiatrisk-poliklinikk/
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
