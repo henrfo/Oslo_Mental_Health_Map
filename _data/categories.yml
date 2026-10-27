@@ -1,4 +1,6 @@
-# group: tjenester = services (middle chips), ressurser = resources (right chips)
+# group: tjenester = services (middle chips, one chip per nivå)
+#        fagstoff  = what you know (right chip "Fagstoff", sub-pills per category)
+#        ressurser = who you point to (right chip "Ressurser", sub-pills per category)
 - id: frivillig
   name: Frivillig
   group: tjenester
@@ -11,18 +13,22 @@
   name: Spesialist
   group: tjenester
 
-- id: krisetelefoner
-  name: Krisetelefoner
+- id: retningslinjer
+  name: Retningslinjer
+  group: fagstoff
+
+- id: veiledere
+  name: Veiledere
+  group: fagstoff
+
+- id: kurs
+  name: Kurs
+  group: fagstoff
+
+- id: hjelpelinjer
+  name: Hjelpelinjer
   group: ressurser
 
 - id: brukerorganisasjoner
   name: Brukerorganisasjoner
-  group: ressurser
-
-- id: retningslinjer
-  name: Retningslinjer
-  group: ressurser
-
-- id: kurs
-  name: Kurs
   group: ressurser

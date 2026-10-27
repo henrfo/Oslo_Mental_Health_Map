@@ -22,14 +22,20 @@ There is one file per category in `_data/entries/`. The file an entry sits in is
 
 Urgency is separate from nivå: set `akutt: true` on any offer that takes acute cases, at any level. The Akutt chip shows those.
 
-**Resources** (right chips):
+**Fagstoff** (right chip, what you know):
 
 | File | Contents |
 |---|---|
-| `krisetelefoner.yml` | Krisetelefoner: crisis and support hotlines |
-| `brukerorganisasjoner.yml` | Brukerorganisasjoner: user and patient organisations |
 | `retningslinjer.yml` | Retningslinjer: national guidelines and pathways (Helsedirektoratet etc.) |
+| `veiledere.yml` | Veiledere: national guides and handbooks |
 | `kurs.yml` | Kurs: courses and training |
+
+**Ressurser** (right chip, who you point to):
+
+| File | Contents |
+|---|---|
+| `hjelpelinjer.yml` | Hjelpelinjer: crisis and support phone lines |
+| `brukerorganisasjoner.yml` | Brukerorganisasjoner: user and patient organisations |
 
 ```yaml
 - name: Example Service                   # required. Official name, untranslated
@@ -39,15 +45,15 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
   website: https://example.no             # required. The offer's own page (intake, referral info)
   date_added: 2026-10-27                  # required. Drives "Recently added"
   last_verified: 2026-10-27               # required. Date a person last confirmed the details are still correct
-  tilstand: [angst, depresjon]            # services: required. Resources: optional. List, see values below
-  malgruppe: [ungdom]                     # services: required. Resources: optional. List, see values below
+  tilstand: [angst, depresjon]            # services: required. Fagstoff/ressurser: optional. List, see values below
+  malgruppe: [ungdom]                     # services: required. Fagstoff/ressurser: optional. List, see values below
   bydel: Gamle Oslo                       # services: required. One of the 15 bydeler, or "Hele Oslo"
   henvisning: false                       # services: required. true = referral needed
   akutt: false                            # services: required. true = takes acute cases
   address: Storgata 1, 0155 Oslo          # optional. Omit for phone- or online-only services
   lat: 59.9133                            # required if address is set. Decimal degrees (WGS84)
   lon: 10.7522
-  phone: 116 123                          # optional. Required for krisetelefoner
+  phone: 116 123                          # optional. Required for hjelpelinjer
 ```
 
 The key for Norwegian text is `nb`, not `no`. YAML reads `no` as false.

@@ -1,4 +1,5 @@
 :root {
+  --chip-height:      28px;
   --text:             #111111;
   --muted:            #666666;
   --hairline:         #e5e5e5;
@@ -117,8 +118,11 @@ body {
 }
 
 .pill {
+  display: inline-flex;
+  align-items: center;
+  height: var(--chip-height);
   white-space: nowrap;
-  padding: 3px 10px;
+  padding: 0 10px;
   font-size: 12px;
   font-family: inherit;
   cursor: pointer;
@@ -141,6 +145,74 @@ body {
   border-color: var(--pill-active-bg);
 }
 
+/* Nivå chips are the main way in, so they're a step larger */
+.pill-group-primary .pill {
+  font-size: 13px;
+  padding: 0 14px;
+}
+
+/* List | Map view switch: a segmented control, not a filter */
+.view-row {
+  display: flex;
+  justify-content: center;
+}
+
+.view-toggle {
+  display: inline-flex;
+  height: var(--chip-height);
+  border: 1px solid var(--text);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.view-btn {
+  white-space: nowrap;
+  padding: 0 16px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: var(--text);
+}
+
+.view-btn + .view-btn {
+  border-left: 1px solid var(--text);
+}
+
+.view-btn.selected {
+  background: var(--pill-active-bg);
+  color: var(--pill-active-text);
+}
+
+.map {
+  height: 60vh;
+  min-height: 360px;
+  border: 1px solid var(--hairline);
+  border-radius: 2px;
+}
+
+.map-note {
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.map-popup {
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.map-popup strong a {
+  color: #111111;
+  text-decoration: none;
+}
+
+.map-popup .tool-phone {
+  color: #666666;
+}
+
 .sub-pills {
   display: none;
   flex-wrap: wrap;
@@ -153,8 +225,8 @@ body {
 }
 
 .sub-pill {
-  font-size: 11px;
-  padding: 2px 8px;
+  font-size: 12px;
+  padding: 0 10px;
   color: var(--muted);
   border-color: var(--hairline);
 }
@@ -686,7 +758,7 @@ body {
   }
 
   .pill {
-    padding: 6px 12px;
+    padding: 0 12px;
   }
 
   .sub-pills.visible {

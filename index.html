@@ -18,12 +18,18 @@ title: Oslo Mental Health Map
 </header>
 
 <div class="controls">
+  <div class="view-row">
+    <div class="view-toggle" role="group" aria-label="View">
+      <button class="view-btn selected" data-view="list">List</button>
+      <button class="view-btn" data-view="map">Map</button>
+    </div>
+  </div>
   <div class="pills" id="pills">
     <div class="pill-group">
       <button class="pill selected" data-filter="all">All</button>
       <button class="pill" data-filter="new">Recently added</button>
     </div>
-    <div class="pill-group">
+    <div class="pill-group pill-group-primary">
       {%- assign services = site.data.categories | where: 'group', 'tjenester' %}
       {%- for cat in services %}
       <button class="pill" data-filter="{{ cat.id }}">{{ cat.name }}</button>
@@ -31,12 +37,11 @@ title: Oslo Mental Health Map
       <button class="pill" data-filter="akutt">Akutt</button>
     </div>
     <div class="pill-group">
-      {%- assign resources = site.data.categories | where: 'group', 'ressurser' %}
-      {%- for cat in resources %}
-      <button class="pill" data-filter="{{ cat.id }}">{{ cat.name }}</button>
-      {%- endfor %}
+      <button class="pill" data-filter="fagstoff">Fagstoff</button>
+      <button class="pill" data-filter="ressurser">Ressurser</button>
     </div>
   </div>
+  <div class="sub-pills" id="sub-pills"></div>
   <input class="search" id="search" type="search" placeholder="Search…" autocomplete="off">
   <div class="mobile-filter" id="mobile-tilstand">
     <button class="pill selected" data-value="">All</button>
@@ -144,7 +149,8 @@ title: Oslo Mental Health Map
               data-tilstand="{{ tool.tilstand | join: '|' }}"
               data-bydel="{{ tool.bydel }}"
               data-malgruppe="{{ tool.malgruppe | join: '|' }}"
-              data-henvisning="{% if tool.henvisning == true %}ja{% elsif tool.henvisning == false %}nei{% endif %}">
+              data-henvisning="{% if tool.henvisning == true %}ja{% elsif tool.henvisning == false %}nei{% endif %}"
+              {% if tool.lat and tool.lon %}data-lat="{{ tool.lat }}" data-lon="{{ tool.lon }}" data-address="{{ tool.address }}"{% endif %}>
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
@@ -167,7 +173,21 @@ title: Oslo Mental Health Map
   </tbody>
 </table>
 
+<div id="map" class="map hidden" aria-label="Map of entries"></div>
+<p id="map-note" class="map-note hidden"></p>
+
 <script>
+  // Right-side chips expand into sub-pills, one per category in the group
+  const groups = {
+    fagstoff:  [{% assign cats = site.data.categories | where: 'group', 'fagstoff' %}{% for cat in cats %}'{{ cat.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
+    ressurser: [{% assign cats = site.data.categories | where: 'group', 'ressurser' %}{% for cat in cats %}'{{ cat.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}]
+  };
+
+  const categoryNames = {
+    {% for cat in site.data.categories %}'{{ cat.id }}': '{{ cat.name }}',
+    {% endfor %}
+  };
+
   const toolTable = document.querySelector('.tool-table');
 
   // Pre-populate date cells once on load
@@ -197,6 +217,7 @@ title: Oslo Mental Health Map
   });
 
   const mainPills     = document.querySelectorAll('#pills .pill');
+  const subPillsEl    = document.getElementById('sub-pills');
   const search        = document.getElementById('search');
   const tbody         = document.getElementById('tool-list');
   const toolRows      = document.querySelectorAll('#tool-list tr:not(.section-header)');
@@ -211,7 +232,8 @@ title: Oslo Mental Health Map
   const colFilters = { tilstand: null, bydel: null, malgruppe: null, henvisning: null };
   const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', malgruppe: 'alle' };
 
-  let activeFilter = 'all';
+  let activeFilter    = 'all';
+  let activeSubFilter = null;
 
   function thFor(key) {
     return document.querySelector(`.col-th[data-key="${key}"]`);
@@ -282,9 +304,119 @@ title: Oslo Mental Health Map
 
   document.addEventListener('click', closeDropdowns);
 
+  // ── Map view ──
+  // Leaflet loads on first switch to the map, so list-only visits don't pay for it.
+  const OSLO_CENTER = [59.9139, 10.7522];
+  const viewBtns = document.querySelectorAll('.view-btn');
+  const mapEl    = document.getElementById('map');
+  const mapNote  = document.getElementById('map-note');
+  let activeView  = 'list';
+  let map         = null;
+  let markerLayer = null;
+  let leafletLoad = null;
+
+  function loadLeaflet() {
+    if (!leafletLoad) {
+      leafletLoad = new Promise((resolve, reject) => {
+        const css = document.createElement('link');
+        css.rel  = 'stylesheet';
+        css.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+        document.head.appendChild(css);
+        const js = document.createElement('script');
+        js.src     = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+        js.onload  = resolve;
+        js.onerror = reject;
+        document.head.appendChild(js);
+      });
+    }
+    return leafletLoad;
+  }
+
+  function popupFor(row) {
+    const el = document.createElement('div');
+    el.className = 'map-popup';
+    const link = row.querySelector('.tool-name a').cloneNode(true);
+    const name = document.createElement('strong');
+    name.appendChild(link);
+    el.appendChild(name);
+    const header = [...headers].find(h => h.dataset.category === row.dataset.category);
+    const details = [header ? header.textContent.trim() : '', row.dataset.akutt === 'true' ? 'Akutt' : '']
+      .filter(Boolean).join(' · ');
+    [details, row.dataset.address].forEach(text => {
+      if (!text) return;
+      const line = document.createElement('div');
+      line.textContent = text;
+      el.appendChild(line);
+    });
+    const phone = row.querySelector('.tool-phone');
+    if (phone) {
+      const line = document.createElement('div');
+      line.appendChild(phone.cloneNode(true));
+      el.appendChild(line);
+    }
+    return el;
+  }
+
+  function renderMarkers() {
+    if (!map || activeView !== 'map') return;
+    markerLayer.clearLayers();
+    const shown = [...toolRows].filter(r => !r.classList.contains('hidden'));
+    const placed = shown.filter(r => r.dataset.lat && r.dataset.lon);
+    placed.forEach(row => {
+      const akutt = row.dataset.akutt === 'true';
+      L.circleMarker([+row.dataset.lat, +row.dataset.lon], {
+        radius: 7, weight: 2,
+        color: akutt ? '#dc2626' : '#111111',
+        fillColor: akutt ? '#dc2626' : '#111111',
+        fillOpacity: 0.7,
+      }).bindPopup(popupFor(row)).addTo(markerLayer);
+    });
+    if (placed.length) {
+      map.fitBounds(L.latLngBounds(placed.map(r => [+r.dataset.lat, +r.dataset.lon])), { padding: [40, 40], maxZoom: 14 });
+    } else {
+      map.setView(OSLO_CENTER, 11);
+    }
+    const unplaced = shown.length - placed.length;
+    mapNote.textContent = unplaced
+      ? `${unplaced} of ${shown.length} ${shown.length === 1 ? 'entry' : 'entries'} ${unplaced === 1 ? 'has' : 'have'} no address (phone, online or city-wide) and ${unplaced === 1 ? 'is' : 'are'} only in the list.`
+      : '';
+    mapNote.classList.toggle('hidden', !unplaced);
+  }
+
+  async function setView(view) {
+    activeView = view === 'map' ? 'map' : 'list';
+    viewBtns.forEach(b => b.classList.toggle('selected', b.dataset.view === activeView));
+    toolTable.classList.toggle('hidden', activeView === 'map');
+    mapEl.classList.toggle('hidden', activeView !== 'map');
+    if (activeView === 'list') mapNote.classList.add('hidden');
+    updateURL();
+    if (activeView !== 'map') return;
+    try {
+      await loadLeaflet();
+    } catch {
+      mapNote.textContent = 'The map could not be loaded. Check your connection and try again.';
+      mapNote.classList.remove('hidden');
+      return;
+    }
+    if (!map) {
+      map = L.map(mapEl, { scrollWheelZoom: false }).setView(OSLO_CENTER, 11);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+      markerLayer = L.layerGroup().addTo(map);
+    }
+    map.invalidateSize();
+    renderMarkers();
+  }
+
+  viewBtns.forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
+
   function updateURL() {
     const params = new URLSearchParams();
+    if (activeView === 'map') params.set('view', 'map');
     if (activeFilter && activeFilter !== 'all') params.set('filter', activeFilter);
+    if (activeSubFilter) params.set('cat', activeSubFilter);
     Object.entries(colFilters).forEach(([key, value]) => { if (value) params.set(key, value); });
     const q = search.value.trim();
     if (q) params.set('q', q);
@@ -321,12 +453,14 @@ title: Oslo Mental Health Map
       originalOrder.forEach(el => tbody.appendChild(el));
     }
 
+    const allowed = activeSubFilter ? [activeSubFilter] : groups[activeFilter] || [activeFilter];
+
     let visible = 0;
     toolRows.forEach(row => {
       const pillMatch = isNewView                 ? recent.has(row)
                       : activeFilter === 'akutt'  ? row.dataset.akutt === 'true'
                       : activeFilter === 'all'    ? true
-                      : row.dataset.category === activeFilter;
+                      : allowed.includes(row.dataset.category);
       const textMatch = !q || row.dataset.name.includes(q) || row.dataset.desc.includes(q);
       const show = pillMatch && textMatch && Object.keys(colFilters).every(key => matchesCol(row, key));
       row.classList.toggle('hidden', !show);
@@ -343,13 +477,49 @@ title: Oslo Mental Health Map
 
     countEl.textContent = visible + (visible === 1 ? ' entry' : ' entries');
     updateURL();
+    renderMarkers();
+  }
+
+  function showSubPills(filter) {
+    const cats = groups[filter];
+    if (!cats || cats.length <= 1) {
+      subPillsEl.innerHTML = '';
+      subPillsEl.classList.remove('visible');
+      return;
+    }
+
+    subPillsEl.innerHTML = cats.map(id =>
+      `<button class="pill sub-pill" data-cat="${id}">${categoryNames[id] || id}</button>`
+    ).join('');
+
+    subPillsEl.querySelectorAll('.sub-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        const wasSelected = pill.classList.contains('selected');
+        subPillsEl.querySelectorAll('.sub-pill').forEach(p => p.classList.remove('selected'));
+        if (wasSelected) {
+          // Clicking the active sub-filter again deselects it (back to the whole group)
+          activeSubFilter = null;
+        } else {
+          pill.classList.add('selected');
+          activeSubFilter = pill.dataset.cat;
+        }
+        applyFilters();
+      });
+    });
+
+    subPillsEl.classList.add('visible');
   }
 
   mainPills.forEach(pill => {
     pill.addEventListener('click', () => {
+      // Clicking an open group chip (Fagstoff/Ressurser) again closes it, back to All
+      const reclickedGroup = groups[pill.dataset.filter] && activeFilter === pill.dataset.filter;
+      const target = reclickedGroup ? [...mainPills].find(p => p.dataset.filter === 'all') : pill;
       mainPills.forEach(p => p.classList.remove('selected'));
-      pill.classList.add('selected');
-      activeFilter = pill.dataset.filter;
+      target.classList.add('selected');
+      activeFilter    = target.dataset.filter;
+      activeSubFilter = null;
+      showSubPills(activeFilter);
       applyFilters();
     });
   });
@@ -367,11 +537,19 @@ title: Oslo Mental Health Map
         mainPills.forEach(pl => pl.classList.remove('selected'));
         pill.classList.add('selected');
         activeFilter = initFilter;
+        showSubPills(activeFilter);
       }
+    }
+    const initCat = p.get('cat');
+    if (initCat) {
+      activeSubFilter = initCat;
+      const sub = subPillsEl.querySelector(`[data-cat="${initCat}"]`);
+      if (sub) sub.classList.add('selected');
     }
     Object.keys(colFilters).forEach(key => { if (p.get(key)) setColFilter(key, p.get(key)); });
     if (p.get('q')) { search.value = p.get('q'); }
     if (p.toString()) applyFilters();
+    if (p.get('view') === 'map') setView('map');
   })();
 
   // / to focus search
