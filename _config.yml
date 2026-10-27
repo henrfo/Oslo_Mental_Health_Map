@@ -1,0 +1,17 @@
+title: Oslo Mental Health Map
+description: A community-driven overview of mental health resources in Oslo.
+baseurl: "/Oslo_Mental_Health_Map"
+url: "https://henrfo.github.io"
+
+plugins:
+  - jekyll-sitemap
+
+exclude:
+  - scripts/
+  - Gemfile
+  - Gemfile.lock
+  - Gemfile.local
+  - Gemfile.local.lock
+  - vendor/
+  - README.md
+  - CONTRIBUTING.md

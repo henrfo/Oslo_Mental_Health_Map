@@ -1,0 +1,94 @@
+---
+layout: default
+title: About
+permalink: /about/
+---
+
+<header>
+  <div class="site-header-row">
+    <div class="site-header-left">
+      <a href="{{ '/' | relative_url }}" class="back-link">← Directory</a>
+      <h1 class="site-title">About Oslo Mental Health Map</h1>
+    </div>
+    <nav class="site-nav">
+      <a href="{{ '/contribute/' | relative_url }}">Suggest an entry</a>
+      <a href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<div class="about-body">
+  <p>Oslo Mental Health Map is a shared overview of mental health resources in Oslo. If everyone contributes what they know, it becomes easier to find the right help.</p>
+
+  <p class="about-gap"><strong>How health status works.</strong> A weekly GitHub Actions cron job checks each tool's repository.</p>
+  <ul class="health-legend">
+    <li><span class="dot dot-active"></span> Active — committed within 6 months</li>
+    <li><span class="dot dot-quiet"></span> Quiet — 6 to 24 months</li>
+    <li><span class="dot dot-inactive"></span> Inactive — 2+ years or archived</li>
+    <li><span class="dot dot-external"></span> Not on GitHub</li>
+  </ul>
+
+  <p><strong>What gets included.</strong> To be decided.</p>
+
+  <p><strong>How to contribute.</strong> Use the form at <a href="{{ '/contribute/' | relative_url }}">/contribute</a> — your submission becomes a public GitHub Issue automatically. You can also open an issue directly on GitHub, or submit a pull request. Each tool is a YAML entry: name, url, description, language, modality, optionally github (owner/repo for health tracking), and added_by (with optional added_by_github handle) to credit whoever suggested it.</p>
+
+  {%- comment -%} unique contributor names {%- endcomment -%}
+  {%- assign names = '' | split: '' -%}
+  {%- for cat in site.data.categories -%}
+    {%- assign cat_tools = site.data.tools[cat.id] -%}
+    {%- for tool in cat_tools -%}
+      {%- if tool.added_by -%}
+        {%- unless names contains tool.added_by -%}
+          {%- assign names = names | push: tool.added_by -%}
+        {%- endunless -%}
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endfor -%}
+
+  {%- comment -%} key each contributor by their most recent date_added, then sort newest-first {%- endcomment -%}
+  {%- assign keyed = '' | split: '' -%}
+  {%- for name in names -%}
+    {%- assign maxd = 0 -%}
+    {%- for cat in site.data.categories -%}
+      {%- assign cat_tools = site.data.tools[cat.id] -%}
+      {%- for tool in cat_tools -%}
+        {%- if tool.added_by == name and tool.date_added -%}
+          {%- assign dn = tool.date_added | date: '%Y%m%d' | plus: 0 -%}
+          {%- if dn > maxd -%}{%- assign maxd = dn -%}{%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+    {%- capture entry -%}{{ maxd }}|{{ name }}{%- endcapture -%}
+    {%- assign keyed = keyed | push: entry -%}
+  {%- endfor -%}
+  {%- assign keyed = keyed | sort | reverse -%}
+
+  <p class="about-gap"><strong>Contributors:</strong></p>
+  <div class="contributor-wall">
+    <span class="contributor"><a href="https://github.com/henrfo" target="_blank" rel="noopener noreferrer"><img class="contributor-avatar" src="https://github.com/henrfo.png?size=48" alt="" loading="lazy">henrfo</a></span>
+    {%- for entry in keyed -%}
+      {%- assign name = entry | split: '|' | last -%}
+      {%- assign gh = '' -%}
+      {%- assign url = '' -%}
+      {%- for cat in site.data.categories -%}
+        {%- assign cat_tools = site.data.tools[cat.id] -%}
+        {%- for tool in cat_tools -%}
+          {%- if tool.added_by == name -%}
+            {%- if tool.added_by_github and gh == '' -%}{%- assign gh = tool.added_by_github -%}{%- endif -%}
+            {%- if tool.added_by_url and url == '' -%}{%- assign url = tool.added_by_url -%}{%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endfor -%}
+      {%- if gh != '' -%}
+      <span class="contributor"><a href="https://github.com/{{ gh }}" target="_blank" rel="noopener noreferrer"><img class="contributor-avatar" src="https://github.com/{{ gh }}.png?size=48" alt="" loading="lazy">{{ name }}</a></span>
+      {%- elsif url != '' -%}
+      <span class="contributor"><a href="{{ url }}" target="_blank" rel="noopener noreferrer">{{ name }}</a></span>
+      {%- else -%}
+      <span class="contributor">{{ name }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <p>Started by <a href="mailto:henrfo@uio.no">Henrik Formoe (University of Oslo)</a>. Open to everyone.</p>
+</div>
+

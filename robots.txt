@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://henrfo.github.io/Oslo_Mental_Health_Map/sitemap.xml
