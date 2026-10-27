@@ -10,8 +10,6 @@ exclude:
   - scripts/
   - Gemfile
   - Gemfile.lock
-  - Gemfile.local
-  - Gemfile.local.lock
   - vendor/
   - README.md
   - CONTRIBUTING.md
