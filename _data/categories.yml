@@ -1,4 +1,4 @@
-# group: tjenester = services (middle chips, one chip per nivå)
+# group: tjenester = services (middle chips, one per level: Frivillig → Førstelinje → Spesialist → Akutt)
 #        fagstoff  = what you know (right chip "Fagstoff", sub-pills per category)
 #        ressurser = who you point to (right chip "Ressurser", sub-pills per category)
 - id: frivillig
@@ -11,6 +11,10 @@
 
 - id: spesialist
   name: { nb: Spesialist, en: Specialist }
+  group: tjenester
+
+- id: akutt
+  name: { nb: Akutt, en: Acute }
   group: tjenester
 
 - id: retningslinjer

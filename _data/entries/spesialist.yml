@@ -11,7 +11,6 @@
   lat: 59.94221
   lon: 10.71283
   henvisning: true
-  akutt: false                # acute ward exists, but via legevakt/AMK; consider separate entry
   website: https://diakonhjemmetsykehus.no/avdelinger/klinikk-for-psykisk-helse-og-rus/voksenpsykiatrisk-avdeling-vinderen
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -26,30 +25,11 @@
   dekker: [Gamle Oslo, Grünerløkka, St. Hanshaugen]
   #          job ads list Lovisenberggata 17 (St. Hanshaugen: 59.93335, 10.74691)
   henvisning: true
-  akutt: false                # has an acute ambulatory home-hospital team
   bydel: "Nordre Aker"
   address: "Spångbergveien 25, 0853 Oslo"   # own page gives postcode 0771; the street is at 0853 (Tåsen)
   lat: 59.94219
   lon: 10.74851
   website: https://www.lovisenbergsykehus.no/avdelinger/nic-waals-institutt
-  last_verified: 2026-10-27
-  date_added: 2026-10-27
-
-- name: "Psykiatrisk legevakt (OUS)"
-  description:
-    nb: "Akuttpsykiatrisk vurdering kveld og helg for alle i Oslo."
-    en: "Emergency psychiatric assessment in the evenings and at weekends for everyone in Oslo."
-  tilstand: [psykose, selvskading, krise]
-  malgruppe: [alle]
-  dekker: [Hele Oslo]
-  henvisning: false
-  akutt: true
-  phone: "116 117"
-  bydel: "Bjerke"
-  address: "Trondheimsveien 233 (Aker sykehus), 0586 Oslo"
-  lat: 59.93919
-  lon: 10.79225
-  website: https://www.oslo-universitetssykehus.no/avdelinger/klinikk-psykisk-helse-og-avhengighet/nydalen-dps/psykiatrisk-legevakt/
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -61,7 +41,6 @@
   malgruppe: [voksne]
   dps: D47
   henvisning: true
-  akutt: false
   bydel: "St. Hanshaugen"
   address: "Lovisenberggata 21, 0456 Oslo"   # poliklinikk Grünerløkka is at Ullevålsveien 2
   lat: 59.93427
@@ -78,7 +57,6 @@
   malgruppe: [voksne]
   dps: D68
   henvisning: true
-  akutt: false
   bydel: "Nordre Aker"
   address: "Gullhaugveien 12, 0484 Oslo"   # poliklinikk; døgnbehandling is at Lovisenberggata 4G
   lat: 59.95154
@@ -95,7 +73,6 @@
   malgruppe: [voksne]
   dps: D69
   henvisning: true
-  akutt: false
   bydel: "Søndre Nordstrand"
   address: "Helga Vaneks vei 6, 1281 Oslo"
   lat: 59.84799
@@ -112,7 +89,6 @@
   malgruppe: [voksne]
   dps: D50
   henvisning: true
-  akutt: false
   bydel: "Alna"
   address: "Jerikoveien 28, 1067 Oslo"   # the DPS also lists Rosenbergveien 15
   lat: 59.93563
@@ -130,7 +106,6 @@
   malgruppe: [barn, ungdom]
   dekker: [Frogner, Ullern, Vestre Aker]
   henvisning: true
-  akutt: false
   bydel: "Vestre Aker"
   address: "Sørkedalsveien 150B, 0754 Oslo"
   lat: 59.94186
@@ -148,7 +123,6 @@
   malgruppe: [voksne]
   dekker: [Hele Oslo]
   henvisning: true
-  akutt: false
   website: https://www.ahus.no/avdelinger/medisinsk-divisjon/sorgstotte
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -161,7 +135,6 @@
   malgruppe: [alle]
   dekker: [Hele Oslo]
   henvisning: true
-  akutt: false
   website: https://www.helse-sorost.no/helsefaglig/samarbeid/avtaler-med-private/avtalespesialister
   last_verified: 2026-10-27
   date_added: 2026-10-27

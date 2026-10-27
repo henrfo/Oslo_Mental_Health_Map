@@ -29,7 +29,6 @@ col_name:         { nb: Navn, en: Name }
 col_desc:         { nb: Beskrivelse, en: Description }
 col_when:         { nb: Når, en: When }
 col_added:        { nb: Lagt til, en: Added }
-col_nivaa:        { nb: Nivå, en: Level }
 col_tilstand:     { nb: Tilstand, en: Condition }
 col_bydel:        { nb: Bydel, en: District }
 dekker_note:      { nb: "Bydelene tilbudet dekker, ikke hvor det ligger.", en: "The districts the service covers, not where it is." }

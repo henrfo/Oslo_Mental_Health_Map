@@ -11,53 +11,7 @@
   lon: 10.75160
   phone: "913 03 913"
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/sentrumsarbeid/uteseksjonen/
-  last_verified: 2026-10-27
-  date_added: 2026-10-27
-
-- name: "Legevakten i Oslo"
-  description:
-    nb: "Døgnåpen legevakt, også ved alvorlig depresjon, selvmordsfare eller psykose."
-    en: "Emergency clinic open around the clock, also for severe depression, suicide risk or psychosis."
-  tilstand: [depresjon, selvskading, psykose, krise]
-  malgruppe: [alle]
-  dekker: [Hele Oslo]
-  henvisning: false
-  akutt: true
-  phone: "116 117"
-  website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/legevakt-oslo/
-  bydel: "Bjerke"
-  address: "Trondheimsveien 233 (Aker sykehus), 0586 Oslo"
-  lat: 59.93919
-  lon: 10.79225
-  last_verified: 2026-10-27
-  date_added: 2026-10-27
-
-- name: "Psykososial akuttjeneste"
-  description:
-    nb: "Gratis døgnåpen psykososial akutthjelp ved legevakten."
-    en: "Free psychosocial emergency help at the emergency clinic, open around the clock."
-  tilstand: [krise]
-  malgruppe: [alle]
-  dekker: [Hele Oslo]
-  henvisning: false
-  akutt: true
-  phone: "116 117"
-  website: https://www.oslo.kommune.no/helse-og-omsorg/akutt-helsehjelp-og-legevakt/psykososial-akuttjeneste/
-  last_verified: 2026-10-27
-  date_added: 2026-10-27
-
-- name: "Barnevernvakten"
-  description:
-    nb: "Akutt barnevern når du er alvorlig bekymret for et barn."
-    en: "Emergency child welfare service when you are seriously worried about a child."
-  tilstand: [krise]
-  malgruppe: [barn, ungdom]
-  dekker: [Hele Oslo]
-  henvisning: false
-  akutt: true
-  website: https://www.barnevernvakten.no/kommuner/oslo-kommune
   last_verified: 2026-10-27
   date_added: 2026-10-27
 
@@ -69,7 +23,6 @@
   malgruppe: [ungdom, voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/ved-milde-til-moderate-psykiske-utfordringer/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -82,7 +35,6 @@
   malgruppe: [ungdom]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/psykisk-helsehjelp-til-barn-unge-og-familier/psykisk-helsehjelp-for-ungdom-og-unge-voksne/ung-arena/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -95,7 +47,6 @@
   malgruppe: [barn, voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/barn-ungdom-og-familie/oslohjelpa/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -109,7 +60,6 @@
   malgruppe: [ungdom]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/helsetjenester/helsestasjon-og-vaksine/helsestasjon-for-ungdom-hfu/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -123,7 +73,6 @@
   malgruppe: [ungdom]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/psykisk-helsehjelp-til-barn-unge-og-familier/psykisk-helsehjelp-for-ungdom-og-unge-voksne/uteseksjonens-psykologtjeneste/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -136,7 +85,6 @@
   malgruppe: [voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/barn-ungdom-og-familie/barnevern-og-foreldreveiledning/par-og-familieterapi/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -150,7 +98,6 @@
   malgruppe: [voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/helsetjenester/dagtilbud/frisklivssentraler/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -164,7 +111,6 @@
   malgruppe: [ungdom, voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/behandling-og-tjenester/hasjavvenning/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -179,7 +125,6 @@
   malgruppe: [ungdom, voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.nav.no/no/lokalt/oslo/satsinger-og-aktiviteter/senter-for-jobbmestring
   last_verified: 2026-10-27
   date_added: 2026-10-27

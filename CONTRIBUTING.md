@@ -19,8 +19,9 @@ There is one file per category in `_data/entries/`. The file an entry sits in is
 | `frivillig.yml` | Frivillig: volunteer and peer organisations |
 | `forstelinje.yml` | Førstelinje: municipal low-threshold services, GP-level care |
 | `spesialist.yml` | Spesialist: specialist health services (DPS, BUP, private specialists) |
+| `akutt.yml` | Akutt: emergency and crisis services (legevakt, psychiatric emergency, child welfare on call) |
 
-Urgency is separate from nivå: set `akutt: true` on any offer that takes acute cases, at any level. The Akutt chip shows those.
+The levels form a ladder: Frivillig → Førstelinje → Spesialist → Akutt.
 
 **Fagstoff** (right chip, what you know):
 
@@ -50,7 +51,6 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
   malgruppe: [ungdom]                     # services: required. Fagstoff/ressurser: optional. List, see values below
   bydel: Gamle Oslo                       # services: required. One of the 15 bydeler, or "Hele Oslo"
   henvisning: false                       # services: required. true = referral needed
-  akutt: false                            # services: required. true = takes acute cases
   address: Storgata 1, 0155 Oslo          # optional. Omit for phone- or online-only services
   lat: 59.9133                            # required if address is set. Decimal degrees (WGS84)
   lon: 10.7522

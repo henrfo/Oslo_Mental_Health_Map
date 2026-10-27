@@ -8,7 +8,6 @@
   dekker: [Hele Oslo]
   # address: not listed on linkoslo.no; add when known (no map pin until then)
   henvisning: false
-  akutt: false
   website: https://www.linkoslo.no/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -26,7 +25,6 @@
   lon: 10.75180
   phone: "940 65 739"
   henvisning: false
-  akutt: false
   website: https://mentalhelse.no/oslo/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -39,7 +37,6 @@
   malgruppe: [voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://sobernorge.no
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -52,7 +49,6 @@
   malgruppe: [voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://mentalhelse.no/vart-arbeid/prosjekter/livsgnist-naturen-som-moteplass/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -66,7 +62,6 @@
   malgruppe: [parorende]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://piosenteret.no/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -79,7 +74,6 @@
   malgruppe: [parorende]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://www.ivareta.no/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -92,7 +86,6 @@
   malgruppe: [voksne]
   dekker: [Hele Oslo]
   henvisning: false
-  akutt: false
   website: https://angstforeningen.no/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -110,7 +103,6 @@
   lat: 59.92068
   lon: 10.73565
   henvisning: false
-  akutt: false
   phone: "22 99 34 80"
   website: https://www.fontenehuset.no/
   last_verified: 2026-10-27
@@ -128,7 +120,6 @@
   lat: 59.91419
   lon: 10.77476
   henvisning: false
-  akutt: false
   phone: "22 08 33 90"
   website: https://www.fontenehuset-osloost.no/
   last_verified: 2026-10-27
@@ -147,7 +138,6 @@
   lat: 59.84513
   lon: 10.83469
   henvisning: false
-  akutt: false
   phone: "922 86 666"
   website: https://www.fontenehuset-oslosor.no/
   last_verified: 2026-10-27
@@ -166,7 +156,6 @@
   lat: 59.91888
   lon: 10.74480
   henvisning: false
-  akutt: false
   phone: "40 20 40 03"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -185,7 +174,6 @@
   lat: 59.87635
   lon: 10.82044
   henvisning: false
-  akutt: false
   phone: "97 53 93 34"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -204,7 +192,6 @@
   lat: 59.91508
   lon: 10.75526
   henvisning: false
-  akutt: false
   phone: "22 17 18 18"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -223,7 +210,6 @@
   lat: 59.91822
   lon: 10.79969
   henvisning: false
-  akutt: false
   phone: "48 12 57 83"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -241,7 +227,6 @@
   lat: 59.91130
   lon: 10.76673
   henvisning: false
-  akutt: false
   phone: "48 10 56 36"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -259,7 +244,6 @@
   lat: 59.92453
   lon: 10.71862
   henvisning: false
-  akutt: false
   phone: "22 55 35 06"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -277,7 +261,6 @@
   lat: 59.83004
   lon: 10.78121
   henvisning: false
-  akutt: false
   phone: "91 00 34 50"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -295,7 +278,6 @@
   lat: 59.95797
   lon: 10.91552
   henvisning: false
-  akutt: false
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
   date_added: 2026-10-27
@@ -312,7 +294,6 @@
   lat: 59.92185
   lon: 10.75663
   henvisning: false
-  akutt: false
   phone: "41 86 50 92"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -331,7 +312,6 @@
   lat: 59.92245
   lon: 10.64091
   henvisning: false
-  akutt: false
   phone: "48 22 50 61"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -349,7 +329,6 @@
   lat: 59.89417
   lon: 10.84201
   henvisning: false
-  akutt: false
   phone: "93 23 01 28"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -367,7 +346,6 @@
   lat: 59.96404
   lon: 10.89323
   henvisning: false
-  akutt: false
   phone: "91 52 18 29"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -385,7 +363,6 @@
   lat: 59.94614
   lon: 10.81494
   henvisning: false
-  akutt: false
   phone: "90 62 13 49"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -404,7 +381,6 @@
   lat: 59.95281
   lon: 10.76038
   henvisning: false
-  akutt: false
   phone: "90 22 73 75"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27
@@ -422,7 +398,6 @@
   lat: 59.93264
   lon: 10.75485
   henvisning: false
-  akutt: false
   phone: "97 42 50 61"
   website: https://www.oslo.kommune.no/helse-og-omsorg/psykisk-helsehjelp/kortvarige-og-moderate-psykiske-utfordringer/tilbud-pa-dagtid/
   last_verified: 2026-10-27

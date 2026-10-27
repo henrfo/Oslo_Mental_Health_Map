@@ -39,7 +39,6 @@ bilingual: true
       {%- for cat in services %}
       <button class="pill" data-filter="{{ cat.id }}">{% include t.html nb=cat.name.nb en=cat.name.en %}</button>
       {%- endfor %}
-      <button class="pill" data-filter="akutt">{% include t.html k="akutt" %}</button>
     </div>
     <div class="pill-group">
       <button class="pill" data-filter="fagstoff">{% include t.html k="fagstoff" %}</button>
@@ -78,16 +77,6 @@ bilingual: true
       <th class="col-desc-th">{% include t.html k="col_desc" %}</th>
       <th class="col-date">{% include t.html k="col_added" %}</th>
       <th class="col-when">{% include t.html k="col_when" %}</th>
-      <th class="col-th" data-key="nivaa">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_nivaa" %}</span>&nbsp;▾</button>
-        <div class="col-dropdown">
-          <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
-          {%- assign services = site.data.categories | where: 'group', 'tjenester' %}
-          {%- for cat in services %}
-          <button class="col-option" data-value="{{ cat.id }}">{% include t.html nb=cat.name.nb en=cat.name.en %}</button>
-          {%- endfor %}
-        </div>
-      </th>
       <th class="col-th" data-key="tilstand">
         <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
@@ -172,11 +161,9 @@ bilingual: true
               data-verified="{{ tool.last_verified }}"
               data-link-status="{{ health.status }}"
               data-link-checked="{{ health.checked }}"
-              data-akutt="{{ tool.akutt }}"
               data-tilstand="{{ tool.tilstand | join: '|' }}"
               data-bydel="{{ tool.bydel }}"
               data-dekker="{{ dekker | join: '|' }}"
-              data-nivaa="{{ cat.id }}"
               data-malgruppe="{{ tool.malgruppe | join: '|' }}"
               data-henvisning="{% if tool.henvisning == true %}ja{% elsif tool.henvisning == false %}nei{% endif %}"
               {% if tool.nar %}data-nar-dag="{{ tool.nar.dag }}" data-nar-fra="{{ tool.nar.fra }}" data-nar-til="{{ tool.nar.til }}" data-nar-hyppighet="{{ tool.nar.hyppighet }}"{% endif %}
@@ -187,11 +174,8 @@ bilingual: true
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer"{% if tool.full_name %} title="{{ tool.full_name }}"{% endif %}>{{ tool.name }}</a>
               {%- if health.status == 'broken' %} <span class="broken-tag">{% include t.html k="link_broken" %}</span>{% endif %}
-              {%- if tool.akutt or tool.phone %}
-              <span class="tool-sub">
-                {%- if tool.akutt %}{% include t.html k="akutt" %}{% if tool.phone %} · {% endif %}{% endif %}
-                {%- if tool.phone %}<a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif -%}
-              </span>
+              {%- if tool.phone %}
+              <span class="tool-sub"><a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a></span>
               {%- endif %}
             </td>
             <td class="tool-desc">
@@ -200,7 +184,6 @@ bilingual: true
             </td>
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
             <td class="col-when"></td>
-            <td class="col-cell col-wrap col-short">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
             <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
             <td class="col-cell col-wrap col-short">{% if dekker contains 'Hele Oslo' %}{% include t.html k="hele_oslo" %}{% else %}{% for b in dekker %}<span class="val">{{ b }}</span>{% endfor %}{% endif %}</td>
             <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
@@ -328,7 +311,7 @@ bilingual: true
 
   // Column filters; an entry tagged with the wildcard value matches every filter of that column.
   // The bydel filter matches what an entry serves (dekker), not where it is.
-  const colFilters = { nivaa: null, tilstand: null, bydel: null, malgruppe: null, henvisning: null };
+  const colFilters = { tilstand: null, bydel: null, malgruppe: null, henvisning: null };
   const wildcards  = { tilstand: 'generelt', bydel: 'Hele Oslo', malgruppe: 'alle' };
   const filterAttr = { bydel: 'dekker' };
 
@@ -473,7 +456,7 @@ bilingual: true
     const name = document.createElement('strong');
     name.appendChild(row.querySelector('.tool-name a').cloneNode(true));
     el.appendChild(name);
-    const details = [categoryLabel(row), row.dataset.akutt === 'true' ? t('akutt') : ''].filter(Boolean).join(' · ');
+    const details = categoryLabel(row);
     [details, row.dataset.address, whenText(row, false)].forEach(text => {
       if (!text) return;
       const line = document.createElement('div');
@@ -532,7 +515,7 @@ bilingual: true
     const shown    = [...toolRows].filter(r => !r.classList.contains('hidden'));
     const placed   = shown.filter(r => r.dataset.lat && r.dataset.lon);
     if (activeRow && !placed.includes(activeRow)) setActiveRow(null);
-    // Fill = the row's dot colour (how recently the info was verified); the Akutt chip, not colour, singles out acute services
+    // Fill = the row's dot colour (how recently the info was verified)
     const css = getComputedStyle(document.documentElement);
     const dotColor = row => {
       const kind = ['dot-active', 'dot-quiet', 'dot-inactive'].find(k => row.querySelector('.dot').classList.contains(k)) || 'dot-inactive';
@@ -787,7 +770,6 @@ bilingual: true
 
     toolRows.forEach(row => {
       const pillMatch = selected                  ? selected.has(row)
-                      : activeFilter === 'akutt'  ? row.dataset.akutt === 'true'
                       : activeFilter === 'all'    ? true
                       : allowed.includes(row.dataset.category);
       const textMatch = !q || row.dataset.name.includes(q) || row.dataset.desc.includes(q);

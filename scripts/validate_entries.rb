@@ -56,7 +56,8 @@ Dir[File.join(ROOT, '_data/entries/*.yml')].sort.each do |file|
     if service
       bad.('needs dekker, dps or bydel (which bydeler it serves)') unless e['dekker'] || e['dps'] || e['bydel']
       %w[tilstand malgruppe].each { |k| bad.("missing #{k}") unless e[k] }
-      %w[henvisning akutt].each { |k| bad.("#{k} must be true or false") unless [true, false].include?(e[k]) }
+      bad.('henvisning must be true or false') unless [true, false].include?(e['henvisning'])
+      bad.('akutt is no longer a field; acute services go in akutt.yml') if e.key?('akutt')
     end
 
     Array(e['tilstand']).each  { |v| bad.("unknown tilstand '#{v}'") unless tilstand.include?(v) }
