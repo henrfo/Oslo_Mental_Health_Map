@@ -1,0 +1,11 @@
+- name: NKVTS – Nasjonalt kunnskapssenter om vold og traumatisk stress
+  description:
+    nb: Nasjonalt kunnskapssenter for vold og traumer, med forskning, kurs, e-læring og veiledere for helsepersonell.
+    en: National centre for violence and trauma, with research, courses, e-learning and guides for health professionals.
+  tilstand: [traumer]
+  address: Gullhaugveien 1-3, 0484 Oslo
+  lat: 59.94960
+  lon: 10.76834
+  website: https://www.nkvts.no
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

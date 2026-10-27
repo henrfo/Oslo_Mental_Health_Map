@@ -2,33 +2,45 @@
 layout: default
 title: About
 permalink: /about/
+bilingual: true
 ---
 
 <header>
   <div class="site-header-row">
     <div class="site-header-left">
-      <a href="{{ '/' | relative_url }}" class="back-link">← Directory</a>
-      <h1 class="site-title">About Oslo Mental Health Map</h1>
+      <a href="{{ '/' | relative_url }}" class="back-link"><span class="l-nb">← Oversikten</span><span class="l-en">← Directory</span></a>
+      <h1 class="site-title"><span class="l-nb">Om Oslo Mental Health Map</span><span class="l-en">About Oslo Mental Health Map</span></h1>
     </div>
     <nav class="site-nav">
-      <a href="{{ '/contribute/' | relative_url }}">Suggest an offer or edit</a>
+      <a href="{{ '/contribute/' | relative_url }}">{% include t.html k="nav_suggest" %}</a>
       <a href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">GitHub</a>
+      {% include lang-toggle.html %}
     </nav>
   </div>
 </header>
 
 <div class="about-body">
-  <p>Oslo Mental Health Map is a shared overview of mental health services in Oslo, made first for health professionals who need to refer or point someone onward. If everyone contributes what they know, it becomes easier to find the right offer.</p>
+  <p class="l-nb">Oslo Mental Health Map er en felles oversikt over psykiske helsetilbud i Oslo, laget først og fremst for helsepersonell som skal henvise eller vise noen videre. Jo flere som bidrar med det de vet, desto lettere blir det å finne riktig tilbud.</p>
+  <p class="l-en">Oslo Mental Health Map is a shared overview of mental health services in Oslo, made first for health professionals who need to refer or point someone onward. If everyone contributes what they know, it becomes easier to find the right offer.</p>
 
-  <p class="about-gap"><strong>How the status dot works.</strong> A weekly link checker opens each entry's website.</p>
+  <p class="about-gap l-nb"><strong>Slik fungerer statusprikken.</strong> En ukentlig lenkesjekk åpner nettsiden til hver oppføring.</p>
+  <p class="about-gap l-en"><strong>How the status dot works.</strong> A weekly link checker opens each entry's website.</p>
   <ul class="health-legend">
-    <li><span class="dot dot-active"></span> Link active: the website responded within the last month</li>
-    <li><span class="dot dot-inactive"></span> Link broken: the website did not respond</li>
+    <li><span class="dot dot-active"></span> <span class="l-nb">Aktiv lenke: nettsiden svarte i løpet av de siste 30 dagene</span><span class="l-en">Link active: the website responded within the last 30 days</span></li>
+    <li><span class="dot dot-inactive"></span> <span class="l-nb">Brutt lenke: nettsiden svarte ikke</span><span class="l-en">Link broken: the website did not respond</span></li>
   </ul>
 
-  <p><strong>What gets included.</strong> To be decided.</p>
+  <p class="l-nb"><strong>Info bekreftet.</strong> Datoen under beskrivelsen viser når noen sist sjekket at opplysningene stemmer. En lenke som virker betyr ikke at tilbudet fortsatt finnes eller er uendret.</p>
+  <p class="l-en"><strong>Info verified.</strong> The date under each description shows when someone last checked that the details are right. A working link doesn't mean the service still exists or is unchanged.</p>
 
-  <p><strong>How to contribute.</strong> Use the form at <a href="{{ '/contribute/' | relative_url }}">/contribute</a> — your submission becomes a public GitHub Issue automatically. You can also open an issue directly on GitHub, or submit a pull request. Each offer is a YAML entry; the fields are listed in <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">CONTRIBUTING.md</a>. Add added_by (with optional added_by_github handle) to credit whoever suggested it.</p>
+  <p class="l-nb"><strong>DPS-områder.</strong> Kartet viser opptaksområdene til DPS-ene i Oslo, fra SSBs <a href="https://www.ssb.no/klass/klassifikasjoner/632" target="_blank" rel="noopener noreferrer">kodeliste for opptaksområder i spesialisthelsetjenesten (DPS)</a>, med grenser fra SSBs <a href="https://statisticsnorway.github.io/speshelse/" target="_blank" rel="noopener noreferrer">kartrapport</a>. Kodelisten oppdateres årlig.</p>
+  <p class="l-en"><strong>DPS areas.</strong> The map shows the catchment areas of Oslo's DPS (community mental health centres), from Statistics Norway's <a href="https://www.ssb.no/klass/klassifikasjoner/632" target="_blank" rel="noopener noreferrer">code list of specialist health service catchment areas (DPS)</a>, with boundaries from SSB's <a href="https://statisticsnorway.github.io/speshelse/" target="_blank" rel="noopener noreferrer">map report</a>. The code list is updated yearly.</p>
+
+  <p class="l-nb"><strong>Hva som tas med.</strong> Ikke bestemt ennå.</p>
+  <p class="l-en"><strong>What gets included.</strong> To be decided.</p>
+
+  <p class="l-nb"><strong>Slik bidrar du.</strong> Bruk skjemaet på <a href="{{ '/contribute/' | relative_url }}">/contribute</a>. Forslaget blir automatisk en offentlig GitHub-issue. Du kan også opprette en issue direkte på GitHub, eller sende en pull request. Hvert tilbud er en YAML-oppføring; feltene står i <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">CONTRIBUTING.md</a>. Legg til added_by (og eventuelt added_by_github) for å kreditere den som foreslo det.</p>
+  <p class="l-en"><strong>How to contribute.</strong> Use the form at <a href="{{ '/contribute/' | relative_url }}">/contribute</a>. Your submission becomes a public GitHub Issue automatically. You can also open an issue directly on GitHub, or submit a pull request. Each offer is a YAML entry; the fields are listed in <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer">CONTRIBUTING.md</a>. Add added_by (with optional added_by_github handle) to credit whoever suggested it.</p>
 
   {%- comment -%} unique contributor names {%- endcomment -%}
   {%- assign names = '' | split: '' -%}
@@ -61,7 +73,7 @@ permalink: /about/
   {%- endfor -%}
   {%- assign keyed = keyed | sort | reverse -%}
 
-  <p class="about-gap"><strong>Contributors:</strong></p>
+  <p class="about-gap"><strong><span class="l-nb">Bidragsytere:</span><span class="l-en">Contributors:</span></strong></p>
   <div class="contributor-wall">
     <span class="contributor"><a href="https://github.com/henrfo" target="_blank" rel="noopener noreferrer"><img class="contributor-avatar" src="https://github.com/henrfo.png?size=48" alt="" loading="lazy">henrfo</a></span>
     {%- for entry in keyed -%}
@@ -87,6 +99,9 @@ permalink: /about/
     {%- endfor -%}
   </div>
 
-  <p>Started by <a href="mailto:henrfo@uio.no">Henrik Formoe (University of Oslo)</a>. Open to everyone.</p>
+  <p class="l-nb">Startet av <a href="mailto:henrfo@uio.no">Henrik Formoe (Universitetet i Oslo)</a>. Åpent for alle.</p>
+  <p class="l-en">Started by <a href="mailto:henrfo@uio.no">Henrik Formoe (University of Oslo)</a>. Open to everyone.</p>
 </div>
+
+<script src="{{ '/assets/js/lang.js' | relative_url }}"></script>
 

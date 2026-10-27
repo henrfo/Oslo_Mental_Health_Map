@@ -2,15 +2,25 @@
 layout: default
 title: Suggest an offer or edit
 permalink: /contribute/
+bilingual: true
 ---
 
 <header>
-  <h1 class="site-title">Suggest an offer or edit</h1>
-  <p class="site-subtitle">Know something that should be listed, or spot something wrong? Tell us.</p>
+  <div class="site-header-row">
+    <div class="site-header-left">
+      <h1 class="site-title">{% include t.html k="nav_suggest" %}</h1>
+    </div>
+    <nav class="site-nav">
+      <a href="{{ '/about/' | relative_url }}">{% include t.html k="nav_about" %}</a>
+      {% include lang-toggle.html %}
+    </nav>
+  </div>
+  <p class="site-subtitle"><span class="l-nb">Vet du om noe som bør være med, eller ser du noe som er feil? Si fra.</span><span class="l-en">Know something that should be listed, or spot something wrong? Tell us.</span></p>
 </header>
 
 <div id="submitted-msg" style="display:none">
-  <p>Thanks — your suggestion is now <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">visible on GitHub</a>.</p>
+  <p class="l-nb">Takk! Forslaget ditt er nå <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">synlig på GitHub</a>.</p>
+  <p class="l-en">Thanks — your suggestion is now <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">visible on GitHub</a>.</p>
 </div>
 
 <form id="suggest-form" class="suggest-form" action="https://omhm-webhook-bridge.openmritools.workers.dev" method="POST">
@@ -21,45 +31,48 @@ permalink: /contribute/
     <div class="radio-group">
       <label class="radio-label">
         <input type="radio" name="type" value="suggest" checked>
-        Suggest an offer
+        <span class="l-nb">Foreslå et tilbud</span><span class="l-en">Suggest an offer</span>
       </label>
       <label class="radio-label">
         <input type="radio" name="type" value="flag">
-        Flag an edit
+        <span class="l-nb">Meld fra om en endring</span><span class="l-en">Flag an edit</span>
       </label>
     </div>
   </div>
 
   <div class="field">
-    <label for="tool-name">Name</label>
+    <label for="tool-name"><span class="l-nb">Navn</span><span class="l-en">Name</span></label>
     <input id="tool-name" type="text" name="tool_name" required autocomplete="off">
     <div id="tool-hint" class="tool-hint"></div>
   </div>
 
   <div class="field">
-    <label for="tool-url">URL</label>
-    <input id="tool-url" type="text" name="tool_url" placeholder="URL" required autocomplete="off">
+    <label for="tool-url"><span class="l-nb">Nettside</span><span class="l-en">Website</span></label>
+    <input id="tool-url" type="text" name="tool_url" required autocomplete="off">
   </div>
 
   <div class="field">
-    <label id="desc-label" for="tool-desc">What does it do?</label>
-    <textarea id="tool-desc" name="description" rows="4" placeholder="One or two sentences. What it does, not why it matters."></textarea>
+    <label id="desc-label" for="tool-desc"></label>
+    <textarea id="tool-desc" name="description" rows="4"></textarea>
   </div>
 
   <div class="field">
-    <label for="contact">Your email or GitHub username <span class="optional">(optional)</span></label>
+    <label for="contact"><span class="l-nb">E-post eller GitHub-brukernavn</span><span class="l-en">Your email or GitHub username</span> <span class="optional"><span class="l-nb">(valgfritt)</span><span class="l-en">(optional)</span></span></label>
     <input id="contact" type="text" name="contact" autocomplete="off">
   </div>
 
   <div class="field">
     <label class="radio-label">
       <input type="checkbox" name="list_contributor" checked>
-      List me as a contributor in the directory
+      <span class="l-nb">Vis meg som bidragsyter i oversikten</span><span class="l-en">List me as a contributor in the directory</span>
     </label>
   </div>
 
-  <button type="submit" class="submit-btn">Submit</button>
-  <p class="tool-hint">All suggestions are tracked publicly — <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">see pending suggestions on GitHub</a>.</p>
+  <button type="submit" class="submit-btn"><span class="l-nb">Send inn</span><span class="l-en">Submit</span></button>
+  <p class="tool-hint">
+    <span class="l-nb">Alle forslag spores offentlig — <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">se innsendte forslag på GitHub</a>.</span>
+    <span class="l-en">All suggestions are tracked publicly — <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">see submitted suggestions on GitHub</a>.</span>
+  </p>
 </form>
 
 <script>
@@ -72,43 +85,65 @@ permalink: /contribute/
     {% for cat in site.data.categories %}
     {% assign cat_tools = site.data.entries[cat.id] %}
     {% for tool in cat_tools %}
-    { name: {{ tool.name | jsonify }}, url: {{ tool.url | jsonify }} },
+    { name: {{ tool.name | jsonify }}, url: {{ tool.website | jsonify }} },
     {% endfor %}
     {% endfor %}
   ];
 
-  const descCopy = {
-    suggest: { label: 'What does it do?', placeholder: 'One or two sentences. What it does, not why it matters.' },
-    flag:    { label: 'What needs fixing?', placeholder: 'Which entry, and what\'s wrong.' }
+  // Copy that depends on both the chosen type and the language
+  const COPY = {
+    nb: {
+      suggest: { label: 'Hva tilbyr det?', placeholder: 'Én eller to setninger. Hva det tilbyr, ikke hvorfor det er viktig.' },
+      flag:    { label: 'Hva må rettes?', placeholder: 'Hvilken oppføring, og hva er feil.' },
+      url:     { suggest: 'https://…', flag: 'Valgfritt — ta med hvis relevant.' },
+      listed:  ['er allerede med — ', 'se den i oversikten', '.'],
+    },
+    en: {
+      suggest: { label: 'What does it offer?', placeholder: 'One or two sentences. What it offers, not why it matters.' },
+      flag:    { label: 'What needs fixing?', placeholder: 'Which entry, and what\'s wrong.' },
+      url:     { suggest: 'https://…', flag: 'Optional — include if relevant.' },
+      listed:  ['is already listed — ', 'see it in the directory', '.'],
+    },
   };
+
   const descLabel = document.getElementById('desc-label');
   const descArea  = document.getElementById('tool-desc');
   const urlInput  = document.getElementById('tool-url');
-  document.querySelectorAll('input[name="type"]').forEach(r => {
-    r.addEventListener('change', () => {
-      const isFlag = r.value === 'flag';
-      descLabel.textContent    = descCopy[r.value].label;
-      descArea.placeholder     = descCopy[r.value].placeholder;
-      urlInput.required    = !isFlag;
-      urlInput.placeholder = isFlag ? 'Optional — include if relevant.' : 'URL';
-    });
-  });
-
   const nameInput = document.getElementById('tool-name');
-  const hint = document.getElementById('tool-hint');
+  const hint      = document.getElementById('tool-hint');
+  const lang      = () => (document.documentElement.dataset.lang === 'en' ? 'en' : 'nb');
+  const type      = () => document.querySelector('input[name="type"]:checked').value;
 
-  nameInput.addEventListener('input', () => {
+  function renderCopy() {
+    const c = COPY[lang()];
+    descLabel.textContent = c[type()].label;
+    descArea.placeholder  = c[type()].placeholder;
+    urlInput.placeholder  = c.url[type()];
+    urlInput.required     = type() !== 'flag';
+    renderHint();
+  }
+
+  function renderHint() {
+    hint.textContent = '';
     const q = nameInput.value.trim().toLowerCase();
-    if (q.length < 2) { hint.innerHTML = ''; return; }
+    if (q.length < 2) return;
     const match = existingTools.find(t => t.name.toLowerCase().includes(q));
-    if (match) {
-      hint.innerHTML = 'ℹ️ <strong>' + match.name + '</strong> is already listed — <a href="{{ '/' | relative_url }}">see it in the directory</a>.';
-    } else {
-      hint.innerHTML = '';
-    }
-  });
+    if (!match) return;
+    const [before, linkText, after] = COPY[lang()].listed;
+    const name = document.createElement('strong');
+    name.textContent = match.name;
+    const link = document.createElement('a');
+    link.href = '{{ "/" | relative_url }}';
+    link.textContent = linkText;
+    hint.append('ℹ️ ', name, ' ' + before, link, after);
+  }
+
+  document.querySelectorAll('input[name="type"]').forEach(r => r.addEventListener('change', renderCopy));
+  nameInput.addEventListener('input', renderHint);
+  document.addEventListener('omhm:lang', renderCopy);
 </script>
+<script src="{{ '/assets/js/lang.js' | relative_url }}"></script>
 
 <footer class="footer">
-  <a href="{{ '/' | relative_url }}">← Back to directory</a>
+  <a href="{{ '/' | relative_url }}"><span class="l-nb">← Tilbake til oversikten</span><span class="l-en">← Back to directory</span></a>
 </footer>

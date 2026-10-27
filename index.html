@@ -13,9 +13,7 @@ bilingual: true
       <a href="{{ '/contribute/' | relative_url }}">{% include t.html k="nav_suggest" %}</a>
       <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">{% include t.html k="nav_pending" %}</a>
       <a href="{{ '/about/' | relative_url }}">{% include t.html k="nav_about" %}</a>
-      <span class="lang-toggle" role="group" aria-label="Language">
-        <button class="lang-btn" data-set-lang="nb" lang="nb">NO</button><button class="lang-btn" data-set-lang="en" lang="en">EN</button>
-      </span>
+      {% include lang-toggle.html %}
     </nav>
   </div>
   <p class="site-subtitle">
