@@ -11,6 +11,7 @@ bilingual: true
     </div>
     <nav class="site-nav">
       <a href="{{ '/contribute/' | relative_url }}">{% include t.html k="nav_suggest" %}</a>
+      <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">{% include t.html k="nav_pending" %}</a>
       <a href="{{ '/about/' | relative_url }}">{% include t.html k="nav_about" %}</a>
       {% include lang-toggle.html %}
     </nav>
@@ -202,11 +203,10 @@ bilingual: true
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
-              {%- comment -%} Level tag: Kart hides the group headings and shows this instead {%- endcomment -%}
-              <span class="level-tag">{% include t.html nb=cat.name.nb en=cat.name.en %}</span>
               {%- if tool.akutt %} <span class="akutt-tag">{% include t.html k="akutt" %}</span>{% endif %}
               {%- if health.status == 'broken' %} <span class="broken-tag">{% include t.html k="link_broken" %}</span>{% endif %}
-              {%- if tool.phone %} <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}
+              <span class="tool-sub">{% include t.html nb=cat.name.nb en=cat.name.en %}
+                {%- if tool.phone %} · <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}</span>
             </td>
             <td class="tool-desc">
               {% include t.html nb=tool.description.nb en=tool.description.en %}
@@ -911,8 +911,5 @@ bilingual: true
 
 <footer class="footer footer-split">
   <span>{% include t.html k="footer_akutt" %}: <a href="tel:113">113</a> · {% include t.html k="footer_legevakt" %}: <a href="tel:116117">116 117</a></span>
-  <span class="footer-links">
-    <a href="https://github.com/henrfo/Oslo_Mental_Health_Map/issues?q=is%3Aissue+label%3Asuggestion%2Cedit" target="_blank" rel="noopener noreferrer">{% include t.html k="nav_pending" %}</a>
-    <a href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">{% include t.html k="contribute_gh" %}</a>
-  </span>
+  <a href="https://github.com/henrfo/Oslo_Mental_Health_Map" target="_blank" rel="noopener noreferrer">{% include t.html k="contribute_gh" %}</a>
 </footer>

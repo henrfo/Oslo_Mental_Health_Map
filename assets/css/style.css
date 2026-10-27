@@ -11,6 +11,18 @@
   --pill-active-text: #ffffff;
 }
 
+/* Focus rings only for keyboard users, not after a mouse click */
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -533,17 +545,12 @@ html[data-lang="nb"] .l-en {
 }
 
 .meta-left,
-/* Footer: crisis numbers on the left, "Innsendte forslag · Bidra på GitHub" on the right */
+/* Footer: crisis numbers on the left, "Bidra på GitHub" on the right */
 .footer-split {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 16px;
-}
-
-.footer-links {
-  display: inline-flex;
-  gap: 16px;
 }
 
 .meta-sep {
@@ -642,7 +649,15 @@ html[data-lang="nb"] .l-en {
 .tool-name a {
   color: var(--text);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+/* Second line under every name: "Frivillig · 940 65 739" (level, then phone) */
+.tool-sub {
+  display: block;
+  margin-top: 1px;
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .tool-name a:hover {
@@ -707,25 +722,6 @@ html[data-lang="nb"] .l-en {
   display: block;
 }
 
-/* Level tag beside the name: only in Kart, where the group headings are hidden */
-.level-tag {
-  display: none;
-  margin-left: 6px;
-  padding: 1px 5px;
-  border: 1px solid var(--hairline);
-  border-radius: 2px;
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.map-mode .level-tag {
-  display: inline-block;
-}
-
-
 /* Set by the link checker; the row is faded too (.inactive) */
 .broken-tag {
   margin-left: 6px;
@@ -741,9 +737,6 @@ html[data-lang="nb"] .l-en {
 }
 
 .tool-name a.tool-phone {
-  display: block;
-  width: fit-content;
-  margin-left: 0;
   color: var(--muted);
   font-weight: 400;
   font-size: 12px;
