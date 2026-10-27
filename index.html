@@ -79,7 +79,7 @@ bilingual: true
       <th class="col-date">{% include t.html k="col_added" %}</th>
       <th class="col-when">{% include t.html k="col_when" %}</th>
       <th class="col-th" data-key="tilstand">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span> ▾</button>
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_tilstand" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           {%- for t in site.data.tilstand %}{% unless t.id == 'generelt' %}
@@ -88,7 +88,7 @@ bilingual: true
         </div>
       </th>
       <th class="col-th" data-key="bydel">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_bydel" %}</span> ▾</button>
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_bydel" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
           <p class="col-note">{% include t.html k="dekker_note" %}</p>
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
@@ -98,7 +98,7 @@ bilingual: true
         </div>
       </th>
       <th class="col-th" data-key="dps">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_dps" %}</span> ▾</button>
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_dps" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
           <p class="col-note">{% include t.html k="dps_note" %}</p>
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
@@ -108,7 +108,7 @@ bilingual: true
         </div>
       </th>
       <th class="col-th" data-key="malgruppe">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_malgruppe" %}</span> ▾</button>
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_malgruppe" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
           {%- for m in site.data.malgruppe %}{% unless m.id == 'alle' %}
@@ -117,7 +117,7 @@ bilingual: true
         </div>
       </th>
       <th class="col-th" data-key="henvisning">
-        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_henvisning" %}</span> ▾</button>
+        <button class="col-header-btn"><span class="col-header-label">{% include t.html k="col_henvisning" %}</span>&nbsp;▾</button>
         <div class="col-dropdown">
           <p class="col-note">{% include t.html k="henvisning_note" %}</p>
           <button class="col-option selected" data-value="">{% include t.html k="all" %}</button>
@@ -164,20 +164,20 @@ bilingual: true
               {%- assign codes = dps_codes | split: '|' -%}
               {%- for code in codes -%}
                 {%- assign area = site.data.dps.areas | where: 'code', code | first -%}
-                {{ area.dps | remove: ' DPS' }}{% unless forloop.last %}, {% endunless %}
+                <span class="val">{{ area.dps | remove: ' DPS' }}</span>
               {%- endfor -%}
             {%- endif -%}
           {%- endcapture -%}
           {%- capture tilstand_labels -%}
             {%- for id in tool.tilstand -%}
               {%- assign t = site.data.tilstand | where: 'id', id | first -%}
-              {% include t.html nb=t.nb en=t.en %}{% unless forloop.last %}, {% endunless %}
+              <span class="val">{% include t.html nb=t.nb en=t.en %}</span>
             {%- endfor -%}
           {%- endcapture -%}
           {%- capture malgruppe_labels -%}
             {%- for id in tool.malgruppe -%}
               {%- assign m = site.data.malgruppe | where: 'id', id | first -%}
-              {% include t.html nb=m.nb en=m.en %}{% unless forloop.last %}, {% endunless %}
+              <span class="val">{% include t.html nb=m.nb en=m.en %}</span>
             {%- endfor -%}
           {%- endcapture -%}
           <tr class="{% if health.status == 'broken' %}inactive{% endif %}"
@@ -202,6 +202,8 @@ bilingual: true
             <td><span class="dot dot-unknown"></span></td>
             <td class="tool-name">
               <a href="{{ tool.website }}" target="_blank" rel="noopener noreferrer">{{ tool.name }}</a>
+              {%- comment -%} Level tag: Kart hides the group headings and shows this instead {%- endcomment -%}
+              <span class="level-tag">{% include t.html nb=cat.name.nb en=cat.name.en %}</span>
               {%- if tool.akutt %} <span class="akutt-tag">{% include t.html k="akutt" %}</span>{% endif %}
               {%- if health.status == 'broken' %} <span class="broken-tag">{% include t.html k="link_broken" %}</span>{% endif %}
               {%- if tool.phone %} <a class="tool-phone" href="tel:{{ tool.phone | remove: ' ' }}">{{ tool.phone }}</a>{% endif %}
@@ -213,7 +215,7 @@ bilingual: true
             <td class="col-date" data-date="{{ tool.date_added }}"></td>
             <td class="col-when"></td>
             <td class="col-cell col-wrap">{{ tilstand_labels }}</td>
-            <td class="col-cell col-wrap col-short">{% if dekker contains 'Hele Oslo' %}{% include t.html k="hele_oslo" %}{% else %}{{ dekker | join: ', ' }}{% endif %}</td>
+            <td class="col-cell col-wrap col-short">{% if dekker contains 'Hele Oslo' %}{% include t.html k="hele_oslo" %}{% else %}{% for b in dekker %}<span class="val">{{ b }}</span>{% endfor %}{% endif %}</td>
             <td class="col-cell col-wrap col-short">{{ dps_names }}</td>
             <td class="col-cell col-wrap">{{ malgruppe_labels }}</td>
             <td class="col-cell col-short">{% if tool.henvisning == true %}{% include t.html k="answer_yes" %}{% elsif tool.henvisning == false %}{% include t.html k="answer_no" %}{% endif %}</td>
@@ -569,24 +571,30 @@ bilingual: true
     }
   }
 
-  // In the map view the table box shows three rows and half of the fourth, so it's
-  // clear the rest scroll inside
+  // In the map view the table box shows exactly this many rows; the rest scroll inside
   const MAP_TABLE_ROWS = 3;
 
   function fitTableBox() {
-    if (activeView !== 'map') { tableWrap.style.maxHeight = ''; return; }
-    let height = tableWrap.querySelector('thead').offsetHeight, rows = 0;
-    tableWrap.style.setProperty('--thead-h', `${height}px`);   // where group headings stick
-    for (const el of tbody.children) {
-      if (!el.offsetParent) continue;   // hidden by filters
-      if (!el.classList.contains('section-header') && ++rows > MAP_TABLE_ROWS) {
-        height += el.offsetHeight / 2;
-        break;
-      }
-      height += el.offsetHeight;
+    if (activeView !== 'map') { tableWrap.style.maxHeight = ''; mapEl.style.height = ''; return; }
+    // Exactly three rows at their real height (group headings are hidden in Kart):
+    // from the top of the box to the bottom of the third visible row
+    const visibleRows = [...tbody.children].filter(el => el.offsetParent);
+    const last = visibleRows[Math.min(MAP_TABLE_ROWS, visibleRows.length) - 1];
+    tableWrap.style.maxHeight = '';
+    if (last) {
+      const height = last.getBoundingClientRect().bottom - tableWrap.getBoundingClientRect().top + tableWrap.scrollTop;
+      tableWrap.style.maxHeight = `${Math.ceil(height)}px`;
     }
-    tableWrap.style.maxHeight = `${height + 1}px`;
+    // The map takes the rest of the screen below the table (CSS sets the phone size)
+    if (window.innerWidth > 640) {
+      const above = tableWrap.getBoundingClientRect().bottom - document.querySelector('.meta').getBoundingClientRect().top;
+      const mapH = Math.max(320, Math.min(700, window.innerHeight - above - 24 - 8));
+      mapEl.style.height = `${mapH}px`;
+      if (map) map.invalidateSize();
+    }
   }
+
+  window.addEventListener('resize', () => { if (activeView === 'map') fitTableBox(); });
 
   function renderCounts() {
     const isVisible = r => !r.classList.contains('hidden');
@@ -594,7 +602,7 @@ bilingual: true
     const byDay = activeFilter === 'week';
     headers.forEach(header => {
       const cat = header.dataset.category;
-      header.classList.toggle('hidden', byDay || ![...toolRows].some(r => r.dataset.category === cat && isVisible(r)));
+      header.classList.toggle('hidden', byDay || activeView === 'map' || ![...toolRows].some(r => r.dataset.category === cat && isVisible(r)));
     });
     countEl.textContent = visible + ' ' + t(visible === 1 ? 'entry' : 'entries');
     fitTableBox();

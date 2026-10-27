@@ -345,15 +345,6 @@ html[data-lang="nb"] .l-en {
   background: #ffffff;
 }
 
-/* Group headings stick under the column header while the box scrolls;
-   --thead-h is set in JS */
-.map-mode .tool-table tr.section-header td {
-  position: sticky;
-  top: var(--thead-h, 40px);
-  z-index: 1;
-  background: #ffffff;
-}
-
 .map-view {
   margin-top: 24px;
 }
@@ -708,7 +699,30 @@ html[data-lang="nb"] .l-en {
 .col-cell,
 .tool-name,
 .tool-desc {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;   /* only breaks words too long for the column */
+}
+
+/* List values (tilstand, bydeler, DPS, målgruppe) one per line, no commas */
+.col-cell .val {
+  display: block;
+}
+
+/* Level tag beside the name: only in Kart, where the group headings are hidden */
+.level-tag {
+  display: none;
+  margin-left: 6px;
+  padding: 1px 5px;
+  border: 1px solid var(--hairline);
+  border-radius: 2px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.map-mode .level-tag {
+  display: inline-block;
 }
 
 
@@ -1139,8 +1153,7 @@ html[data-lang="nb"] .l-en {
     background: #111111;
   }
 
-  .map-mode .tool-table thead th,
-  .map-mode .tool-table tr.section-header td {
+  .map-mode .tool-table thead th {
     background: #111111;
   }
 
