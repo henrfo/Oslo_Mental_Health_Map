@@ -17,6 +17,7 @@ malgruppe  = load_yaml.('_data/malgruppe.yml').map { |m| m['id'] }
 bydeler    = load_yaml.('_data/bydeler.yml')
 dager      = load_yaml.('_data/dager.yml').map { |d| d['id'] }
 dps_codes  = load_yaml.('_data/dps.yml')['areas'].map { |a| a['code'] }
+samlinger  = load_yaml.('_data/samlinger.yml').map { |g| g['id'] }
 
 problems = []
 count = 0
@@ -65,6 +66,7 @@ Dir[File.join(ROOT, '_data/entries/*.yml')].sort.each do |file|
     bad.("unknown bydel '#{e['bydel']}'") if e['bydel'] && !bydeler.include?(e['bydel'])
     Array(e['dekker']).each    { |v| bad.("unknown bydel '#{v}' in dekker") unless bydeler.include?(v) }
     bad.("unknown dps '#{e['dps']}'") if e['dps'] && !dps_codes.include?(e['dps'])
+    bad.("unknown samling '#{e['samling']}' (see _data/samlinger.yml)") if e['samling'] && !samlinger.include?(e['samling'])
 
     if e['address'] && !(e['lat'] && e['lon']) && !e['draft']
       bad.('has an address but no lat/lon (geocode it)')

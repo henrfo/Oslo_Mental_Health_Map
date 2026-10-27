@@ -55,6 +55,7 @@ The levels form a ladder: Frivillig → Førstelinje → Spesialist → Akutt.
   lat: 59.9133                            # required if address is set. Decimal degrees (WGS84)
   lon: 10.7522
   phone: 116 123                          # optional. Required for hjelpelinjer
+  samling: aktivitetshus                  # optional. Groups similar places into one expandable list row (see _data/samlinger.yml)
   draft: true                             # optional. Kept in the data but not shown on the site, e.g. while details are being verified
   nar:                                    # optional, for recurring activities
     dag: sondag                           #   mandag | tirsdag | onsdag | torsdag | fredag | lordag | sondag
@@ -87,7 +88,7 @@ The levels form a ladder: Frivillig → Førstelinje → Spesialist → Akutt.
 
 **last_verified** is a human check that the service still exists and the details above are right. A working link doesn't prove that: a site can stay up after a service closes or changes. It drives the status dot; hover the dot to see the date.
 
-**Status dot.** Shows the age of `last_verified`: green under 1 month, amber 1–6 months, grey over 6 months.
+**Status dot.** Shows the age of `last_verified`: green within the last 30 days, amber 1–6 months, grey over 6 months.
 
 **Link status** is not part of an entry; a broken link fades the row and adds a "Brutt lenke" tag. The weekly link checker writes it to `_data/health.yml`, keyed by the entry's slugified name.
 

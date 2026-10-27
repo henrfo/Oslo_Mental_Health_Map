@@ -1,0 +1,15 @@
+# Groups of similar places shown as one expandable row in the list (each place
+# still gets its own map marker). Entries join a group with `samling: <id>`.
+- id: fontenehus
+  nb: Fontenehusene
+  en: Clubhouses (Fontenehus)
+  description:
+    nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
+    en: "Work communities for people who have or have had mental health problems."
+
+- id: aktivitetshus
+  nb: Aktivitetshusene
+  en: Activity houses
+  description:
+    nb: "Gratis aktiviteter og møteplasser på dagtid for voksne, uten henvisning."
+    en: "Free daytime activities and meeting places for adults, no referral needed."

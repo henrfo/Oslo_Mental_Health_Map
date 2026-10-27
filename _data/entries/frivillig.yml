@@ -92,6 +92,7 @@
 
 - name: "Fontenehuset sentrum"
   full_name: "Fontenehuset Oslo sentrum"
+  samling: fontenehus
   description:
     nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
     en: "Work community for people who have or have had mental health problems."
@@ -109,6 +110,7 @@
   date_added: 2026-10-27
 
 - name: "Fontenehuset Oslo Øst"
+  samling: fontenehus
   description:
     nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
     en: "Work community for people who have or have had mental health problems."
@@ -127,6 +129,7 @@
 
 - name: "Fontenehuset Oslo Sør"
   full_name: "Fontenehuset Oslo Sør (Mortensrud)"
+  samling: fontenehus
   description:
     nb: "Arbeidsfellesskap for deg som har eller har hatt psykiske helseutfordringer."
     en: "Work community for people who have or have had mental health problems."
@@ -145,6 +148,7 @@
 
 - name: "Akersveien 17 B"
   full_name: "Aktivitetshus i Akersveien 17 B"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -163,6 +167,7 @@
 
 - name: "Nordstrand aktivitetshus"
   full_name: "Aktivitetshuset Nordstrand"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -181,6 +186,7 @@
 
 - name: "Prindsen aktivitetshus"
   full_name: "Aktivitetshuset Prindsen"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -199,6 +205,7 @@
 
 - name: "Svovel aktivitetshus"
   full_name: "Aktivitetshuset Svovel"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -216,6 +223,7 @@
   date_added: 2026-10-27
 
 - name: "Aktivitetssenteret 31B"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -233,6 +241,7 @@
   date_added: 2026-10-27
 
 - name: "Amaldhus aktivitetshus"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -250,6 +259,7 @@
   date_added: 2026-10-27
 
 - name: "Broa aktivitetshus"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -267,6 +277,7 @@
   date_added: 2026-10-27
 
 - name: "Fossum aktivitetshus"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -283,6 +294,7 @@
   date_added: 2026-10-27
 
 - name: "Haven aktivitetshus"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -301,6 +313,7 @@
 
 - name: "Hjørnesteinen"
   full_name: "Hjørnesteinen aktivitetshus"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -318,6 +331,7 @@
   date_added: 2026-10-27
 
 - name: "Kafé X"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -335,6 +349,7 @@
   date_added: 2026-10-27
 
 - name: "Løkta aktivitetssenter"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -352,6 +367,7 @@
   date_added: 2026-10-27
 
 - name: "Rasmus aktivitetshus"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -370,6 +386,7 @@
 
 - name: "Recoverysenteret"
   full_name: "Recoverysenteret i Nordre Aker"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."
@@ -387,6 +404,7 @@
   date_added: 2026-10-27
 
 - name: "Svingen treffsted"
+  samling: aktivitetshus
   description:
     nb: "Gratis aktiviteter og møteplass på dagtid for voksne, uten henvisning."
     en: "Free daytime activities and a meeting place for adults, no referral needed."

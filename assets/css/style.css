@@ -367,6 +367,34 @@ html[data-lang="nb"] .l-en {
 
 
 
+/* Group rows (Aktivitetshusene, Fontenehusene) open and close their members */
+.tool-table tr.samling-row {
+  cursor: pointer;
+}
+
+.tool-table tr.samling-row:hover td,
+.tool-table tr.samling-row:focus-visible td {
+  background: var(--hairline);
+}
+
+.samling-name {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.samling-caret {
+  display: block;
+  margin-top: 1px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.tool-table tr.collapsed { display: none; }
+
+.tool-table tr[data-name][data-samling] td:nth-child(2) {
+  padding-left: 12px;   /* members sit indented under their group row */
+}
+
 .tool-table tr.row-active td {
   background: var(--hairline);
 }

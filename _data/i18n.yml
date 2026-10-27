@@ -18,9 +18,9 @@ ressurser:        { nb: Ressurser, en: Resources }
 search:           { nb: Søk…, en: Search… }
 entry:            { nb: oppføring, en: entry }
 entries:          { nb: oppføringer, en: entries }
-age_recent:       { nb: "< 1 mnd", en: "< 1 month" }
-age_mid:          { nb: "1–6 mnd", en: "1–6 months" }
-age_old:          { nb: "> 6 mnd", en: "> 6 months" }
+age_recent:       { nb: "Bekreftet siste 30 dager", en: "Verified in the last 30 days" }
+age_mid:          { nb: "1–6 mnd siden", en: "1–6 months ago" }
+age_old:          { nb: "Over 6 mnd siden", en: "Over 6 months ago" }
 never_verified:   { nb: Ikke bekreftet, en: Not verified }
 link_broken:      { nb: Brutt lenke, en: Link broken }
 checked:          { nb: sjekket, en: checked }
@@ -47,3 +47,4 @@ weekly:           { nb: ukentlig, en: weekly }
 biweekly:         { nb: annenhver uke, en: every other week }
 season:           { nb: Sesong, en: Season }
 source:           { nb: kilde, en: source }
+locations:        { nb: steder, en: locations }

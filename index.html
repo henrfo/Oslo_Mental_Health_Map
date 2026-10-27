@@ -60,7 +60,6 @@ bilingual: true
     <span id="tool-count"></span>
     <span id="filter-tags"></span>
     <span class="meta-sep">·</span>
-    <span>{% include t.html k="verified" %}:</span>
     <span class="legend-item"><span class="dot dot-active"></span> {% include t.html k="age_recent" %}</span>
     <span class="legend-item"><span class="dot dot-quiet"></span> {% include t.html k="age_mid" %}</span>
     <span class="legend-item"><span class="dot dot-inactive"></span> {% include t.html k="age_old" %}</span>
@@ -124,7 +123,20 @@ bilingual: true
         <tr class="section-header" data-category="{{ cat.id }}">
           <td colspan="10">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
         </tr>
+        {% assign prev_samling = '' %}
         {% for tool in tools %}
+          {%- if tool.samling and tool.samling != prev_samling -%}
+            {%- assign sm = site.data.samlinger | where: 'id', tool.samling | first %}
+        <tr class="samling-row" data-samling="{{ tool.samling }}" data-category="{{ cat.id }}" tabindex="0">
+          <td><span class="samling-caret">▸</span></td>
+          <td class="tool-name"><span class="samling-name">{% include t.html nb=sm.nb en=sm.en %}</span><span class="tool-sub samling-count"></span></td>
+          <td class="tool-desc">{% include t.html nb=sm.description.nb en=sm.description.en %}</td>
+          <td class="col-date"></td>
+          <td class="col-when"></td>
+          <td class="col-cell" colspan="4"></td>
+        </tr>
+          {%- endif -%}
+          {%- assign prev_samling = tool.samling | default: '' %}
           {% assign hkey = tool.name | slugify %}
           {% assign health = site.data.health[hkey] %}
           {%- comment -%}
@@ -155,6 +167,7 @@ bilingual: true
           {%- endcapture -%}
           <tr class="{% if health.status == 'broken' %}inactive{% endif %}"
               data-category="{{ cat.id }}"
+              {% if tool.samling %}data-samling="{{ tool.samling }}"{% endif %}
               data-name="{{ tool.name | downcase }}{% if tool.full_name %} {{ tool.full_name | downcase }}{% endif %}"
               data-desc="{{ tool.description.nb | downcase }} {{ tool.description.en | downcase }}"
               data-added="{{ tool.date_added }}"
@@ -228,7 +241,8 @@ bilingual: true
   const subPillsEl    = document.getElementById('sub-pills');
   const search        = document.getElementById('search');
   const tbody         = document.getElementById('tool-list');
-  const toolRows      = document.querySelectorAll('#tool-list tr:not(.section-header)');
+  const toolRows      = document.querySelectorAll('#tool-list tr[data-name]');
+  const samlingRows   = document.querySelectorAll('#tool-list tr.samling-row');
   const headers       = document.querySelectorAll('#tool-list tr.section-header');
   const originalOrder = [...tbody.children];
   const countEl       = document.getElementById('tool-count');
@@ -273,7 +287,7 @@ bilingual: true
   // Dates, schedules and dot tooltips depend on the language, so they're (re)written here.
   // The dot shows how recently a person verified the info (last_verified), computed in the
   // browser so it ages without a rebuild. Broken links get a tag and a faded row instead.
-  const MONTH_MS = 30.44 * 24 * 60 * 60 * 1000;
+  const DAY_MS = 24 * 60 * 60 * 1000;
 
   function renderDates() {
     document.querySelectorAll('.col-date[data-date]').forEach(cell => {
@@ -284,8 +298,9 @@ bilingual: true
       const dot = row.querySelector('.dot');
       const verified = parseDay(row.dataset.verified);
       if (verified) {
-        const months = (Date.now() - verified) / MONTH_MS;
-        dot.className = 'dot ' + (months < 1 ? 'dot-active' : months < 6 ? 'dot-quiet' : 'dot-inactive');
+        // green: last 30 days · amber: up to 6 months · grey: older
+        const days = (Date.now() - verified) / DAY_MS;
+        dot.className = 'dot ' + (days <= 30 ? 'dot-active' : days <= 183 ? 'dot-quiet' : 'dot-inactive');
         dot.title = `${t('verified')} ${fmtDate(verified, DAY_FORMAT)}`;
       } else {
         dot.className = 'dot dot-unknown';
@@ -484,6 +499,7 @@ bilingual: true
     if (activeRow) activeRow.classList.remove('row-active');
     activeRow = row;
     if (!row) return;
+    if (row.classList.contains('collapsed')) toggleSamling(row.dataset.samling, true);
     row.classList.add('row-active');
     if (scroll) {
       // Scroll inside the table box only, not the whole page
@@ -564,6 +580,36 @@ bilingual: true
   }
 
   window.addEventListener('resize', () => { if (activeView === 'map') fitTableBox(); });
+
+  // ── Groups (samling): members collapse behind one expandable row in the list.
+  // Collapsed rows are only folded away, not filtered out, so they keep their map markers.
+  const expandedGroups = new Set();
+
+  function applySamlinger() {
+    const grouping = !['new', 'week'].includes(activeFilter) && !search.value.trim();
+    samlingRows.forEach(summary => {
+      const id = summary.dataset.samling;
+      const members = [...toolRows].filter(r => r.dataset.samling === id);
+      const shown = members.filter(r => !r.classList.contains('hidden'));
+      const open = expandedGroups.has(id);
+      summary.classList.toggle('hidden', !grouping || !shown.length);
+      summary.classList.toggle('open', open);
+      summary.querySelector('.samling-caret').textContent = open ? '▾' : '▸';
+      summary.querySelector('.samling-count').textContent = `${shown.length} ${t('locations')}`;
+      members.forEach(r => r.classList.toggle('collapsed', grouping && !open));
+    });
+  }
+
+  function toggleSamling(id, open) {
+    if (open ?? !expandedGroups.has(id)) expandedGroups.add(id); else expandedGroups.delete(id);
+    applySamlinger();
+    renderCounts();
+  }
+
+  samlingRows.forEach(summary => {
+    summary.addEventListener('click', () => toggleSamling(summary.dataset.samling));
+    summary.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSamling(summary.dataset.samling); } });
+  });
 
   function renderCounts() {
     const isVisible = r => !r.classList.contains('hidden');
@@ -777,6 +823,7 @@ bilingual: true
       row.classList.toggle('hidden', !show);
     });
 
+    applySamlinger();
     updateURL();
     renderMarkers(true);
     renderCounts();
