@@ -1,0 +1,14 @@
+- name: LINK Oslo – senter for selvhjelp og mestring
+  draft: true                 # VERIFY address and website before publishing
+  description:
+    nb: Selvhjelpshus for Oslos innbyggere med gratis samtale- og mestringsgrupper.
+    en: Self-help centre for Oslo residents, with free peer conversation and coping groups.
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: Hele Oslo
+  # address: VERIFY – not found in sources; add from LINK Oslo's own site
+  henvisning: false
+  akutt: false
+  website: https://frivillig.no/link-oslo---senter-for-selvhjelp-og-mestring   # VERIFY – replace with LINK Oslo's own site
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

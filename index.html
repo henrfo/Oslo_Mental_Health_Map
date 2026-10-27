@@ -115,8 +115,9 @@ bilingual: true
   </thead>
   <tbody id="tool-list">
     {% for cat in site.data.categories %}
-      {% assign tools = site.data.entries[cat.id] %}
-      {% if tools %}
+      {% comment %} Entries marked draft: true stay in the data but aren't published {% endcomment %}
+      {% assign tools = site.data.entries[cat.id] | where_exp: "t", "t.draft != true" %}
+      {% if tools.size > 0 %}
         <tr class="section-header" data-category="{{ cat.id }}">
           <td colspan="8">{% include t.html nb=cat.name.nb en=cat.name.en %}</td>
         </tr>

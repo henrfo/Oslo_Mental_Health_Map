@@ -1,0 +1,31 @@
+- name: Voksenpsykiatrisk avdeling Vinderen (Diakonhjemmet)
+  description:
+    nb: DPS og sykehusfunksjon for voksne, med poliklinikker, døgnenheter og akuttpsykiatrisk døgnenhet.
+    en: DPS and hospital psychiatry for adults, with outpatient clinics, inpatient units and an acute psychiatric ward.
+  tilstand: [generelt]
+  malgruppe: [voksne]
+  bydel: Vestre Aker          # serves Frogner, Ullern, Vestre Aker
+  address: Forskningsveien 7, 0373 Oslo
+  lat: 59.94221
+  lon: 10.71283
+  henvisning: true
+  akutt: false                # acute ward exists, but via legevakt/AMK; consider separate entry
+  website: https://www.diakonhjemmetsykehus.no
+  last_verified: 2026-10-27
+  date_added: 2026-10-27
+
+- name: Nic Waals Institutt (Lovisenberg)
+  draft: true                 # VERIFY address before publishing
+  description:
+    nb: Poliklinikk for barn og unges psykiske helse (BUP), 0–18 år, for Gamle Oslo, Grünerløkka og St. Hanshaugen.
+    en: Child and adolescent mental health outpatient clinic (BUP), ages 0–18, for Gamle Oslo, Grünerløkka and St. Hanshaugen.
+  tilstand: [generelt]
+  malgruppe: [barn, ungdom]
+  bydel: St. Hanshaugen
+  # address: VERIFY – Spångbergveien 25 geocodes to Tåsen (Nordre Aker), not St. Hanshaugen;
+  #          job ads list Lovisenberggata 17 (St. Hanshaugen: 59.93335, 10.74691)
+  henvisning: true
+  akutt: false                # has an acute ambulatory home-hospital team
+  website: https://www.lds.no
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

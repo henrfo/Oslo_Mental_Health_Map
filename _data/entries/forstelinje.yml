@@ -1,0 +1,16 @@
+- name: Uteseksjonen
+  description:
+    nb: Oslo kommunes oppsøkende tjeneste i sentrum for utsatte miljøer, med lavterskel psykolog og hasjavvenning.
+    en: City of Oslo outreach service in the city centre for at-risk groups, with low-threshold psychologist and cannabis cessation programme.
+  tilstand: [rus, generelt]
+  malgruppe: [ungdom, voksne]
+  bydel: Grünerløkka          # address bydel; works in the city centre ("Sentrum" is not one of the 15 bydeler)
+  address: Maridalsveien 3, 0178 Oslo
+  lat: 59.92066
+  lon: 10.75160
+  phone: "913 03 913"
+  henvisning: false
+  akutt: false
+  website: https://www.oslo.kommune.no/helse-og-omsorg/rustjenester/sentrumsarbeid/uteseksjonen/
+  last_verified: 2026-10-27
+  date_added: 2026-10-27

@@ -54,6 +54,7 @@ Urgency is separate from nivå: set `akutt: true` on any offer that takes acute 
   lat: 59.9133                            # required if address is set. Decimal degrees (WGS84)
   lon: 10.7522
   phone: 116 123                          # optional. Required for hjelpelinjer
+  draft: true                             # optional. Kept in the data but not shown on the site, e.g. while details are being verified
 ```
 
 **YAML traps.** YAML reads `yes`, `no`, `on`, `off`, `true` and `false` (in any case) as true/false, both as keys and as values:
