@@ -488,8 +488,16 @@ bilingual: true
   // KLASS gives health trust names in capitals; Norwegian uses sentence case ("Oslo universitetssykehus HF")
   const sentenceCase = s => s.charAt(0) + s.slice(1).toLowerCase().replace(/\bhf\b/, 'HF').replace(/\bas\b/, 'AS');
 
-  // A faint, distinct tint per area; red stays reserved for acute markers
-  const DPS_COLORS = { D47: '#2563eb', D48: '#9333ea', D50: '#d97706', D68: '#db2777', D69: '#0891b2' };
+  // A faint, distinct tint per area. No red or green: red means Akutt, green means Aktiv lenke.
+  // Lovisenberg and Nydalen border almost everything, so the similar pairs (blue/cyan,
+  // purple/magenta) go on areas that don't meet or only touch briefly (via Østmarka).
+  const DPS_COLORS = {
+    D47: '#d97706',   // Lovisenberg: amber
+    D48: '#2563eb',   // Vinderen: blue
+    D50: '#0891b2',   // Groruddalen: cyan (doesn't touch Vinderen)
+    D68: '#7c3aed',   // Nydalen: purple
+    D69: '#c026d3',   // Søndre Oslo: magenta
+  };
   const DPS_FILL = 0.10, DPS_FILL_HOVER = 0.22;
 
   function dpsInfo(props) {

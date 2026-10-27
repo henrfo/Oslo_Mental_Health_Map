@@ -9,26 +9,31 @@ fetched: 2026-10-27
 areas:
   - code: D50
     dps: "Groruddalen DPS"
+    ssb_name: "Groruddalen"
     helseforetak: "AKERSHUS UNIVERSITETSSYKEHUS HF"
     bydeler: ["Grorud", "Stovner", "Alna"]
     outside_oslo: ["Nittedal"]
   - code: D47
     dps: "Lovisenberg DPS"
+    ssb_name: "Lovisenberg"
     helseforetak: "LOVISENBERG DIAKONALE SYKEHUS AS"
     bydeler: ["Gamle Oslo", "Grünerløkka", "St. Hanshaugen", "Sentrum"]
     outside_oslo: []
   - code: D68
     dps: "Nydalen DPS"
+    ssb_name: "Nydalen"
     helseforetak: "OSLO UNIVERSITETSSYKEHUS HF"
     bydeler: ["Sagene", "Nordre Aker", "Bjerke", "Marka"]
     outside_oslo: []
   - code: D69
     dps: "Søndre Oslo DPS"
+    ssb_name: "Søndre Oslo"
     helseforetak: "OSLO UNIVERSITETSSYKEHUS HF"
     bydeler: ["Østensjø", "Nordstrand", "Søndre Nordstrand"]
     outside_oslo: []
   - code: D48
-    dps: "Vindern DPS"
+    dps: "Vinderen DPS"
+    ssb_name: "Vindern"
     helseforetak: "DIAKONHJEMMET SYKEHUS AS"
     bydeler: ["Frogner", "Ullern", "Vestre Aker"]
     outside_oslo: []

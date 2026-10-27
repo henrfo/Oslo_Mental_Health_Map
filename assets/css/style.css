@@ -273,12 +273,6 @@ html[data-lang="nb"] .l-en {
     color: #ededec;
     text-shadow: 0 0 3px #111111, 0 0 3px #111111, 0 0 3px #111111;
   }
-
-  .dps-toggle.selected {
-    background: #ededec;
-    color: #111111;
-    border-color: #ededec;
-  }
 }
 
 /* DPS-områder on/off, in the map's top-right corner */
@@ -298,6 +292,22 @@ html[data-lang="nb"] .l-en {
   background: #111111;
   color: #ffffff;
   border-color: #111111;
+}
+
+/* Active controls are light in dark mode (like Kart, Alle, NO); kept right
+   after the base rule so it wins */
+@media (prefers-color-scheme: dark) {
+  .dps-toggle {
+    color: #ededec;
+    background: #1a1a1a;
+    border-color: #444444;
+  }
+
+  .dps-toggle.selected {
+    background: #ededec;
+    color: #111111;
+    border-color: #ededec;
+  }
 }
 
 .dps-tooltip,

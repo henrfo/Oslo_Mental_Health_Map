@@ -30,6 +30,12 @@ CLASSIFICATION_ID = 632
 OSLO_BYDEL_PREFIX = '0301'
 OUT = Path(__file__).resolve().parent.parent / '_data' / 'dps.yml'
 
+# Names shown on the site where SSB's spelling differs from what clinicians use.
+# The SSB name is kept as ssb_name so scripts can still match SSB's data.
+DISPLAY_NAMES = {
+    'Vindern': 'Vinderen',   # Diakonhjemmet: "Voksenpsykiatrisk avdeling Vinderen"
+}
+
 
 def get(url: str) -> dict:
     req = urllib.request.Request(url, headers={'Accept': 'application/json'})
@@ -89,7 +95,8 @@ def main() -> None:
         hf = items.get(dps.get('parentCode'), {})
         lines += [
             f'  - code: {code}',
-            f'    dps: {quote(dps["name"] + " DPS")}',
+            f'    dps: {quote(DISPLAY_NAMES.get(dps["name"], dps["name"]) + " DPS")}',
+            f'    ssb_name: {quote(dps["name"])}',
             f'    helseforetak: {quote(hf.get("name", ""))}',
             f'    bydeler: [{", ".join(quote(b) for b in bydeler[code])}]',
             f'    outside_oslo: [{", ".join(quote(k) for k in outside_oslo[code])}]',

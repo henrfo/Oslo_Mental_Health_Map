@@ -40,7 +40,7 @@ def read_areas() -> list[dict]:
     """Minimal reader for the generated _data/dps.yml (no PyYAML needed)."""
     areas, current = [], None
     for line in DPS_YML.read_text(encoding='utf-8').splitlines():
-        m = re.match(r'\s*-?\s*(code|dps|helseforetak|bydeler|outside_oslo):\s*(.*?)\s*$', line)
+        m = re.match(r'\s*-?\s*(code|dps|ssb_name|helseforetak|bydeler|outside_oslo):\s*(.*?)\s*$', line)
         if not m:
             continue
         key, value = m.groups()
@@ -160,10 +160,10 @@ def main() -> None:
 
     features = []
     for area in areas:
-        short = re.sub(r'\s*DPS$', '', area['dps'])
-        if short not in by_name:
-            sys.exit(f'"{short}" from dps.yml not found in the SSB map')
-        poly, population = by_name[short]
+        ssb_name = area.get('ssb_name') or re.sub(r'\s*DPS$', '', area['dps'])
+        if ssb_name not in by_name:
+            sys.exit(f'"{ssb_name}" from dps.yml not found in the SSB map')
+        poly, population = by_name[ssb_name]
         coordinates = [[ring_to_coords(r) for r in part] for part in poly]
         largest = max((part[0] for part in coordinates), key=len)
         label = LABEL_OVERRIDES.get(area['dps']) or label_point(largest)
