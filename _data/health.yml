@@ -1,37 +1,193 @@
 # Written by scripts/weekly_checks.py links — do not edit by hand.
 adhd-norge:
-  checked: 2026-10-27
+  checked: 2026-11-02
+  status: ok
+akersveien-17-b:
+  checked: 2026-11-02
+  status: ok
+aktivitetssenteret-31b:
+  checked: 2026-11-02
+  status: ok
+amaldhus-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+angstforeningen-oslo:
+  checked: 2026-11-02
+  status: ok
+angsttelefonen:
+  checked: 2026-11-02
+  status: ok
+avtalespesialister:
+  checked: 2026-11-02
+  status: ok
+barnevernvakten:
+  checked: 2026-11-02
   status: ok
 bipolarforeningen-norge:
-  checked: 2026-10-27
+  checked: 2026-11-02
+  status: ok
+broa-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+bup-vest:
+  checked: 2026-11-02
+  status: ok
+dps-groruddalen-ahus:
+  checked: 2026-11-02
+  status: ok
+familievernkontoret:
+  checked: 2026-11-02
+  status: ok
+fontenehuset-oslo-sør:
+  checked: 2026-11-02
+  status: ok
+fontenehuset-oslo-øst:
+  checked: 2026-11-02
+  status: ok
+fontenehuset-sentrum:
+  checked: 2026-11-02
+  status: ok
+fossum-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+frisklivssentralene:
+  checked: 2026-11-02
   status: ok
 frivillig-no:
-  checked: 2026-10-27
+  checked: 2026-11-02
   status: ok
-link-oslo-senter-for-selvhjelp-og-mestring:
-  checked: 2026-10-27
+fyll-dagene:
+  checked: 2026-11-02
+  status: ok
+følelseskompasset:
+  checked: 2026-11-02
+  status: ok
+hasjavvenning-hap:
+  checked: 2026-11-02
+  status: ok
+haven-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+helsestasjon-for-ungdom:
+  checked: 2026-11-02
+  status: ok
+hjørnesteinen:
+  checked: 2026-11-02
+  status: ok
+ivareta:
+  checked: 2026-11-02
+  status: ok
+jobbmestring-nav:
+  checked: 2026-11-02
+  status: ok
+kafé-x:
+  checked: 2026-11-02
+  status: ok
+kirkens-sos:
+  checked: 2026-11-02
+  status: ok
+kors-på-halsen:
+  checked: 2026-11-02
+  status: ok
+legevakten-i-oslo:
+  checked: 2026-11-02
+  status: ok
+link-oslo:
+  checked: 2026-11-02
+  status: ok
+litt-sint-familievernet:
+  checked: 2026-11-02
   status: ok
 livsgnist-mental-helse:
-  checked: 2026-10-27
+  checked: 2026-11-02
+  status: ok
+lovisenberg-dps:
+  checked: 2026-11-02
+  status: ok
+løkta-aktivitetssenter:
+  checked: 2026-11-02
+  status: ok
+mental-helse-hjelpetelefon:
+  checked: 2026-11-02
   status: ok
 mental-helse-oslo:
-  checked: 2026-10-27
+  checked: 2026-11-02
   status: ok
-nic-waals-institutt-lovisenberg:
-  checked: 2026-10-27
+mental-helse-ungdom:
+  checked: 2026-11-02
   status: ok
-nkvts-nasjonalt-kunnskapssenter-om-vold-og-traumatisk-stress:
-  checked: 2026-10-27
+nfkt:
+  checked: 2026-11-02
   status: ok
-norsk-forening-for-kognitiv-atferdsterapi-nfkt:
-  checked: 2026-10-27
+nhi-selvhjelpskurs:
+  checked: 2026-11-02
+  status: ok
+nic-waals-institutt:
+  checked: 2026-11-02
+  status: ok
+nkvts:
+  checked: 2026-11-02
+  status: ok
+nordstrand-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+nydalen-dps-ous:
+  checked: 2026-11-02
+  status: ok
+oslohjelpa:
+  checked: 2026-11-02
+  status: ok
+pio-senteret:
+  checked: 2026-11-02
+  status: ok
+prindsen-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+psykiatrisk-legevakt-ous:
+  checked: 2026-11-02
+  status: ok
+psykososial-akuttjeneste:
+  checked: 2026-11-02
+  status: ok
+pårørendetelefonen:
+  checked: 2026-11-02
+  status: ok
+rask-psykisk-helsehjelp:
+  checked: 2026-11-02
+  status: ok
+rasmus-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+recoverysenteret:
+  checked: 2026-11-02
+  status: ok
+rusinfo:
+  checked: 2026-11-02
   status: ok
 sober-norge:
-  checked: 2026-10-27
+  checked: 2026-11-02
+  status: ok
+sorgpoliklinikken-ahus:
+  checked: 2026-11-02
+  status: ok
+svingen-treffsted:
+  checked: 2026-11-02
+  status: ok
+svovel-aktivitetshus:
+  checked: 2026-11-02
+  status: ok
+søndre-oslo-dps-ous:
+  checked: 2026-11-02
+  status: ok
+ung-arena:
+  checked: 2026-11-02
   status: ok
 uteseksjonen:
-  checked: 2026-10-27
+  checked: 2026-11-02
   status: ok
-voksenpsykiatrisk-avdeling-vinderen-diakonhjemmet:
-  checked: 2026-10-27
+uteseksjonens-psykolog:
+  checked: 2026-11-02
+  status: ok
+vinderen-dps:
+  checked: 2026-11-02
   status: ok
